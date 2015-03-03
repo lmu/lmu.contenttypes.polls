@@ -10,7 +10,7 @@
                 has_poll nocall:poll"
     tal:attributes="data-manager view/portlet_manager_name;
                     data-url context/absolute_url;"
-    i18n:domain="collective.polls">
+    i18n:domain="lmu.contenttypes.polls">
 
     <dt class="portletHeader" tal:condition="view/data/header">
         <span class="portletTopLeft" />

@@ -3,17 +3,18 @@
 from Acquisition import aq_parent
 from Products.CMFCore.interfaces import IActionSucceededEvent
 from Products.CMFCore.interfaces import ISiteRoot
-from collective.polls.config import MEMBERS_ANNO_KEY
-from collective.polls.config import PERMISSION_VOTE
-from collective.polls.config import VOTE_ANNO_KEY
-from collective.polls.content.poll import IPoll
-from five import grok
+from zope.component import getGlobalSiteManager
 
-ALL_ROLES = ['Anonymous', 'Contributor', 'Editor', 'Manager', 'Member',
-             'Reader', 'Reviewer', 'Site Administrator']
+from lmu.contenttypes.polls.config import ALL_ROLES
+from lmu.contenttypes.polls.config import MEMBERS_ANNO_KEY
+from lmu.contenttypes.polls.config import PERMISSION_VOTE
+from lmu.contenttypes.polls.config import VOTE_ANNO_KEY
+from lmu.contenttypes.polls.poll import IPoll
 
 
-@grok.subscribe(IPoll, IActionSucceededEvent)
+gsm = getGlobalSiteManager()
+
+
 def fix_permissions(poll, event):
     """Fix permission on poll object if allow_anonymous is enabled."""
     if event.action in ['open', ]:
@@ -30,8 +31,9 @@ def fix_permissions(poll, event):
                                    ALL_ROLES,
                                    acquire=0)
 
+gsm.registerHandler(fix_permissions, (IPoll, IActionSucceededEvent))
 
-@grok.subscribe(IPoll, IActionSucceededEvent)
+
 def remove_votes(poll, event):
     """Remove existing votes on poll object if reject transaction happens."""
     if event.action in ['reject', ]:
@@ -42,3 +44,5 @@ def remove_votes(poll, event):
         # Erase Votes
         for option in options:
             annotations[VOTE_ANNO_KEY % option] = 0
+
+gsm.registerHandler(remove_votes, (IPoll, IActionSucceededEvent))

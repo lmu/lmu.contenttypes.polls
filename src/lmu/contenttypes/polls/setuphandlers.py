@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
-from Products.CMFPlone.interfaces import INonInstallable
-from collective.polls.config import PROJECTNAME
-from five import grok
-from plone import api
-
 import logging
+
+from Products.CMFPlone.interfaces import INonInstallable
+from plone import api
+from zope.interface import implements
+
+from lmu.contenttypes.polls.config import PROJECTNAME
+from lmu.contenttypes.polls.interfaces import IHiddenProfiles
 
 logger = logging.getLogger(PROJECTNAME)
 
 
-class HiddenProfiles(grok.GlobalUtility):
-
-    grok.implements(INonInstallable)
-    grok.provides(INonInstallable)
-    grok.name('collective.polls')
+class HiddenProfiles(object):
+    implements(INonInstallable, IHiddenProfiles)
 
     def getNonInstallableProfiles(self):
-        profiles = ['collective.polls:uninstall', ]
+        profiles = ['lmu.contenttypes.polls:uninstall', ]
         return profiles
 
 
@@ -27,7 +26,7 @@ def updateWorkflowDefinitions(portal):
 
 
 def setupVarious(context):
-    if context.readDataFile('collective.polls.marker.txt') is None:
+    if context.readDataFile('lmu.contenttypes.polls.marker.txt') is None:
         # not your add-on
         return
 

@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="lmu.blog">
+
+    <include package="Products.CMFCore" file="permissions.zcml" />
+
+    <browser:page
+        name="view"
+        for="lmu.contenttypes.polls.interfaces.IPoll"
+        permission="zope2.View"
+        class=".poll_views.PollView"
+        />
+
+</configure>
