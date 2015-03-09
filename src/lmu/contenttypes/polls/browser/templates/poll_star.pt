@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="lmu.contenttypes.polls">
+<body>
+
+<metal:main fill-slot="content-core">
+    <metal:content define-macro="content-core"
+         tal:define="results view/get_results;
+                     has_voted view/has_voted;
+                     can_vote view/can_vote;
+                     can_edit view/can_edit;
+                     wf_state view/wf_state">
+
+    <h1 tal:content="context/title" >Vote-Question</h1>
+    <p tal:content="context/description" >Description</p>
+
+
+
+    <tal:comment tal:condition="python: False" >
+      Preview Status - WF-State: private or pending 
+      <>
+    </tal:comment>
+
+    <tal:preview tal:condition="python: wf_state in ['private', 'pending']" >
+      <p class="note" i18n:translate="" > 
+        This Poll hasn't been published, you see a preview without voting possibility
+      </p>
+
+      <h2 i18n:translate="" >Voting View</h2>
+      <div>
+        <h3 tal:content="context/title" >Vote-Question</h3>
+        <p tal:content="context/description" >Description</p>
+
+        <form class="poll">
+          <span class="star-rating">
+            <input type="radio" name="rating" value="1" /><i></i>
+            <input type="radio" name="rating" value="2" /><i></i>
+            <input type="radio" name="rating" value="3" /><i></i>
+            <input type="radio" name="rating" value="4" /><i></i>
+            <input type="radio" name="rating" value="5" /><i></i>
+          </span>
+          <input type="submit" name="demo.submit" value="Submit" i18n:attributes="value" disabled="disabled" />
+        </form>
+      </div>
+
+      <h2 i18n:translate="" >Result View Example</h2>
+      <div>
+        <tal:average >
+          <div class="star-result-average">
+            <span class="star-rating">
+              <input type="radio" name="rating" value="1" disabled="disabled" /><i></i>
+              <input type="radio" name="rating" value="2" disabled="disabled" /><i></i>
+              <input type="radio" name="rating" value="3" disabled="disabled" /><i></i>
+              <input type="radio" name="rating" value="4" disabled="disabled" checked="checked" /><i></i>
+              <input type="radio" name="rating" value="5" disabled="disabled" /><i></i>
+            </span><span class="average-participants">(42)</span><br />
+            <span class="average-result" i18n:translate="" >4.1 of 5 Stars</span>
+          </div>
+        </tal:average>
+        <tal:bar>
+          <table>
+            <tbody>
+              <tr><td><span class="stars-5" i18n:translate="" >5 Stars</span></td><td><div class="a-meter"><div class="a-meter-bar" style="width: 31.609%;"></div></div></td><td>(11)</td></tr>
+              <tr><td><span class="stars-4" i18n:translate="" >4 Stars</span></td><td><div class="a-meter"><div class="a-meter-bar" style="width: 64.368%;"></div></div></td><td>(28)</td></tr>
+              <tr><td><span class="stars-3" i18n:translate="" >3 Stars</span></td><td><div class="a-meter"><div class="a-meter-bar" style="width: 1.724%;"></div></div></td><td>(1)</td></tr>
+              <tr><td><span class="stars-2" i18n:translate="" >2 Stars</span></td><td><div class="a-meter"><div class="a-meter-bar" style="width: 2.3%;"></div></div></td><td>(2)</td></tr>
+              <tr><td><span class="stars-1" i18n:translate="" >1 Star</span></td><td><div class="a-meter"><div class="a-meter-bar" style="width: 0%;"></div></div></td><td>(0)</td></tr>
+            </tbody>
+            <tfoot><tr><th i18n:translate="" colspan="2" >Participants</th><th>42</th></tr></tfoot>
+          </table>
+
+        </tal:bar>
+        <tal:numbers >
+          <table>
+            <thead><tr><th i18n:translate="">Option</th><th i18n:translate="">Count</th></tr></thead>
+            <tbody>
+              <tr><td><span class="stars-5" i18n:translate="" >5 Stars</span></td><td>11</td></tr>
+              <tr><td><span class="stars-4" i18n:translate="" >4 Stars</span></td><td>28</td></tr>
+              <tr><td><span class="stars-3" i18n:translate="" >3 Stars</span></td><td>1</td></tr>
+              <tr><td><span class="stars-2" i18n:translate="" >2 Stars</span></td><td>2</td></tr>
+              <tr><td><span class="stars-1" i18n:translate="" >1 Star</span></td><td>0</td></tr>
+            </tbody>
+            <tfoot><tr><th i18n:translate="" >Participants</th><th>42</th></tr></tfoot>
+          </table>
+        </tal:numbers>
+        <tal:no-results>
+          <p i18n:translate="">This Poll did not show results. Thank you for participation.</p>
+        </tal:no-results>
+
+      </div>
+    </tal:preview>
+
+
+
+    <tal:vote-view tal:condition="python: wf_state in ['open']" >
+      <tal:vote tal:condition="python: can_vote and not has_voted">
+        <h1 tal:content="context/title" >Vote-Question</h1>
+        <p tal:content="context/description" >Description</p>
+        <form action="#" methode="post" tal:attributes="action context/absolute_url" >
+          <span class="star-rating">
+            <input type="radio" name="rating" value="1" /><i></i>
+            <input type="radio" name="rating" value="2" /><i></i>
+            <input type="radio" name="rating" value="3" /><i></i>
+            <input type="radio" name="rating" value="4" /><i></i>
+            <input type="radio" name="rating" value="5" /><i></i>
+          </span>
+          <input type="submit" name="poll.submit" value="Submit" i18n:attributes="value" />
+        </form>
+      </tal:vote>
+
+
+
+    </tal:vote-view>
+
+
+
+    <tal:closed-view tal:condition="python: wf_state in ['closed']" >
+
+
+
+
+
+    </tal:closed-view>
+
+
+
+
+
+    </metal:content>
+</metal:main>
+
+</body>
+</html>

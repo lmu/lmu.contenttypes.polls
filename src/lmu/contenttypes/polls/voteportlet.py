@@ -21,7 +21,7 @@ from lmu.contenttypes.polls.interfaces import IVotePortlet
 from lmu.contenttypes.polls import MessageFactory as _
 
 
-class PollPortletRender(base.Rendered):
+class PollPortletRender(base.Renderer):
     """This methods allow to use the portlet render in a view."""
 
     def get_portlet_manager(self, column=''):

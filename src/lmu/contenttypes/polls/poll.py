@@ -31,12 +31,30 @@ class Poll(dexterity.Item):
         utility = queryUtility(IPolls, name='lmu.contenttypes.polls')
         return utility
 
-    def getOptions(self):
+    def get_poll_type(self):
+        return self.poll_type
+
+    def get_options(self):
         """Return available options."""
-        options = self.options
+        options = []
+        if self.poll_type == 'poll_star':
+            options = [
+                {'option_id': '1', 'description': ''},
+                {'option_id': '2', 'description': ''},
+                {'option_id': '3', 'description': ''},
+                {'option_id': '4', 'description': ''},
+                {'option_id': '5', 'description': ''}
+            ]
+        elif self.poll_type == 'poll_free':
+            for option in self.options:
+                options.append({
+                    'option_id': option.lower(),
+                    'description': option
+                })
+
         return options
 
-    def _getVotes(self):
+    def _get_votes(self):
         """Return votes in a dict format."""
         votes = {'options': [],
                  'total': 0}
@@ -53,7 +71,7 @@ class Poll(dexterity.Item):
                 option['percentage'] = option['votes'] / float(votes['total'])
         return votes
 
-    def getResults(self):
+    def get_results(self):
         """Return results so far."""
         votes = self._getVotes()
         all_results = []
@@ -63,7 +81,7 @@ class Poll(dexterity.Item):
                                 item['percentage']))
         return all_results
 
-    def _validateVote(self, options=[]):
+    def _validate_vote(self, options=[]):
         """Check if passed options are available here."""
         available_options = [o['option_id'] for o in self.getOptions()]
         if isinstance(options, list):
@@ -73,7 +91,7 @@ class Poll(dexterity.Item):
         else:
             return options in available_options
 
-    def _setVoter(self, request=None):
+    def _set_voter(self, request=None):
         """Mark this user as a voter."""
         utility = self.utility
         annotations = self.annotations
@@ -108,7 +126,7 @@ class Poll(dexterity.Item):
         votes = self._getVotes()
         return votes['total']
 
-    def setVote(self, options=[], request=None):
+    def set_vote(self, options=[], request=None):
         """Set a vote on this poll."""
         annotations = self.annotations
         utility = self.utility
@@ -130,49 +148,3 @@ class Poll(dexterity.Item):
             votes = annotations.get(vote_key, 0)
             annotations[vote_key] = votes + 1
         return True
-
-
-class PollAddForm(dexterity.AddForm):
-    """Form to handle creation of new Polls."""
-
-    def create(self, data):
-        options = data['options']
-        new_data = []
-        for (index, option) in enumerate(options):
-            option_new = {}
-            option_new['option_id'] = index
-            option_new['description'] = option
-            new_data.append(option_new)
-        data['options'] = new_data
-        return super(PollAddForm, self).create(data)
-
-
-class PollEditForm(dexterity.EditForm):
-    """Form to handle edition of existing polls."""
-
-    def updateWidgets(self):
-        """Update form widgets to hide column option_id from end user."""
-        super(PollEditForm, self).updateWidgets()
-
-        self.widgets['options'].allow_reorder = True
-        data = ''
-        for option in self.widgets['options'].value.split('\n'):
-            if data:
-                data += '\n'
-            if option.strip().startswith('{'):
-                new_val = eval(option)
-                data += new_val['description']
-            else:
-                data = option
-        self.widgets['options'].value = data
-
-    def applyChanges(self, data):
-        options = data['options']
-        new_data = []
-        for (index, option) in enumerate(options):
-            option_new = {}
-            option_new['option_id'] = index
-            option_new['description'] = option
-            new_data.append(option_new)
-        data['options'] = new_data
-        super(PollEditForm, self).applyChanges(data)

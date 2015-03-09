@@ -7,75 +7,78 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="lmu">
 
-  <includeDependencies package="." />
-  <include package="plone.app.portlets" />
+    <includeDependencies package="." />
+    <include package="plone.app.portlets" />
 
-  <five:registerPackage package="." />
-  <i18n:registerTranslations directory="locales" />
+    <five:registerPackage package="." />
+    <i18n:registerTranslations directory="locales" />
 
-  <permission
-    id="lmu.contenttypes.polls.AddPoll"
-    title="lmu.contenttypes.polls: Add poll"
-    />
+    <include package=".browser" />
 
-  <permission
-    id="lmu.contenttypes.polls.ClosePoll"
-    title="lmu.contenttypes.polls: Close poll"
-    />
+    <permission
+        id="lmu.contenttypes.polls.AddPoll"
+        title="lmu.contenttypes.polls: Add poll"
+        />
 
-  <permission
-    id="lmu.contenttypes.polls.Vote"
-    title="lmu.contenttypes.polls: Vote"
-    />
+    <permission
+        id="lmu.contenttypes.polls.ClosePoll"
+        title="lmu.contenttypes.polls: Close poll"
+        />
 
-  <browser:resourceDirectory
-    name="lmu.contenttypes.polls"
-    directory="static"
-    />
+    <permission
+        id="lmu.contenttypes.polls.Vote"
+        title="lmu.contenttypes.polls: Vote"
+        />
 
-  <genericsetup:registerProfile
-    name="default"
-    title="LMU content types for Polls"
-    directory="profiles/default"
-    description="A Plone extension providing a Poll content type, portlet and workflow."
-    provides="Products.GenericSetup.interfaces.EXTENSION"
-    />
+    <browser:resourceDirectory
+        name="lmu.contenttypes.polls"
+        directory="static"
+        />
 
-  <genericsetup:registerProfile
-    name="uninstall"
-    title="Polls: Uninstall"
-    directory="profiles/uninstall"
-    description="Uninstall the lmu.contenttypes.polls package."
-    provides="Products.GenericSetup.interfaces.EXTENSION"
-    />
+    <genericsetup:registerProfile
+        name="default"
+        title="LMU content types for Polls"
+        directory="profiles/default"
+        description="A Plone extension providing a Poll content type, portlet and workflow."
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
 
-  <utility
-    name="lmu.contenttypes.polls"
-    factory="lmu.contenttypes.polls.setuphandlers.HiddenProfiles"
-    provides="lmu.contenttypes.polls.interfaces.IHiddenProfiles"
-    />
+    <genericsetup:registerProfile
+        name="uninstall"
+        title="Polls: Uninstall"
+        directory="profiles/uninstall"
+        description="Uninstall the lmu.contenttypes.polls package."
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
 
-  <utility
-    factory="lmu.contenttypes.polls.polls.Polls"
-    provides="lmu.contenttypes.polls.interfaces.IPolls"
-    />
+    <utility
+        name="lmu.contenttypes.polls"
+        factory="lmu.contenttypes.polls.setuphandlers.HiddenProfiles"
+        provides="lmu.contenttypes.polls.interfaces.IHiddenProfiles"
+        />
 
-  <genericsetup:importStep
-    name="lmu.contenttypes.polls"
-    title="lmu.contenttypes.polls special import handlers"
-    description=""
-    handler="lmu.contenttypes.polls.setuphandlers.setupVarious"
-    />
+    <utility
+        name="lmu.contenttypes.polls"
+        factory="lmu.contenttypes.polls.polls.Polls"
+        provides="lmu.contenttypes.polls.interfaces.IPolls"
+        />
 
-  <!-- Register the portlet -->
-  <plone:portlet
-    name="lmu.contenttypes.polls.voteportlet.VotePortlet"
-    interface="lmu.contenttypes.polls.interfaces.IVotePortlet"
-    assignment="lmu.contenttypes.polls.voteportlet.Assignment"
-    renderer="lmu.contenttypes.polls.voteportlet.Renderer"
-    addview="lmu.contenttypes.polls.voteportlet.AddForm"
-    editview="lmu.contenttypes.polls.voteportlet.EditForm"
-    view_permission="zope2.View"
-    />
+    <genericsetup:importStep
+        name="lmu.contenttypes.polls"
+        title="lmu.contenttypes.polls special import handlers"
+        description=""
+        handler="lmu.contenttypes.polls.setuphandlers.setupVarious"
+        />
+
+    <!-- Register the portlet -->
+    <plone:portlet
+        name="lmu.contenttypes.polls.voteportlet.VotePortlet"
+        interface="lmu.contenttypes.polls.interfaces.IVotePortlet"
+        assignment="lmu.contenttypes.polls.voteportlet.Assignment"
+        renderer="lmu.contenttypes.polls.voteportlet.Renderer"
+        addview="lmu.contenttypes.polls.voteportlet.AddForm"
+        editview="lmu.contenttypes.polls.voteportlet.EditForm"
+        view_permission="zope2.View"
+        />
 
 </configure>

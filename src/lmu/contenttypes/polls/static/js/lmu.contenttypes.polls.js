@@ -1,3 +1,9 @@
+$(':radio').change(
+  function(){
+    $('.choice').text( this.value + ' stars' );
+  } 
+)
+
 !function ($) {
 
     "use strict"; // jshint ;_;

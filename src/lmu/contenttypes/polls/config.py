@@ -21,7 +21,28 @@ ALL_ROLES = ['Anonymous',
 
 PERMISSION_VOTE = 'lmu.contenttypes.polls: Vote'
 
-graph_options = SimpleVocabulary(
-    [SimpleTerm(value=u'bar', title=_(u'Bar Chart')),
-     SimpleTerm(value=u'pie', title=_(u'Pie Chart')),
-     SimpleTerm(value=u'numbers', title=_(u'Numbers Only'))])
+POLL_TYPES = SimpleVocabulary([
+    SimpleTerm(value=u'poll_star', title=_(u'Star Poll')),
+    SimpleTerm(value=u'poll_true_not_true', title=_(u'Agree / Disagree Poll')),
+    SimpleTerm(value=u'poll_like_dislike', title=_(u'Like / Dislike Poll')),
+    SimpleTerm(value=u'poll_free', title=_(u'Free Poll')),
+])
+
+SHOW_RESULTS_OPTIONS = SimpleVocabulary([
+    SimpleTerm(value=u'after_vote', title=_(u'Show after Vote')),
+    SimpleTerm(value=u'with_vote', title=_(u'Show directly with Vote question')),  # NOQA
+    SimpleTerm(value=u'never', title=_(u'Never Show result for user')),
+])
+
+STAR_POLL_RESULT_GRAPH_OPTIONS = SimpleVocabulary([
+    SimpleTerm(value=u'average_bar', title=_(u'Average + Bar Chart')),
+    SimpleTerm(value=u'bar', title=_(u'Bar Chart')),
+    SimpleTerm(value=u'average', title=_(u'Average Chart')),
+    SimpleTerm(value=u'numbers', title=_(u'Numbers Only'))
+])
+
+GENERAL_RESULT_GRAPH_OPTIONS = SimpleVocabulary([
+    SimpleTerm(value=u'bar', title=_(u'Bar Chart')),
+    SimpleTerm(value=u'pie', title=_(u'Pie Chart')),
+    SimpleTerm(value=u'numbers', title=_(u'Numbers Only'))
+])

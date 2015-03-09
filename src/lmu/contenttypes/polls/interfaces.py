@@ -15,7 +15,7 @@ from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 
 from lmu.contenttypes.polls import MessageFactory as _
-from lmu.contenttypes.polls.config import graph_options
+from lmu.contenttypes.polls import config
 
 
 def PossiblePolls(context):
@@ -86,12 +86,12 @@ class IPoll(form.Schema):
 
     """A Poll in a Plone site."""
 
-    allow_anonymous = schema.Bool(
-        title=_(u'Allow anonymous'),
-        description=_(
-            u'Allow not logged in users to vote. '
-            u'The parent folder of this poll should be published before opeining the poll for this field to take effect'),  # NOQA
-        default=True,
+    poll_type = schema.Choice(
+        title=_(u'Type of Poll'),
+        description=_(u''),
+        source=config.POLL_TYPES,
+        default='poll_star',  # config.POLL_TYPES[0].value,
+        required=True,
     )
 
     # multivalue = schema.Bool(
@@ -100,19 +100,45 @@ class IPoll(form.Schema):
     #                     "time."),
     # )
 
-    show_results = schema.Bool(
-        title=_(u'Show partial results'),
+    show_results = schema.Choice(
+        title=_(u'Show results'),
         description=_(
-            u'Show partial results after a voter has already voted.'),
-        default=True,
+            u'How to show results.'),
+        source=config.SHOW_RESULTS_OPTIONS,
+        default='after_vote',  # config.SHOW_RESULTS_OPTIONS[0].value,
+        required=True,
     )
 
-    results_graph = schema.Choice(
+    star_results_graph = schema.Choice(
         title=_(u'Graph'),
         description=_(u'Format to show the results.'),
+        source=config.STAR_POLL_RESULT_GRAPH_OPTIONS,
+        default='average_bar',
+        required=True,
+    )
+
+    general_results_graph = schema.Choice(
+        title=_(u'Graph'),
+        description=_(u'Format to show the results.'),
+        source=config.GENERAL_RESULT_GRAPH_OPTIONS,
         default='bar',
         required=True,
-        source=graph_options,
+    )
+
+    change_vote = schema.Bool(
+        title=_(u'Allow to change Vote'),
+        description=_(u'Allow user to change vote after a successful submit.'),
+        default=False,
+        required=False,
+    )
+
+    allow_anonymous = schema.Bool(
+        title=_(u'Allow anonymous'),
+        description=_(
+            u'Allow not logged in users to vote. '
+            u'The parent folder of this poll should be published before opeining the poll for this field to take effect'),  # NOQA
+        default=False,
+        required=False,
     )
 
     form.widget(options=EnhancedTextLinesFieldWidget)
@@ -120,7 +146,7 @@ class IPoll(form.Schema):
         title=_(u'Available options'),
         value_type=schema.TextLine(),
         default=[],
-        required=True,
+        required=False,
     )
 
     @invariant
@@ -128,9 +154,9 @@ class IPoll(form.Schema):
         """Validate options."""
         options = data.options
         descriptions = options and [o for o in options]
-        if len(descriptions) < 2:
+        if data.poll_type == 'poll_free' and len(descriptions) < 2:
             raise InsuficientOptions(
-                _(u'You need to provide at least two options for a poll.'))
+                _(u'You need to provide at least two options for a free poll.'))
 
 
 class IVotePortlet(IPortletDataProvider):

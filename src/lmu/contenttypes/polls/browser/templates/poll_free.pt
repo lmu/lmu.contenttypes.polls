@@ -1,4 +1,4 @@
-pysa<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
@@ -7,17 +7,46 @@ pysa<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       i18n:domain="lmu.contenttypes.polls">
 <body>
 
-<metal:main fill-slot="content-core">
+<metal:main fill-slot="content">
     <metal:content-core define-macro="content-core"
-         tal:define="results view/getResults;
+         tal:define="results view/get_results;
                      has_voted view/has_voted;
                      can_vote view/can_vote;
-                     can_edit view/can_edit;">
+                     can_edit view/can_edit;
+                     poll_type view/get_poll_type">
+
+    <h1 tal:content="context/title" >Vote-Question</h1>
+    <p tal:content="context/description" >Description</p>
+
+    <tal:star-rating tal:condition="python: poll_type == 'poll_star'" >
+
+      <tal:vote tal:condition="python: can_vote and not has_voted">
+        <form action="#" methode="post" tal:attributes="action context/absolute_url" >
+          <span class="star-rating">
+            <input type="radio" name="rating" value="1"><i></i>
+            <input type="radio" name="rating" value="2"><i></i>
+            <input type="radio" name="rating" value="3"><i></i>
+            <input type="radio" name="rating" value="4"><i></i>
+            <input type="radio" name="rating" value="5"><i></i>
+          </span>
+          <input type="submit" name="poll.submit" value="Submit" i18n:attributes="value" />
+        </form>
+      </tal:vote>
+
+    </tal:star-rating>
+
+
+
+
+
+
+
+
 
     <tal:editing tal:condition="can_edit">
     <h2 i18n:translate="">Available options:</h2>
     <ul>
-        <li tal:repeat="option view/getOptions">
+        <li tal:repeat="option view/get_options">
             <span tal:content="option/description" />
         </li>
     </ul>
@@ -27,7 +56,7 @@ pysa<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
     <h2 i18n:translate="">Vote!</h2>
     <form action="#" method="post"
           tal:attributes="action context/absolute_url">
-        <tal:one_choice repeat="option context/options">
+        <tal:one_choice repeat="option context/get_options">
         <input type="radio"
               name="#"
               value="#"

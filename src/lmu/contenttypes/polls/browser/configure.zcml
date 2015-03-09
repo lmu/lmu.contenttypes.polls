@@ -8,8 +8,23 @@
     <browser:page
         name="view"
         for="lmu.contenttypes.polls.interfaces.IPoll"
+        class="lmu.contenttypes.polls.browser.poll_views.PollView"
         permission="zope2.View"
-        class=".poll_views.PollView"
         />
+<!--
+    <browser:page
+        name="add"
+        for="lmu.contenttypes.polls.interfaces.IPoll"
+        class="lmu.contenttypes.polls.browser.poll_views.PollAddForm"
+        permission="cmf.AddPortalContent"
+        />
+
+    <browser:page
+        name="edit"
+        for="lmu.contenttypes.polls.interfaces.IPoll"
+        class="lmu.contenttypes.polls.browser.poll_views.PollEditForm"
+        permission="cmf.ModifyPortalContent"
+        />
+        -->
 
 </configure>

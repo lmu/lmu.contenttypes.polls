@@ -5,7 +5,10 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.Five.browser import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
+from plone.dexterity.browser import add
+from plone.dexterity.browser import edit
 from zope.component import getMultiAdapter
 
 from lmu.contenttypes.polls import MessageFactory as _
@@ -13,15 +16,57 @@ from lmu.contenttypes.polls import MessageFactory as _
 
 class PollView(BrowserView):
 
-    def update(self):
-        super(PollView, self).update()
-        messages = IStatusMessage(self.request)
-        context = aq_inner(self.context)
+    poll_star_template = ViewPageTemplateFile('templates/poll_star.pt')
+    poll_like_dislike_template = ViewPageTemplateFile('templates/poll_like_dislike.pt')  # NOQA
+    poll_true_not_true_template = ViewPageTemplateFile('templates/poll_true_not_true.pt')  # NOQA
+    poll_free_template = ViewPageTemplateFile('templates/poll_free.pt')
+
+    def __init__(self, context, request):
+        """
+        """
+        super(PollView, self).__init__(context, request)
         self.context = context
+        self.request = request
         self.state = getMultiAdapter(
             (context, self.request), name=u'plone_context_state')
         self.wf_state = self.state.workflow_state()
         self.utility = context.utility
+        self.poll_type = context.poll_type
+
+    def __call__(self):
+        """
+        """
+        env = self.request.environ
+        request_type = env.get('REQUEST_METHOD', 'GET')
+
+        if request_type == 'GET':
+            if self.poll_type == 'poll_star':
+                return self.poll_star_template()
+            elif self.poll_type == 'poll_true_not_true':
+                return self.poll_true_not_true_template()
+
+            elif self.poll_type == 'poll_like_dislike':
+                return self.poll_like_dislike_template()
+
+            elif self.poll_type == 'poll_free':
+                return self.poll_free_template()
+        elif request_type == 'POST':
+            #import ipdb; ipdb.set_trace()
+            self.update()
+            referer = env.get('HTTP_REFERER', self.context.absolte_url)
+            return self.request.response.redirect(referer)
+
+        else:
+            pass
+
+    def update(self):
+        """
+        """
+        super(PollView, self).update()
+        messages = IStatusMessage(self.request)
+        #context = aq_inner(self.context)
+        #self.context = context
+
         # Handle vote
         form = self.request.form
         self.errors = []
@@ -111,15 +156,67 @@ class PollView(BrowserView):
         utility = self.utility
         return utility.uid_for_poll(self.context)
 
-    def getOptions(self):
-        """Return available options."""
-        return self.context.getOptions()
+    def get_poll_type(self):
+        return self.context.get_poll_type()
 
-    def getResults(self):
+    def get_options(self):
+        """Return available options."""
+        return self.context.get_options()
+
+    def get_wf_state(self):
+        return self.wf_state
+
+    def get_results(self):
         """Return results so far if allowed."""
         show_results = False
+        context = aq_inner(self.context)
         if self.wf_state == 'open':
-            show_results = show_results or self.context.show_results
+            show_results = show_results or context.show_results
         elif self.wf_state == 'closed':
             show_results = True
-        return (show_results and self.context.getResults()) or None
+        return (show_results and context.get_results()) or None
+
+# class PollAddForm(add.DefaultAddForm):
+#     """Form to handle creation of new Polls."""
+
+#     def create(self, data):
+#         options = data['options']
+#         new_data = []
+#         for (index, option) in enumerate(options):
+#             option_new = {}
+#             option_new['option_id'] = index
+#             option_new['description'] = option
+#             new_data.append(option_new)
+#         data['options'] = new_data
+#         return super(PollAddForm, self).create(data)
+
+
+# class PollEditForm(edit.DefaultEditForm):
+#     """Form to handle edition of existing polls."""
+
+#     def updateWidgets(self):
+#         """Update form widgets to hide column option_id from end user."""
+#         super(PollEditForm, self).updateWidgets()
+
+#         self.widgets['options'].allow_reorder = True
+#         data = ''
+#         for option in self.widgets['options'].value.split('\n'):
+#             if data:
+#                 data += '\n'
+#             if option.strip().startswith('{'):
+#                 new_val = eval(option)
+#                 data += new_val['description']
+#             else:
+#                 data = option
+#         self.widgets['options'].value = data
+
+#     def applyChanges(self, data):
+#         options = data['options']
+#         new_data = []
+#         for (index, option) in enumerate(options):
+#             option_new = {}
+#             option_new['option_id'] = index
+#             option_new['description'] = option
+#             new_data.append(option_new)
+#         data['options'] = new_data
+#         super(PollEditForm, self).applyChanges(data)
