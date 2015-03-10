@@ -8,8 +8,6 @@ from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.app.layout.viewlets import common as base
-from plone.dexterity.browser import add
-from plone.dexterity.browser import edit
 from zope.component import getMultiAdapter
 
 from lmu.contenttypes.polls import MessageFactory as _
@@ -48,9 +46,10 @@ class PollView(BrowserView):
                     self.participants = results.get('total', 0)
                     self.average = 0.0
                     for option in results.get('options', []):
-                        self.average += float(option['index']) * float(option['votes'])
+                        self.average += float(option['index']) * \
+                            float(option['votes'])
                     if self.participants > 1:
-                        self.average = average / self.participants
+                        self.average = self.average / self.participants
             elif self.poll_type == 'poll_true_not_true':
                 self.template = self.poll_true_not_true_template
 
@@ -194,20 +193,6 @@ class PollView(BrowserView):
             show_results = True
         return (show_results and context.get_results()) or None
 
-    def star_average(self):
-        results = self.get_results()
-        self.participants = results.get('total', 0)
-        average = 0.0
-        for option in results.get('options', []):
-            average += float(option['index']) * float(option['votes'])
-        self.average = average / self.participants
-        return self.average
-
-    def get_participants(self):
-        if not hasattr(self, 'participants'):
-            self.star_average()
-        return self.participants
-
     def fake_results(self):
         return [
             {'index': 1,
@@ -257,12 +242,12 @@ class PollView(BrowserView):
 
     def get_star_numbers_widget(self, example=False):
         if example:
-            viewlet = StarBarWidgetViewlet(
+            viewlet = StarNumbersWidgetViewlet(
                 self.context, self.request, None, None,
                 self.fake_results(), 42)
         else:
             results = self.get_results()
-            viewlet = StarBarWidgetViewlet(
+            viewlet = StarNumbersWidgetViewlet(
                 self.context, self.request, None, None,
                 results['options'], results['total'])
         return viewlet.render()
@@ -300,7 +285,7 @@ class StarBarWidgetViewlet(base.ViewletBase):
         self.context = context
         self.request = request
         self.results = results
-        self._participants = participants
+        self.participants = participants
 
     def render(self):
         for option in self.results:
@@ -314,29 +299,7 @@ class StarBarWidgetViewlet(base.ViewletBase):
                 'width: {per}%;'.format(per=per*100.0))
         return self.template()
 
-    def get_result_for(self, index):
-        results = self.context.get_results()
-        for option in results.get('options', []):
-            if option['index'] == int(index):
-                return option
 
-    def get_participants(self):
-        return self._participants
+class StarNumbersWidgetViewlet(StarBarWidgetViewlet):
 
-
-class StarNumbersWidgetViewlet(base.ViewletBase):
-
-    template = ViewPageTemplateFile('templates/poll_star_average_widget.pt')
-
-    def __init__(self, context, request, portal, manager,
-                 results, participants=0):
-        """
-        """
-        super(StarAverageWidgetViewlet, self).__init__(
-            context, request, portal, manager)
-        self.context = context
-        self.request = request
-        self.participants = participants
-
-    def render(self):
-        return self.template()
+    template = ViewPageTemplateFile('templates/poll_star_numbers_widget.pt')

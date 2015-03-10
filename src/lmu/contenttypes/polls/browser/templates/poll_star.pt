@@ -7,20 +7,27 @@
       i18n:domain="lmu.contenttypes.polls">
 <body>
 
-<metal:main fill-slot="content-core">
-    <metal:content define-macro="content-core"
+<metal:main fill-slot="content">
+    <metal:content define-macro="content"
                    tal:define="results view/get_results;
                                has_voted view/has_voted;
                                can_vote view/can_vote;
                                can_edit view/can_edit;
                                wf_state view/wf_state;
                                show_results view/get_show_results;
-                               graph_type view/graph_type;">
+                               graph_type view/graph_type;
+                               show_border context/@@plone/showEditableBorder; 
+                               show_border python:show_border and not ajax_load">
 
-    <tal:comment tal:condition="python: False" >
-      Preview Status - WF-State: private or pending 
-      <>
-    </tal:comment>
+    <div id="edit-bar"
+         tal:condition="show_border"
+         tal:content="structure provider:plone.contentviews" />
+
+    <div metal:use-macro="context/global_statusmessage/macros/portal_message">
+      Status message
+    </div>
+
+    <div id="content" tal:attributes="class python:show_border and 'documentEditable' or ''" >
 
     <tal:preview tal:condition="python: wf_state in ['private', 'pending']" >
       <p class="note" i18n:translate="" > 
@@ -30,8 +37,7 @@
       <h2 i18n:translate="" >Voting View</h2>
       <div>
         <h3 tal:content="context/title" >Vote-Question</h3>
-        <p tal:content="context/description" >Description</p>
-
+        <p tal:content="context/description" class="documentDescription" >Description</p>
         <form class="poll">
           <span class="star-rating">
             <input type="radio" name="options" value="1" /><i></i>
@@ -77,7 +83,7 @@
     <tal:vote-view tal:condition="python: wf_state in ['open', 'published']" >
       <tal:vote tal:condition="python: can_vote and not has_voted">
         <h1 tal:content="context/title" >Vote-Question</h1>
-        <p tal:content="context/description" >Description</p>
+        <p tal:content="context/description" class="documentDescription" >Description</p>
         <form action="#" method="POST" tal:attributes="action context/absolute_url" class="poll">
           <span class="star-rating">
             <input type="radio" name="options" value="1" /><i></i>
@@ -105,7 +111,7 @@
       <tal:result tal:condition="python: has_voted" >
         <div>
           <h1 tal:content="context/title" >Vote-Question</h1>
-          <p tal:content="context/description" >Description</p>
+          <p tal:content="context/description" class="documentDescription" >Description</p>
           <p>This is the partial Result</p>
           <tal:average tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['average_bar', 'average']">
             <tal:include tal:replace="structure python:view.get_star_average_widget()" />
@@ -127,7 +133,7 @@
       <p>This Poll has been closed</p>
         <div>
           <h1 tal:content="context/title" >Vote-Question</h1>
-          <p tal:content="context/description" >Description</p>
+          <p tal:content="context/description" class="documentDescription" >Description</p>
           <p tal:condition="python: has_voted" i18n:translate="" >This is the final Result, thanks for participating</p>
           <p tal:condition="python: not has_voted" i18n:translate="" >This is the final Result, you have not participate</p>
           <tal:average tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['average_bar', 'average']">
@@ -145,7 +151,7 @@
           </tal:no-results>
         </div>
     </tal:closed-view>
-
+    </div>
     </metal:content>
 </metal:main>
 

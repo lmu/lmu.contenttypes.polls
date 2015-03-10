@@ -58,7 +58,7 @@
   <tfoot>
     <tr>
       <th i18n:translate="" colspan="2" >Participants</th>
-      <th tal:content="view/get_participants">42</th>
+      <th tal:content="view/participants">42</th>
     </tr>
   </tfoot>
 </table>
