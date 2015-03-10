@@ -12,7 +12,7 @@
  <permission>Access contents information</permission>
  <permission>Modify portal content</permission>
  <permission>View</permission>
- <permission>collective.polls: Vote</permission>
+ <permission>lmu.contenttypes.polls: Vote</permission>
 
  <state state_id="closed" title="Closed"  i18n:attributes="title">
   <exit-transition transition_id="open"/>
@@ -22,7 +22,7 @@
   </permission-map>
   <permission-map name="View" acquired="True">
   </permission-map>
-  <permission-map name="collective.polls: Vote" acquired="False">
+  <permission-map name="lmu.contenttypes.polls: Vote" acquired="False">
   </permission-map>
  </state>
 
@@ -35,7 +35,7 @@
   </permission-map>
   <permission-map name="View" acquired="True">
   </permission-map>
-  <permission-map name="collective.polls: Vote" acquired="False">
+  <permission-map name="lmu.contenttypes.polls: Vote" acquired="False">
    <permission-role>Contributor</permission-role>
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
@@ -73,7 +73,7 @@
    <permission-role>Reviewer</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
-  <permission-map name="collective.polls: Vote" acquired="False">
+  <permission-map name="lmu.contenttypes.polls: Vote" acquired="False">
   </permission-map>
  </state>
 
@@ -102,7 +102,7 @@
    <permission-role>Contributor</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
-  <permission-map name="collective.polls: Vote" acquired="False">
+  <permission-map name="lmu.contenttypes.polls: Vote" acquired="False">
   </permission-map>
  </state>
 
@@ -116,7 +116,7 @@
           category="workflow"
           i18n:translate="">Close</action>
   <guard>
-   <guard-permission>collective.polls: Close poll</guard-permission>
+   <guard-permission>lmu.contenttypes.polls: Close poll</guard-permission>
   </guard>
  </transition>
 

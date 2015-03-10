@@ -1,0 +1,64 @@
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <span class="stars-5" i18n:translate="" >5 Stars</span>
+      </td>
+      <td>
+        <div class="a-meter">
+          <div class="a-meter-bar" style="width: 9.934%;" tal:attributes="style view/result5style;"></div>
+        </div>
+      </td>
+      <td>(<span tal:replace="view/result5par" /> / <span tal:replace="view/result5per" /> %)</td>
+    </tr>
+    <tr>
+      <td>
+        <span class="stars-4" i18n:translate="" >4 Stars</span>
+      </td>
+      <td>
+        <div class="a-meter">
+          <div class="a-meter-bar" style="width: 66.225%;" tal:attributes="style view/result4style;"></div>
+        </div>
+      </td>
+      <td>(<span tal:replace="view/result4par" /> / <span tal:replace="view/result4per" /> %)</td>
+    </tr>
+    <tr>
+      <td>
+        <span class="stars-3" i18n:translate="" >3 Stars</span>
+      </td>
+      <td>
+        <div class="a-meter">
+          <div class="a-meter-bar" style="width: 17.881%;" tal:attributes="style view/result3style;"></div>
+        </div>
+      </td>
+      <td>(<span tal:replace="view/result3par" /> / <span tal:replace="view/result3per" /> %)</td>
+    </tr>
+    <tr>
+      <td>
+        <span class="stars-2" i18n:translate="" >2 Stars</span>
+      </td>
+      <td>
+        <div class="a-meter">
+          <div class="a-meter-bar" style="width: 5.298%;" tal:attributes="style view/result2style;"></div>
+        </div>
+      </td>
+      <td>(<span tal:replace="view/result2par" /> / <span tal:replace="view/result2per" /> %)</td>
+    <tr>
+      <td>
+        <span class="stars-1" i18n:translate="" >1 Star</span>
+      </td>
+      <td>
+        <div class="a-meter">
+          <div class="a-meter-bar" style="width: 0.662%;" tal:attributes="style view/result1style;"></div>
+        </div>
+      </td>
+      <td>(<span tal:replace="view/result1par" /> / <span tal:replace="view/result1per" /> %)</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th i18n:translate="" colspan="2" >Participants</th>
+      <th tal:content="view/get_participants">42</th>
+    </tr>
+  </tfoot>
+</table>

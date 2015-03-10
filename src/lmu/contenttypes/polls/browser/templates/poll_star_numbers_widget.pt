@@ -1,0 +1,11 @@
+<table>
+  <thead><tr><th i18n:translate="">Option</th><th i18n:translate="">Count</th></tr></thead>
+  <tbody>
+    <tr><td><span class="stars-5" i18n:translate="" >5 Stars</span></td><td>3</td></tr>
+    <tr><td><span class="stars-4" i18n:translate="" >4 Stars</span></td><td>25</td></tr>
+    <tr><td><span class="stars-3" i18n:translate="" >3 Stars</span></td><td>9</td></tr>
+    <tr><td><span class="stars-2" i18n:translate="" >2 Stars</span></td><td>4</td></tr>
+    <tr><td><span class="stars-1" i18n:translate="" >1 Star</span></td><td>1</td></tr>
+  </tbody>
+  <tfoot><tr><th i18n:translate="" >Participants</th><th>42</th></tr></tfoot>
+</table>

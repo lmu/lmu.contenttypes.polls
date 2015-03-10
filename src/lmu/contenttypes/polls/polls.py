@@ -34,7 +34,7 @@ class Polls(object):
 
     def _query_for_polls(self, **kw):
         """Use Portal Catalog to return a list of polls."""
-        kw['portal_type'] = 'collective.polls.poll'
+        kw['portal_type'] = 'lmu.contenttypes.polls.poll'
         results = self.ct.searchResults(**kw)
         return results
 
@@ -97,7 +97,8 @@ class Polls(object):
 
     def allowed_to_vote(self, poll, request=None):
         """Return True is user is allowed to vote in a poll."""
-        canVote = self.mt.checkPermission('collective.polls: Vote', poll) == 1
+        canVote = self.mt.checkPermission(
+            'lmu.contenttypes.polls: Vote', poll) == 1
         if canVote:
             # User must view the poll
             # and poll must be open to allow votes

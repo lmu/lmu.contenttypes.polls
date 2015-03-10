@@ -7,6 +7,7 @@ from Products.CMFCore.interfaces import ISiteRoot
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
+from plone.app.layout.viewlets import common as base
 from plone.dexterity.browser import add
 from plone.dexterity.browser import edit
 from zope.component import getMultiAdapter
@@ -41,28 +42,31 @@ class PollView(BrowserView):
 
         if request_type == 'GET':
             if self.poll_type == 'poll_star':
-                return self.poll_star_template()
+                self.template = self.poll_star_template
+                results = self.get_results()
+                if results:
+                    self.participants = results.get('total', 0)
+                    average = 0.0
+                    for option in results.get('options', []):
+                        average += float(option['index']) * float(option['votes'])
+                    self.average = average / self.participants
             elif self.poll_type == 'poll_true_not_true':
-                return self.poll_true_not_true_template()
+                self.template = self.poll_true_not_true_template
 
             elif self.poll_type == 'poll_like_dislike':
-                return self.poll_like_dislike_template()
+                self.template = self.poll_like_dislike_template
 
             elif self.poll_type == 'poll_free':
-                return self.poll_free_template()
+                self.template = self.poll_free_template
         elif request_type == 'POST':
-            #import ipdb; ipdb.set_trace()
             self.update()
-            referer = env.get('HTTP_REFERER', self.context.absolte_url)
+            referer = env.get('HTTP_REFERER', self.context.absolute_url)
             return self.request.response.redirect(referer)
-
-        else:
-            pass
+        return self.template()
 
     def update(self):
         """
         """
-        super(PollView, self).update()
         messages = IStatusMessage(self.request)
         #context = aq_inner(self.context)
         #self.context = context
@@ -118,7 +122,7 @@ class PollView(BrowserView):
         if not self.errors:
             # Let's vote
             try:
-                self.context.setVote(options, self.request)
+                self.context.set_vote(options, self.request)
                 self.messages.append(_(u'Thanks for your vote'))
                 # We do this to avoid redirecting anonymous user as
                 # we just sent them the cookie
@@ -130,6 +134,10 @@ class PollView(BrowserView):
     def can_vote(self):
         if hasattr(self, '_has_voted') and self._has_voted:
             # This is mainly to avoid anonymous users seeing the form again
+            self.messages.addStatusMessage(
+                'Anonymous Users are not allowed to vote.',
+                type='warn'
+            )
             return False
         utility = self.utility
         try:
@@ -159,6 +167,15 @@ class PollView(BrowserView):
     def get_poll_type(self):
         return self.context.get_poll_type()
 
+    def get_show_results(self):
+        return self.context.get_show_results()
+
+    def graph_type(self):
+        if self.context.get_poll_type() == 'poll_star':
+            return self.context.star_results_graph
+        else:
+            return self.context.general_results_graph
+
     def get_options(self):
         """Return available options."""
         return self.context.get_options()
@@ -176,47 +193,149 @@ class PollView(BrowserView):
             show_results = True
         return (show_results and context.get_results()) or None
 
-# class PollAddForm(add.DefaultAddForm):
-#     """Form to handle creation of new Polls."""
+    def star_average(self):
+        results = self.get_results()
+        self.participants = results.get('total', 0)
+        average = 0.0
+        for option in results.get('options', []):
+            average += float(option['index']) * float(option['votes'])
+        self.average = average / self.participants
+        return self.average
 
-#     def create(self, data):
-#         options = data['options']
-#         new_data = []
-#         for (index, option) in enumerate(options):
-#             option_new = {}
-#             option_new['option_id'] = index
-#             option_new['description'] = option
-#             new_data.append(option_new)
-#         data['options'] = new_data
-#         return super(PollAddForm, self).create(data)
+    def get_participants(self):
+        if not hasattr(self, 'participants'):
+            self.star_average()
+        return self.participants
+
+    def fake_results(self):
+        return [
+            {'index': 1,
+             'description': u'1 Star',
+             'votes': 1,
+             'percentage': 0.00662},
+            {'index': 2,
+             'description': u'2 Stars',
+             'votes': 4,
+             'percentage': 0.05298},
+            {'index': 3,
+             'description': u'3 Stars',
+             'votes': 9,
+             'percentage': 0.17881},
+            {'index': 4,
+             'description': u'4 Stars',
+             'votes': 25,
+             'percentage': 0.66225},
+            {'index': 5,
+             'description': u'5 Stars',
+             'votes': 3,
+             'percentage': 0.09934},
+        ]
+
+    def get_star_average_widget(self, example=False):
+        if example:
+            viewlet = StarAverageWidgetViewlet(
+                self.context, self.request, None, None,
+                0.71905, 3.59, 42)
+        else:
+            viewlet = StarAverageWidgetViewlet(
+                self.context, self.request, None, None,
+                self.average/5.0, self.average, self.participants)
+        return viewlet.render()
+
+    def get_star_bar_widget(self, example=False):
+        if example:
+            viewlet = StarBarWidgetViewlet(
+                self.context, self.request, None, None,
+                self.fake_results(), 42)
+        else:
+            results = self.get_results()
+            viewlet = StarBarWidgetViewlet(
+                self.context, self.request, None, None,
+                results['options'], results['total'])
+        return viewlet.render()
+
+    def get_star_numbers_widget(self, example=False):
+        if example:
+            viewlet = StarBarWidgetViewlet(
+                self.context, self.request, None, None,
+                self.fake_results(), 42)
+        else:
+            results = self.get_results()
+            viewlet = StarBarWidgetViewlet(
+                self.context, self.request, None, None,
+                results['options'], results['total'])
+        return viewlet.render()
 
 
-# class PollEditForm(edit.DefaultEditForm):
-#     """Form to handle edition of existing polls."""
+class StarAverageWidgetViewlet(base.ViewletBase):
 
-#     def updateWidgets(self):
-#         """Update form widgets to hide column option_id from end user."""
-#         super(PollEditForm, self).updateWidgets()
+    template = ViewPageTemplateFile('templates/poll_star_average_widget.pt')
 
-#         self.widgets['options'].allow_reorder = True
-#         data = ''
-#         for option in self.widgets['options'].value.split('\n'):
-#             if data:
-#                 data += '\n'
-#             if option.strip().startswith('{'):
-#                 new_val = eval(option)
-#                 data += new_val['description']
-#             else:
-#                 data = option
-#         self.widgets['options'].value = data
+    def __init__(self, context, request, portal, manager,
+                 average, star_average, participants):
+        """
+        """
+        super(StarAverageWidgetViewlet, self).__init__(
+            context, request, portal, manager)
+        self.context = context
+        self.request = request
+        self.average = average * 100.0
+        self.participants = participants
+        self.star_average = star_average
 
-#     def applyChanges(self, data):
-#         options = data['options']
-#         new_data = []
-#         for (index, option) in enumerate(options):
-#             option_new = {}
-#             option_new['option_id'] = index
-#             option_new['description'] = option
-#             new_data.append(option_new)
-#         data['options'] = new_data
-#         super(PollEditForm, self).applyChanges(data)
+    def render(self):
+        return self.template()
+
+
+class StarBarWidgetViewlet(base.ViewletBase):
+
+    template = ViewPageTemplateFile('templates/poll_star_bar_widget.pt')
+
+    def __init__(self, context, request, portal, manager,
+                 results, participants=0):
+        """
+        """
+        super(StarBarWidgetViewlet, self).__init__(context, request, portal, manager)  # NOQA
+        self.context = context
+        self.request = request
+        self.results = results
+        self._participants = participants
+
+    def render(self):
+        for option in self.results:
+            setattr(self, 'result{index}{name}'.format(
+                index=option['index'], name='par'), option['votes'])
+            per = option['percentage']
+            setattr(self, 'result{index}{name}'.format(
+                index=option['index'], name='per'), per*100.0)
+            setattr(self, 'result{index}{name}'.format(
+                index=option['index'], name='style'),
+                'width: {per}%;'.format(per=per*100.0))
+        return self.template()
+
+    def get_result_for(self, index):
+        results = self.context.get_results()
+        for option in results.get('options', []):
+            if option['index'] == int(index):
+                return option
+
+    def get_participants(self):
+        return self._participants
+
+
+class StarNumbersWidgetViewlet(base.ViewletBase):
+
+    template = ViewPageTemplateFile('templates/poll_star_average_widget.pt')
+
+    def __init__(self, context, request, portal, manager,
+                 results, participants=0):
+        """
+        """
+        super(StarAverageWidgetViewlet, self).__init__(
+            context, request, portal, manager)
+        self.context = context
+        self.request = request
+        self.participants = participants
+
+    def render(self):
+        return self.template()

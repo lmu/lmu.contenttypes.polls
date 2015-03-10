@@ -2,7 +2,7 @@
 <object name="portal_workflow" meta_type="Plone Workflow Tool">
  <object name="poll_workflow" meta_type="Workflow"/>
  <bindings>‚‚
-  <type type_id="lmu.contenttypes.polls.poll">
+  <type type_id="Poll">
    <bound-workflow workflow_id="poll_workflow"/>
   </type>
  </bindings>

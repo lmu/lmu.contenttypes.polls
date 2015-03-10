@@ -19,7 +19,7 @@ class Poll(dexterity.Item):
     implements(IPoll)
 
     __ac_permissions__ = (
-        (PERMISSION_VOTE, ('setVote', '_setVoter', )),
+        (PERMISSION_VOTE, ('set_vote', '_set_voter', )),
     )
 
     @property
@@ -34,16 +34,19 @@ class Poll(dexterity.Item):
     def get_poll_type(self):
         return self.poll_type
 
+    def get_show_results(self):
+        return self.show_results
+
     def get_options(self):
         """Return available options."""
         options = []
         if self.poll_type == 'poll_star':
             options = [
-                {'option_id': '1', 'description': ''},
-                {'option_id': '2', 'description': ''},
-                {'option_id': '3', 'description': ''},
-                {'option_id': '4', 'description': ''},
-                {'option_id': '5', 'description': ''}
+                {'option_id': 1, 'description': ''},
+                {'option_id': 2, 'description': ''},
+                {'option_id': 3, 'description': ''},
+                {'option_id': 4, 'description': ''},
+                {'option_id': 5, 'description': ''}
             ]
         elif self.poll_type == 'poll_free':
             for option in self.options:
@@ -58,11 +61,12 @@ class Poll(dexterity.Item):
         """Return votes in a dict format."""
         votes = {'options': [],
                  'total': 0}
-        for option in self.getOptions():
+        for option in self.get_options():
             index = option.get('option_id')
             description = option.get('description')
             option_votes = self.annotations.get(VOTE_ANNO_KEY % index, 0)
-            votes['options'].append({'description': description,
+            votes['options'].append({'index': index,
+                                     'description': description,
                                      'votes': option_votes,
                                      'percentage': 0.0})
             votes['total'] = votes['total'] + option_votes
@@ -73,17 +77,11 @@ class Poll(dexterity.Item):
 
     def get_results(self):
         """Return results so far."""
-        votes = self._getVotes()
-        all_results = []
-        for item in votes['options']:
-            all_results.append((item['description'],
-                                item['votes'],
-                                item['percentage']))
-        return all_results
+        return self._get_votes()
 
     def _validate_vote(self, options=[]):
         """Check if passed options are available here."""
-        available_options = [o['option_id'] for o in self.getOptions()]
+        available_options = [o['option_id'] for o in self.get_options()]
         if isinstance(options, list):
             # TODO: Allow multiple options
             # multivalue = self.multivalue
@@ -135,11 +133,11 @@ class Poll(dexterity.Item):
                 return False
         except Unauthorized:
             raise Unauthorized
-        if not self._validateVote(options):
+        if not self._validate_vote(options):
             return False
         if not isinstance(options, list):
             options = [options, ]
-        if not self._setVoter(request):
+        if not self._set_voter(request):
             # We failed to set voter, so we will not compute its votes
             return False
         # set vote in annotation storage
