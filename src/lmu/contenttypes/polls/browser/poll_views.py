@@ -46,10 +46,11 @@ class PollView(BrowserView):
                 results = self.get_results()
                 if results:
                     self.participants = results.get('total', 0)
-                    average = 0.0
+                    self.average = 0.0
                     for option in results.get('options', []):
-                        average += float(option['index']) * float(option['votes'])
-                    self.average = average / self.participants
+                        self.average += float(option['index']) * float(option['votes'])
+                    if self.participants > 1:
+                        self.average = average / self.participants
             elif self.poll_type == 'poll_true_not_true':
                 self.template = self.poll_true_not_true_template
 
