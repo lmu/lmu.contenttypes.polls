@@ -45,65 +45,7 @@ class CurrentPollView(BrowserView):
                 })
         return result
 
-
-class PollBaseView(BrowserView):
-
-    poll_star_template = ViewPageTemplateFile('templates/poll_star.pt')
-    poll_like_dislike_template = ViewPageTemplateFile('templates/poll_like_dislike.pt')  # NOQA
-    poll_true_not_true_template = ViewPageTemplateFile('templates/poll_true_not_true.pt')  # NOQA
-    poll_free_template = ViewPageTemplateFile('templates/poll_free.pt')
-
-    def __init__(self, context, request):
-        """
-        """
-        super(PollBaseView, self).__init__(context, request)
-        self.context = context
-        self.request = request
-        self.state = getMultiAdapter(
-            (context, self.request), name=u'plone_context_state')
-        self.wf_state = self.state.workflow_state()
-        self.utility = context.utility
-        self.poll_type = context.poll_type
-        omit = self.request.get('omit')
-        self.omit = str2bool(omit)
-        self.heading_level = 'h3'
-
-    def __call__(self):
-        """
-        """
-        env = self.request.environ
-        request_type = env.get('REQUEST_METHOD', 'GET')
-
-        if request_type == 'GET':
-            if self.poll_type == 'poll_star':
-                self.template = self.poll_star_template
-                view_class = self.request.steps[-1:][0]
-                if view_class in ['current_poll', ' poll_base_view']:
-                    self.heading_level = 'h3'
-                else:
-                    self.heading_level = 'h1'
-                results = self.get_results()
-                if results:
-                    self.participants = results.get('total', 0)
-                    self.average = 0.0
-                    for option in results.get('options', []):
-                        self.average += float(option['index']) * \
-                            float(option['votes'])
-                    if self.participants > 1:
-                        self.average = self.average / self.participants
-            elif self.poll_type == 'poll_true_not_true':
-                self.template = self.poll_true_not_true_template
-
-            elif self.poll_type == 'poll_like_dislike':
-                self.template = self.poll_like_dislike_template
-
-            elif self.poll_type == 'poll_free':
-                self.template = self.poll_free_template
-        elif request_type == 'POST':
-            self.update()
-            referer = env.get('HTTP_REFERER', self.context.absolute_url)
-            return self.request.response.redirect(referer)
-        return self.template()
+class _PollBaseView(BrowserView):
 
     def update(self):
         """
@@ -170,6 +112,66 @@ class PollBaseView(BrowserView):
                 self._has_voted = True
             except Unauthorized:
                 self.errors.append(_(u'You are not authorized to vote'))
+
+
+class PollBaseView(_PollBaseView):
+
+    poll_star_template = ViewPageTemplateFile('templates/poll_star.pt')
+    poll_like_dislike_template = ViewPageTemplateFile('templates/poll_like_dislike.pt')  # NOQA
+    poll_true_not_true_template = ViewPageTemplateFile('templates/poll_true_not_true.pt')  # NOQA
+    poll_free_template = ViewPageTemplateFile('templates/poll_free.pt')
+
+    def __init__(self, context, request):
+        """
+        """
+        super(PollBaseView, self).__init__(context, request)
+        self.context = context
+        self.request = request
+        self.state = getMultiAdapter(
+            (context, self.request), name=u'plone_context_state')
+        self.wf_state = self.state.workflow_state()
+        self.utility = context.utility
+        self.poll_type = context.poll_type
+        omit = self.request.get('omit')
+        self.omit = str2bool(omit)
+        self.heading_level = 'h3'
+
+    def __call__(self):
+        """
+        """
+        env = self.request.environ
+        request_type = env.get('REQUEST_METHOD', 'GET')
+
+        if request_type == 'GET':
+            if self.poll_type == 'poll_star':
+                self.template = self.poll_star_template
+                view_class = self.request.steps[-1:][0]
+                if view_class in ['current_poll', ' poll_base_view']:
+                    self.heading_level = 'h3'
+                else:
+                    self.heading_level = 'h1'
+                results = self.get_results()
+                if results:
+                    self.participants = results.get('total', 0)
+                    self.average = 0.0
+                    for option in results.get('options', []):
+                        self.average += float(option['index']) * \
+                            float(option['votes'])
+                    if self.participants > 1:
+                        self.average = self.average / self.participants
+            elif self.poll_type == 'poll_true_not_true':
+                self.template = self.poll_true_not_true_template
+
+            elif self.poll_type == 'poll_like_dislike':
+                self.template = self.poll_like_dislike_template
+
+            elif self.poll_type == 'poll_free':
+                self.template = self.poll_free_template
+        elif request_type == 'POST':
+            self.update()
+            referer = env.get('HTTP_REFERER', self.context.absolute_url)
+            return self.request.response.redirect(referer)
+        return self.template()
 
     @property
     def can_vote(self):
@@ -294,7 +296,7 @@ class PollBaseView(BrowserView):
         return viewlet.render()
 
 
-class PollView(BrowserView):
+class PollView(_PollBaseView):
 
     template = ViewPageTemplateFile('templates/poll.pt')
 
