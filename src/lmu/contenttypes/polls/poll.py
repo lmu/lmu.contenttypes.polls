@@ -113,6 +113,30 @@ class Poll(dexterity.Item):
             annotations[MEMBERS_ANNO_KEY] = voters
             return True
 
+    def _remove_voter(self, request=None):
+        """Mark this user as a voter."""
+        utility = self.utility
+        annotations = self.annotations
+        voters = self.voters()
+        member = utility.member
+        member_id = member.getId()
+        if not member_id and request:
+            poll_uid = utility.uid_for_poll(self)
+            cookie = COOKIE_KEY % str(poll_uid)
+            expires = 'Wed, 19 Feb 2020 14:28:00 GMT'  # XXX: why hardcoded?
+            vote_id = str(utility.anonymous_vote_id())
+            request.response[cookie] = vote_id
+            request.response.setCookie(cookie,
+                                       vote_id,
+                                       path='/',
+                                       expires=expires)
+            member_id = 'Anonymous-%s' % vote_id
+
+        if member_id:
+            voters.remove(member_id)
+            annotations[MEMBERS_ANNO_KEY] = voters
+            return True
+
     def voters(self):
         annotations = self.annotations
         voters = annotations.get(MEMBERS_ANNO_KEY, [])
@@ -141,6 +165,16 @@ class Poll(dexterity.Item):
             # We failed to set voter, so we will not compute its votes
             return False
         # set vote in annotation storage
+        for option in options:
+            vote_key = VOTE_ANNO_KEY % option
+            votes = annotations.get(vote_key, 0)
+            annotations[vote_key] = votes + 1
+        return True
+
+    def remove_vote(self, options=[], request=None):
+        """Set a vote on this poll."""
+        annotations = self.annotations
+
         for option in options:
             vote_key = VOTE_ANNO_KEY % option
             votes = annotations.get(vote_key, 0)

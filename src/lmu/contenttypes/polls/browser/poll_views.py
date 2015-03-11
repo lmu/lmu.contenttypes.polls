@@ -20,32 +20,14 @@ def str2bool(v):
     return v is not None and v.lower() in ['true', '1']
 
 
-class CurrentPollView(BrowserView):
+class BaseView(BrowserView):
 
-    template = ViewPageTemplateFile('templates/current_poll_view.pt')
-
-    def __call__(self):
-        omit = self.request.get('omit')
-        self.omit = str2bool(omit)
-        self.utility = queryUtility(IPolls, name='lmu.contenttypes.polls')
-        polls = self.utility.recent_polls()
-        self.polls = []
-        result = self.template()
-        if len(polls) == 1:
-            poll = polls[0].getObject()
-            return poll.restrictedTraverse('@@poll_base_view')()
-        elif len(polls) <= 0:
-            return _(u"No active or closed Polls avalible")
-        else:
-            #import ipdb; ipdb.set_trace()
-            for poll in polls:
-                self.polls.append({
-                    'title': poll.Title,
-                    'url': poll.getURL(),
-                })
-        return result
-
-class _PollBaseView(BrowserView):
+    def __init__(self, context, request):
+        """
+        """
+        super(BaseView, self).__init__(context, request)
+        self.context = context
+        self.request = request
 
     def update(self):
         """
@@ -113,8 +95,39 @@ class _PollBaseView(BrowserView):
             except Unauthorized:
                 self.errors.append(_(u'You are not authorized to vote'))
 
+    def handleRedirect(self):
+        env = self.request.environ
+        referer = env.get('HTTP_REFERER', self.context.absolute_url)
+        if referer in [
+            'https://iuksptest.verwaltung.uni-muenchen.de/index.html',
+            'https://iukintest.verwaltung.uni-muenchen.de/index.html',
+            'https://www.serviceportal.verwaltung.uni-muenchen.de/index.html',
+            'https://www.intranet.verwaltung.uni-muenchen.de/index.html',
+        ]:
+            referer += '#feedback'
+        return self.request.response.redirect(referer)
 
-class PollBaseView(_PollBaseView):
+
+class CurrentPollView(BaseView):
+
+    template = ViewPageTemplateFile('templates/current_poll_view.pt')
+
+    def __call__(self):
+        omit = self.request.get('omit')
+        self.omit = str2bool(omit)
+        self.utility = queryUtility(IPolls, name='lmu.contenttypes.polls')
+        self.open_polls = self.utility.recent_polls()
+        self.closed_polls = self.utility.recent_polls(show_all=True,
+                                                      review_state='closed')
+        if len(self.open_polls) == 1:
+            poll = self.open_polls[0].getObject()
+            return poll.restrictedTraverse('@@poll_base_view')()
+        elif len(self.open_polls) <= 0 and len(self.closed_polls) <= 0:
+            return _(u"No active or closed Polls avalible")
+        return self.template()
+
+
+class PollBaseView(BaseView):
 
     poll_star_template = ViewPageTemplateFile('templates/poll_star.pt')
     poll_like_dislike_template = ViewPageTemplateFile('templates/poll_like_dislike.pt')  # NOQA
@@ -169,8 +182,7 @@ class PollBaseView(_PollBaseView):
                 self.template = self.poll_free_template
         elif request_type == 'POST':
             self.update()
-            referer = env.get('HTTP_REFERER', self.context.absolute_url)
-            return self.request.response.redirect(referer)
+            return self.handleRedirect()
         return self.template()
 
     @property
@@ -296,7 +308,7 @@ class PollBaseView(_PollBaseView):
         return viewlet.render()
 
 
-class PollView(_PollBaseView):
+class PollView(BaseView):
 
     template = ViewPageTemplateFile('templates/poll.pt')
 
@@ -318,14 +330,12 @@ class PollView(_PollBaseView):
         request_type = env.get('REQUEST_METHOD', 'GET')
 
         if request_type == 'GET':
-            #import ipdb; ipdb.set_trace()
             base_view = self.context.restrictedTraverse('@@poll_base_view')
             #base_view = PollBaseView(self.context, self.request)
             self.base_view = base_view()
         elif request_type == 'POST':
             self.update()
-            referer = env.get('HTTP_REFERER', self.context.absolute_url)
-            return self.request.response.redirect(referer)
+            return self.handleRedirect()
         return self.template()
 
 
@@ -343,7 +353,7 @@ class StarAverageWidgetViewlet(base.ViewletBase):
         self.request = request
         self.average = average * 100.0
         self.participants = participants
-        self.star_average = star_average
+        self.star_average = round(star_average, 1)
 
     def render(self):
         return self.template()

@@ -22,10 +22,16 @@
 
 <body tal:omit-tag="omit" class="current-pollpage template-folder-current_poll_view" >
 
-  <h3 i18n:translate="">Current Polls</h3>
+  <h3 i18n:translate="" tal:condition="view/open_polls">Open Polls</h3>
 
-  <ul tal:repeat="poll view/polls">
-    <li><a tal:attributes="href poll/url; alt poll/title" tal:content="poll/title" >Poll</a></li>
+  <ul tal:repeat="poll view/open_polls">
+    <li><a tal:attributes="href poll/getURL; alt poll/Title" tal:content="poll/Title" >Poll</a></li>
+  </ul>
+
+  <h3 i18n:translate="" tal:condition="view/closed_polls">Closed Polls</h3>
+
+  <ul tal:repeat="poll view/closed_polls">
+    <li><a tal:attributes="href poll/getURL; alt poll/Title" tal:content="poll/Title" >Poll</a></li>
   </ul>
 
 </body>

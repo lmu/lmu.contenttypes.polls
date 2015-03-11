@@ -221,7 +221,7 @@ class Renderer(base.Renderer):
     def getVotingResults(self):
         poll = self.poll()
         if poll.show_results:
-            return poll.getResults()
+            return poll.get_results()
         else:
             return None
 
