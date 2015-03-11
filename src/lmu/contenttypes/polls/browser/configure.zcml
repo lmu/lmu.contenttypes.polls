@@ -11,20 +11,19 @@
         class="lmu.contenttypes.polls.browser.poll_views.PollView"
         permission="zope2.View"
         />
-<!--
+
     <browser:page
-        name="add"
+        name="poll_base_view"
         for="lmu.contenttypes.polls.interfaces.IPoll"
-        class="lmu.contenttypes.polls.browser.poll_views.PollAddForm"
-        permission="cmf.AddPortalContent"
+        class="lmu.contenttypes.polls.browser.poll_views.PollBaseView"
+        permission="zope2.View"
         />
 
     <browser:page
-        name="edit"
-        for="lmu.contenttypes.polls.interfaces.IPoll"
-        class="lmu.contenttypes.polls.browser.poll_views.PollEditForm"
-        permission="cmf.ModifyPortalContent"
+        name="current_poll"
+        for="*"
+        class="lmu.contenttypes.polls.browser.poll_views.CurrentPollView"
+        permission="zope2.View"
         />
-        -->
 
 </configure>

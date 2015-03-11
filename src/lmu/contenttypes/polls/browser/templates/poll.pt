@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="lmu.contenttypes.polls">
+<body>
+
+<metal:main fill-slot="content">
+    <metal:content define-macro="content"
+                   tal:define="show_border context/@@plone/showEditableBorder; 
+                               show_border python:show_border and not ajax_load">
+
+    <div id="edit-bar"
+         tal:condition="show_border"
+         tal:content="structure provider:plone.contentviews" />
+
+    <div metal:use-macro="context/global_statusmessage/macros/portal_message">
+      Status message
+    </div>
+
+    <div id="content" tal:attributes="class python:show_border and 'documentEditable' or ''" >
+      <tal:include tal:replace="structure view/base_view" />
+    </div>
+    </metal:content>
+</metal:main>
+
+</body>
+</html>

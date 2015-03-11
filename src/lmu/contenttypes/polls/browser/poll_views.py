@@ -9,11 +9,44 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.app.layout.viewlets import common as base
 from zope.component import getMultiAdapter
+from zope.component import queryUtility
 
 from lmu.contenttypes.polls import MessageFactory as _
+#from lmu.contenttypes.polls.interfaces import IPoll
+from lmu.contenttypes.polls.interfaces import IPolls
 
 
-class PollView(BrowserView):
+def str2bool(v):
+    return v is not None and v.lower() in ['true', '1']
+
+
+class CurrentPollView(BrowserView):
+
+    template = ViewPageTemplateFile('templates/current_poll_view.pt')
+
+    def __call__(self):
+        omit = self.request.get('omit')
+        self.omit = str2bool(omit)
+        self.utility = queryUtility(IPolls, name='lmu.contenttypes.polls')
+        polls = self.utility.recent_polls()
+        self.polls = []
+        result = self.template()
+        if len(polls) == 1:
+            poll = polls[0].getObject()
+            return poll.restrictedTraverse('@@poll_base_view')()
+        elif len(polls) <= 0:
+            return _(u"No active or closed Polls avalible")
+        else:
+            #import ipdb; ipdb.set_trace()
+            for poll in polls:
+                self.polls.append({
+                    'title': poll.Title,
+                    'url': poll.getURL(),
+                })
+        return result
+
+
+class PollBaseView(BrowserView):
 
     poll_star_template = ViewPageTemplateFile('templates/poll_star.pt')
     poll_like_dislike_template = ViewPageTemplateFile('templates/poll_like_dislike.pt')  # NOQA
@@ -23,7 +56,7 @@ class PollView(BrowserView):
     def __init__(self, context, request):
         """
         """
-        super(PollView, self).__init__(context, request)
+        super(PollBaseView, self).__init__(context, request)
         self.context = context
         self.request = request
         self.state = getMultiAdapter(
@@ -31,6 +64,9 @@ class PollView(BrowserView):
         self.wf_state = self.state.workflow_state()
         self.utility = context.utility
         self.poll_type = context.poll_type
+        omit = self.request.get('omit')
+        self.omit = str2bool(omit)
+        self.heading_level = 'h3'
 
     def __call__(self):
         """
@@ -41,6 +77,11 @@ class PollView(BrowserView):
         if request_type == 'GET':
             if self.poll_type == 'poll_star':
                 self.template = self.poll_star_template
+                view_class = self.request.steps[-1:][0]
+                if view_class in ['current_poll', ' poll_base_view']:
+                    self.heading_level = 'h3'
+                else:
+                    self.heading_level = 'h1'
                 results = self.get_results()
                 if results:
                     self.participants = results.get('total', 0)
@@ -253,6 +294,39 @@ class PollView(BrowserView):
         return viewlet.render()
 
 
+class PollView(BrowserView):
+
+    template = ViewPageTemplateFile('templates/poll.pt')
+
+    def __init__(self, context, request):
+        """
+        """
+        super(PollView, self).__init__(context, request)
+        self.context = context
+        self.request = request
+        self.state = getMultiAdapter(
+            (context, self.request), name=u'plone_context_state')
+        self.wf_state = self.state.workflow_state()
+        self.utility = context.utility
+
+    def __call__(self):
+        """
+        """
+        env = self.request.environ
+        request_type = env.get('REQUEST_METHOD', 'GET')
+
+        if request_type == 'GET':
+            #import ipdb; ipdb.set_trace()
+            base_view = self.context.restrictedTraverse('@@poll_base_view')
+            #base_view = PollBaseView(self.context, self.request)
+            self.base_view = base_view()
+        elif request_type == 'POST':
+            self.update()
+            referer = env.get('HTTP_REFERER', self.context.absolute_url)
+            return self.request.response.redirect(referer)
+        return self.template()
+
+
 class StarAverageWidgetViewlet(base.ViewletBase):
 
     template = ViewPageTemplateFile('templates/poll_star_average_widget.pt')
@@ -293,7 +367,7 @@ class StarBarWidgetViewlet(base.ViewletBase):
                 index=option['index'], name='par'), option['votes'])
             per = option['percentage']
             setattr(self, 'result{index}{name}'.format(
-                index=option['index'], name='per'), per*100.0)
+                index=option['index'], name='per'), round(per*100.0, 1))
             setattr(self, 'result{index}{name}'.format(
                 index=option['index'], name='style'),
                 'width: {per}%;'.format(per=per*100.0))

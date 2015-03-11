@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="lmu" 
+      tal:define="omit view/omit"
+      tal:omit-tag="omit" >
+
+<head tal:condition="not:omit">
+  <title tal:content="context/Title"></title>
+
+  <link rel="stylesheet" type="text/css" href="++resource++collective.js.foundation/css/normalize.css" >
+  <link rel="stylesheet" type="text/css" href="++resource++collective.js.foundation/css/foundation.min.css" >
+
+  <link rel="stylesheet" href="++theme++lmu.theme.intranet/static/foundation/stylesheets/app.css">
+  <link rel="stylesheet" href="++theme++lmu.theme.intranet/static/main.css">
+
+  <script type="text/javascript" src="++resource++plone.app.jquery.js" ></script>
+  <script type="text/javascript" src="++resource++collective.js.foundation/js/foundation.min.js" ></script>
+
+</head>
+
+<body tal:omit-tag="omit" class="current-pollpage template-folder-current_poll_view" >
+
+  <h3 i18n:translate="">Current Polls</h3>
+
+  <ul tal:repeat="poll view/polls">
+    <li><a tal:attributes="href poll/url; alt poll/title" tal:content="poll/title" >Poll</a></li>
+  </ul>
+
+</body>
+</html>
