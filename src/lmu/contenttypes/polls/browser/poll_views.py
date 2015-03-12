@@ -104,7 +104,7 @@ class BaseView(BrowserView):
             'https://www.serviceportal.verwaltung.uni-muenchen.de/index.html',
             'https://www.intranet.verwaltung.uni-muenchen.de/index.html',
         ]:
-            referer += '#feedback'
+            referer += ''  # '#feedback'
         return self.request.response.redirect(referer)
 
 
