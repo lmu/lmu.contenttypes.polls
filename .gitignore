@@ -8,6 +8,7 @@
 *.EGG-INFO
 .*.cfg
 .DS_Store
+*.css.map
 bin/
 build/
 develop-eggs/
