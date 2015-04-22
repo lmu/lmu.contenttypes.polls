@@ -1,5 +1,5 @@
 #!/bin/sh
-PRODUCTNAME='collective.polls'
+PRODUCTNAME='lmu.contenttypes.polls'
 I18NDOMAIN=$PRODUCTNAME
 
 # Synchronise the .pot with the templates.
