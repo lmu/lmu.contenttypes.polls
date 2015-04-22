@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <dc-workflow xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-   i18n:domain="plone"
+   i18n:domain="lmu.contenttypes.polls"
    workflow_id="poll_workflow"
    title="Poll Workflow"
    description="Workflow to be used with polls"
