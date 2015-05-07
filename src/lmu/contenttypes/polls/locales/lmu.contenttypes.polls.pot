@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-04-22 16:36+0000\n"
+"POT-Creation-Date: 2015-05-07 21:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,10 @@ msgstr ""
 
 #: ./interfaces.py:91
 msgid ""
+msgstr ""
+
+#: ./profiles/default/portlets.xml
+msgid "A portlet to allow voting on a specific poll"
 msgstr ""
 
 #: ./interfaces.py:199
@@ -79,6 +83,10 @@ msgstr ""
 msgid "Closed"
 msgstr ""
 
+#: ./browser/templates/current_poll_view.pt:31
+msgid "Closed Polls"
+msgstr ""
+
 #: ./interfaces.py:114
 msgid "Format to show the results."
 msgstr ""
@@ -105,6 +113,10 @@ msgstr ""
 
 #: ./browser/poll_views.py:78
 msgid "Invalid option"
+msgstr ""
+
+#: ./profiles/default/portlets.xml
+msgid "LMU Voting portlet"
 msgstr ""
 
 #: ./interfaces.py:31
@@ -145,6 +157,10 @@ msgstr ""
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml
 msgid "Open"
+msgstr ""
+
+#: ./browser/templates/current_poll_view.pt:25
+msgid "Open Polls"
 msgstr ""
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml

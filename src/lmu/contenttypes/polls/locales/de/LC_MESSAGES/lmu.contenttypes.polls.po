@@ -14,6 +14,10 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: DOMAIN\n"
 
+#: ./profiles/default/portlets.xml
+msgid "A portlet to allow voting on a specific poll"
+msgstr ""
+
 #: ./interfaces.py:199
 msgid "Add a link to the poll"
 msgstr ""
@@ -72,6 +76,10 @@ msgstr ""
 msgid "Closed"
 msgstr ""
 
+#: ./browser/templates/current_poll_view.pt:31
+msgid "Closed Polls"
+msgstr ""
+
 #: ./interfaces.py:114
 msgid "Format to show the results."
 msgstr ""
@@ -98,6 +106,10 @@ msgstr ""
 
 #: ./browser/poll_views.py:78
 msgid "Invalid option"
+msgstr ""
+
+#: ./profiles/default/portlets.xml
+msgid "LMU Voting portlet"
 msgstr ""
 
 #: ./interfaces.py:31
@@ -138,6 +150,10 @@ msgstr ""
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml
 msgid "Open"
+msgstr ""
+
+#: ./browser/templates/current_poll_view.pt:25
+msgid "Open Polls"
 msgstr ""
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml
