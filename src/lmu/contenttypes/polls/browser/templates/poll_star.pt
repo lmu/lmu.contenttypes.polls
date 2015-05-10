@@ -38,7 +38,7 @@
         </form>
         <div tal:condition="python: show_results == 'with_vote'" >
           <hr />
-          <h3>Partial results</h3>
+          <h3  i18n:translate="">Partial results</h3>
           <tal:average tal:condition="python: graph_type in ['average_bar', 'average']">
             <tal:include tal:replace="structure python:view.get_star_average_widget(example=True)" />
           </tal:average>
@@ -87,7 +87,7 @@
         </form>
         <div tal:condition="python: show_results == 'with_vote'" >
           <hr />
-          <h3>Partial results</h3>
+          <h3 i18n:translate="" >Partial results</h3>
           <tal:average tal:condition="python: graph_type in ['average_bar', 'average']">
             <tal:include tal:replace="structure python:view.get_star_average_widget()" />
           </tal:average>
@@ -105,7 +105,7 @@
           <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
           <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
           <p tal:content="context/description" class="documentDescription" >Description</p>
-          <p>This is the partial Result</p>
+          <p i18n:translate="">This is the partial Result</p>
           <tal:average tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['average_bar', 'average']">
             <tal:include tal:replace="structure python:view.get_star_average_widget()" />
           </tal:average>
@@ -123,7 +123,7 @@
     </tal:vote-view>
 
     <tal:closed-view tal:condition="python: wf_state in ['closed']" >
-      <p>This Poll has been closed</p>
+      <p i18n:translate="" >This Poll has been closed</p>
         <div>
           <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
           <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
