@@ -51,6 +51,7 @@
         </div>
       </td>
       <td>(<span tal:replace="view/result2par" /> / <span tal:replace="view/result2per" /> %)</td>
+    </tr>
     <tr>
       <td>
         <span class="stars-1" i18n:translate="" >1 Star</span>
