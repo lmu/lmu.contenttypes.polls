@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-05-08 14:07+0000\n"
+"POT-Creation-Date: 2015-05-11 09:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,24 +21,37 @@ msgstr ""
 msgid ""
 msgstr ""
 
-#: ./browser/templates/poll_star_bar_widget.pt:56
+#: ./browser/templates/poll_star_average_widget.pt:16
+msgid "${dynamic_count} of 5 Stars"
+msgstr ""
+
+#: ./browser/templates/poll_star_bar_widget.pt:57
+#: ./browser/templates/poll_star_numbers_widget.pt:39
 msgid "1 Star"
 msgstr ""
 
 #: ./browser/templates/poll_star_bar_widget.pt:46
+#: ./browser/templates/poll_star_numbers_widget.pt:34
 msgid "2 Stars"
 msgstr ""
 
 #: ./browser/templates/poll_star_bar_widget.pt:35
+#: ./browser/templates/poll_star_numbers_widget.pt:29
 msgid "3 Stars"
 msgstr ""
 
 #: ./browser/templates/poll_star_bar_widget.pt:24
+#: ./browser/templates/poll_star_numbers_widget.pt:24
 msgid "4 Stars"
 msgstr ""
 
 #: ./browser/templates/poll_star_bar_widget.pt:13
+#: ./browser/templates/poll_star_numbers_widget.pt:19
 msgid "5 Stars"
+msgstr ""
+
+#: ./profiles/default/types/Poll.xml
+msgid "A poll"
 msgstr ""
 
 #: ./profiles/default/portlets.xml
@@ -187,12 +200,17 @@ msgstr ""
 msgid "Opened"
 msgstr ""
 
+#: ./browser/templates/poll_star_numbers_widget.pt:12
+msgid "Option"
+msgstr ""
+
 #: ./browser/templates/poll_star.pt:41
 #: ./browser/templates/voteportlet.pt:38
 msgid "Partial results"
 msgstr ""
 
-#: ./browser/templates/poll_star_bar_widget.pt:68
+#: ./browser/templates/poll_star_bar_widget.pt:69
+#: ./browser/templates/poll_star_numbers_widget.pt:46
 msgid "Participants"
 msgstr ""
 
@@ -200,11 +218,16 @@ msgstr ""
 msgid "Pending review"
 msgstr ""
 
+#: ./browser/templates/poll_star_numbers_widget.pt:13
+msgid "Percentage"
+msgstr ""
+
 #: ./config.py:46
 msgid "Pie Chart"
 msgstr ""
 
 #: ./interfaces.py:178
+#: ./profiles/default/types/Poll.xml
 msgid "Poll"
 msgstr ""
 
@@ -334,6 +357,10 @@ msgstr ""
 #: ./browser/templates/poll_like_dislike.pt:56
 #: ./browser/templates/poll_true_not_true.pt:56
 msgid "Vote!"
+msgstr ""
+
+#: ./browser/templates/poll_star_numbers_widget.pt:14
+msgid "Voters"
 msgstr ""
 
 #: ./browser/templates/poll_star.pt:24

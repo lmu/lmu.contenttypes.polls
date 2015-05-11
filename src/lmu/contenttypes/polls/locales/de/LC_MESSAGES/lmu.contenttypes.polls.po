@@ -14,25 +14,38 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: DOMAIN\n"
 
-#: ./browser/templates/poll_star_bar_widget.pt:56
+#: ./browser/templates/poll_star_average_widget.pt:16
+msgid "${dynamic_count} of 5 Stars"
+msgstr "${dynamic_count} von 5 Sternen"
+
+#: ./browser/templates/poll_star_bar_widget.pt:57
+#: ./browser/templates/poll_star_numbers_widget.pt:39
 msgid "1 Star"
 msgstr "1 Stern"
 
 #: ./browser/templates/poll_star_bar_widget.pt:46
+#: ./browser/templates/poll_star_numbers_widget.pt:34
 msgid "2 Stars"
 msgstr "2 Sterne"
 
 #: ./browser/templates/poll_star_bar_widget.pt:35
+#: ./browser/templates/poll_star_numbers_widget.pt:29
 msgid "3 Stars"
 msgstr "3 Sterne"
 
 #: ./browser/templates/poll_star_bar_widget.pt:24
+#: ./browser/templates/poll_star_numbers_widget.pt:24
 msgid "4 Stars"
 msgstr "4 Sterne"
 
 #: ./browser/templates/poll_star_bar_widget.pt:13
+#: ./browser/templates/poll_star_numbers_widget.pt:19
 msgid "5 Stars"
 msgstr "5 Sterne"
+
+#: ./profiles/default/types/Poll.xml
+msgid "A poll"
+msgstr "Eine Umfrage"
 
 #: ./profiles/default/portlets.xml
 msgid "A portlet to allow voting on a specific poll"
@@ -180,12 +193,17 @@ msgstr "Offene Umfragen"
 msgid "Opened"
 msgstr "Veröffentlicht"
 
+#: ./browser/templates/poll_star_numbers_widget.pt:12
+msgid "Option"
+msgstr "Optionen"
+
 #: ./browser/templates/poll_star.pt:41
 #: ./browser/templates/voteportlet.pt:38
 msgid "Partial results"
 msgstr "So hat die LMU abgestimmt"
 
-#: ./browser/templates/poll_star_bar_widget.pt:68
+#: ./browser/templates/poll_star_bar_widget.pt:69
+#: ./browser/templates/poll_star_numbers_widget.pt:46
 msgid "Participants"
 msgstr "Teilnehmer"
 
@@ -193,11 +211,16 @@ msgstr "Teilnehmer"
 msgid "Pending review"
 msgstr "Wartet auf Redaktion"
 
+#: ./browser/templates/poll_star_numbers_widget.pt:13
+msgid "Percentage"
+msgstr "Prozente"
+
 #: ./config.py:46
 msgid "Pie Chart"
 msgstr "Torten Diagramm"
 
 #: ./interfaces.py:178
+#: ./profiles/default/types/Poll.xml
 msgid "Poll"
 msgstr "Umfrage"
 
@@ -328,6 +351,10 @@ msgstr "Art der Umfrage"
 #: ./browser/templates/poll_true_not_true.pt:56
 msgid "Vote!"
 msgstr "Abstimmen!"
+
+#: ./browser/templates/poll_star_numbers_widget.pt:14
+msgid "Voters"
+msgstr "Teilnehmer"
 
 #: ./browser/templates/poll_star.pt:24
 msgid "Voting View"
