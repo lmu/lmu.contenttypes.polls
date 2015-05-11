@@ -311,7 +311,7 @@ msgstr "Dies ist das abschließende Ergebnis. Sie haben an dieser Umfrage nicht 
 
 #: ./browser/templates/poll_star.pt:108
 msgid "This is the partial Result"
-msgstr "Dies ist das aktuelle Zwischenergebnis."
+msgstr "So hat die LMU abgestimmt:"
 
 #: ./browser/templates/poll_free.pt:90
 #: ./browser/templates/poll_like_dislike.pt:90

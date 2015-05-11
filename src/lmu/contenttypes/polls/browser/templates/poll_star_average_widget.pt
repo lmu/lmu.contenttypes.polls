@@ -13,7 +13,7 @@
             tal:attributes="style rstyle" ></span>
     </span>
     <span class="average-participants">(<span tal:replace="view/participants"/>)</span><br />
-    <span class="average-result" i18n:translate="" ><span tal:replace="view/star_average"/> of 5 Stars</span>
+    <span class="average-result" i18n:translate="" ><span tal:replace="view/star_average" i18n:name="dynamic_count"/> of 5 Stars</span>
 </div>
 
 </html>
