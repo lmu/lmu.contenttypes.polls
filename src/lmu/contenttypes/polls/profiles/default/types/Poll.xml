@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <object name="lmu.contenttypes.polls.poll"
    meta_type="Dexterity FTI"
-   i18n:domain="lmu"
+   i18n:domain="lmu.contenttypes.polls"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <!-- Basic metadata -->
