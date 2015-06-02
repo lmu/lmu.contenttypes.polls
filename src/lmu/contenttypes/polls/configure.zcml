@@ -65,17 +65,17 @@
 
     <utility
         name="lmu.contenttypes.polls.ResultViewOptions"
-        component=".config.ResultViewOptionsVocabularyFactory"
+        component="lmu.contenttypes.polls.config.ResultViewOptionsVocabularyFactory"
         />
 
     <utility
         name="lmu.contenttypes.polls.StarPollResultGraphOptions"
-        component=".config.StarPollResultGraphOptionsVocabularyFactory"
+        component="lmu.contenttypes.polls.config.StarPollResultGraphOptionsVocabularyFactory"
         />
 
     <utility
         name="lmu.contenttypes.polls.TwoOptionResultGraphOptions"
-        component=".config.TwoOptionResultGraphOptionsVocabularyFactory"
+        component="lmu.contenttypes.polls.config.TwoOptionResultGraphOptionsVocabularyFactory"
         />
 
     <genericsetup:importStep

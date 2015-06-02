@@ -21,7 +21,7 @@
       <description/>
       <title i18n:translate="lable_description_title">Result Diagramm</title>
       <description i18n:translate="lable_description_description">Which Type of Diagramm would you like for the results?</description>
-      <vocabulary>lmu.contenttypes.polls.TwoOptionResultOptions</vocabulary>
+      <vocabulary>lmu.contenttypes.polls.TwoOptionResultGraphOptions</vocabulary>
       <default>average_bar</default>
       <required>True</required>
     </field>

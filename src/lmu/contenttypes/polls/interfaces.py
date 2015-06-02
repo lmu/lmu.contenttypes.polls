@@ -81,6 +81,10 @@ class IPolls(Interface):
         """Return a identifier for vote_id."""
 
 
+class IPollFolder(Interface):
+    """A Poll Folder"""
+
+
 class IPoll(Interface):
     """A Poll in a Plone site."""
 

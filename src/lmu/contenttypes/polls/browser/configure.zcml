@@ -6,6 +6,13 @@
     <include package="Products.CMFCore" file="permissions.zcml" />
 
     <browser:page
+        name="listing_view"
+        for="lmu.contenttypes.polls.interfaces.IPollFolder"
+        class="lmu.contenttypes.polls.browser.poll_views.ListingView"
+        permission="zope2.View"
+        />
+
+    <browser:page
         name="view"
         for="lmu.contenttypes.polls.interfaces.IPoll"
         class="lmu.contenttypes.polls.browser.poll_views.PollView"
@@ -21,7 +28,7 @@
 
     <browser:page
         name="current_poll"
-        for="*"
+        for="lmu.contenttypes.polls.interfaces.IPollFolder"
         class="lmu.contenttypes.polls.browser.poll_views.CurrentPollView"
         permission="zope2.View"
         />

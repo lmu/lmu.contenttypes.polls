@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from AccessControl import Unauthorized
-from plone.directives import dexterity
+from plone.dexterity.content import Item
+#from plone.dexterity.content import Container
+
 from zope.annotation.interfaces import IAnnotations
 from zope.component import queryUtility
 from zope.interface import implements
@@ -11,10 +13,13 @@ from lmu.contenttypes.polls.config import MEMBERS_ANNO_KEY
 from lmu.contenttypes.polls.config import PERMISSION_VOTE
 from lmu.contenttypes.polls.config import VOTE_ANNO_KEY
 from lmu.contenttypes.polls.interfaces import IPoll
+from lmu.contenttypes.polls.interfaces import IStarPoll
+from lmu.contenttypes.polls.interfaces import IAgreeDisagreePoll
+from lmu.contenttypes.polls.interfaces import ILikeDislikePoll
 from lmu.contenttypes.polls.interfaces import IPolls
 
 
-class Poll(dexterity.Item):
+class Poll(Item):
     """A Poll in a Plone site."""
     implements(IPoll)
 
@@ -31,31 +36,8 @@ class Poll(dexterity.Item):
         utility = queryUtility(IPolls, name='lmu.contenttypes.polls')
         return utility
 
-    def get_poll_type(self):
-        return self.poll_type
-
     def get_show_results(self):
         return self.show_results
-
-    def get_options(self):
-        """Return available options."""
-        options = []
-        if self.poll_type == 'poll_star':
-            options = [
-                {'option_id': 1, 'description': ''},
-                {'option_id': 2, 'description': ''},
-                {'option_id': 3, 'description': ''},
-                {'option_id': 4, 'description': ''},
-                {'option_id': 5, 'description': ''}
-            ]
-        elif self.poll_type == 'poll_free':
-            for option in self.options:
-                options.append({
-                    'option_id': option.lower(),
-                    'description': option
-                })
-
-        return options
 
     def _get_votes(self):
         """Return votes in a dict format."""
@@ -180,3 +162,42 @@ class Poll(dexterity.Item):
             votes = annotations.get(vote_key, 0)
             annotations[vote_key] = votes + 1
         return True
+
+
+class StarPoll(Poll):
+    """ """
+    implements(IStarPoll, IPoll)
+
+    def get_options(self):
+        """Return available options."""
+        return [
+            {'option_id': 1, 'description': ''},
+            {'option_id': 2, 'description': ''},
+            {'option_id': 3, 'description': ''},
+            {'option_id': 4, 'description': ''},
+            {'option_id': 5, 'description': ''}
+        ]
+
+
+class AgreeDisagreePoll(Poll):
+    """ """
+    implements(IAgreeDisagreePoll, IPoll)
+
+    def get_options(self):
+        """Return available options."""
+        return [
+            {'option_id': 1, 'description': 'agree'},
+            {'option_id': 2, 'description': 'disagree'}
+        ]
+
+
+class LikeDislikePoll(Poll):
+    """ """
+    implements(ILikeDislikePoll, IPoll)
+
+    def get_options(self):
+        """Return available options."""
+        return [
+            {'option_id': 1, 'description': 'like'},
+            {'option_id': 2, 'description': 'dislike'}
+        ]

@@ -58,7 +58,7 @@ class ResultViewOptionsVocabulary(object):
     def __call__(self, context):
         return SHOW_RESULTS_OPTIONS
 
-ResultViewOptionsVocabularyFactory = ResultViewOptionsVocabulary
+ResultViewOptionsVocabularyFactory = ResultViewOptionsVocabulary()
 
 
 class StarPollResultGraphOptionsVocabulary(object):
@@ -69,7 +69,7 @@ class StarPollResultGraphOptionsVocabulary(object):
     def __call__(self, context):
         return STAR_POLL_RESULT_GRAPH_OPTIONS
 
-StarPollResultGraphOptionsVocabularyFactory = StarPollResultGraphOptionsVocabulary
+StarPollResultGraphOptionsVocabularyFactory = StarPollResultGraphOptionsVocabulary()
 
 
 class TwoOptionResultGraphOptionsVocabulary(object):
@@ -80,4 +80,4 @@ class TwoOptionResultGraphOptionsVocabulary(object):
     def __call__(self, context):
         return GENERAL_RESULT_GRAPH_OPTIONS
 
-TwoOptionResultGraphOptionsVocabularyFactory = TwoOptionResultGraphOptionsVocabulary
+TwoOptionResultGraphOptionsVocabularyFactory = TwoOptionResultGraphOptionsVocabulary()

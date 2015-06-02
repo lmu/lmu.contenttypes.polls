@@ -9,7 +9,7 @@
   <property name="description"
     i18n:translate="">Folder for Polls special views and restrictions</property>
   <property name="icon_expr">string:${portal_url}/folder_icon.png</property>
-  <property name="factory">lmu.contenttypes.polls.content.pollsfolder</property>
+  <property name="factory">lmu.contenttypes.polls.content.pollfolder</property>
   <property name="global_allow">True</property>
   <property name="filter_content_types">True</property>
   <property name="allowed_content_types" >
@@ -23,7 +23,7 @@
   <property name="schema"></property>
   <property name="model_source"></property>
   <property name="model_file">lmu.contenttypes.polls.models:polls_folder.xml</property>
-  <property name="klass">lmu.contenttypes.polls.content.polls.PollsFolder</property>
+  <property name="klass">lmu.contenttypes.polls.content.polls.PollFolder</property>
 
   <property name="behaviors">
      <element value="plone.app.content.interfaces.INameFromTitle" />

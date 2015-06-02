@@ -19,7 +19,7 @@
   <property name="schema"></property>
   <property name="model_source"></property>
   <property name="model_file">lmu.contenttypes.polls.models:star_poll.xml</property>
-  <property name="klass">lmu.contenttypes.polls.content.StarPoll</property>
+  <property name="klass">lmu.contenttypes.polls.content.poll.StarPoll</property>
 
   <property name="behaviors">
      <element value="plone.app.content.interfaces.INameFromTitle" />

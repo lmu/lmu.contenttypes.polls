@@ -20,6 +20,18 @@ def str2bool(v):
     return v is not None and v.lower() in ['true', '1']
 
 
+class ListingView(BrowserView):
+
+    template = ViewPageTemplateFile('templates/listing_view.pt')
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def __call__(self):
+        return self.template()
+
+
 class BaseView(BrowserView):
 
     def __init__(self, context, request):
@@ -333,6 +345,37 @@ class PollView(BaseView):
             base_view = self.context.restrictedTraverse('@@poll_base_view')
             #base_view = PollBaseView(self.context, self.request)
             self.base_view = base_view()
+        elif request_type == 'POST':
+            self.update()
+            return self.handleRedirect()
+        return self.template()
+
+
+class StarPollView(PollView):
+
+    template = ViewPageTemplateFile('templates/poll_star.pt')
+
+    def __call__(self):
+        """
+        """
+        env = self.request.environ
+        request_type = env.get('REQUEST_METHOD', 'GET')
+
+        if request_type == 'GET':
+            view_class = self.request.steps[-1:][0]
+            if view_class in ['current_poll', ' poll_base_view']:
+                self.heading_level = 'h3'
+            else:
+                self.heading_level = 'h1'
+            results = self.get_results()
+            if results:
+                self.participants = results.get('total', 0)
+                self.average = 0.0
+                for option in results.get('options', []):
+                    self.average += float(option['index']) * \
+                        float(option['votes'])
+                if self.participants > 1:
+                    self.average = self.average / self.participants
         elif request_type == 'POST':
             self.update()
             return self.handleRedirect()

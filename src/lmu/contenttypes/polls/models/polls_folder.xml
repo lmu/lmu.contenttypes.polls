@@ -12,7 +12,7 @@
         <description i18n:translate="">Name of the Poll Folder</description>
         <required>True</required>
       </field>
-      <field name="description" type="zope.schema.TextLine">
+      <field name="description" type="zope.schema.Text">
         <title i18n:translate="">Description</title>
         <description i18n:translate="">Used in item listings and search results.</description>
         <required>False</required>

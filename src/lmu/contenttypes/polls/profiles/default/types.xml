@@ -3,7 +3,7 @@
   <object meta_type="Dexterity FTI" name="Poll Folder" />
   <!--<object meta_type="Dexterity FTI" name="Poll" />-->
   <object meta_type="Dexterity FTI" name="Star Poll" />
-  <object meta_type="Dexterity FTI" name="Agree / Disagree Poll" />
-  <object meta_type="Dexterity FTI" name="Like / Dislike Poll" />
+  <object meta_type="Dexterity FTI" name="Agree Disagree Poll" />
+  <object meta_type="Dexterity FTI" name="Like Dislike Poll" />
   <!--<object meta_type="Dexterity FTI" name="Free Poll" />-->
 </object>

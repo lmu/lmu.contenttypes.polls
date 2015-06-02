@@ -8,7 +8,7 @@
 <body>
 
 <metal:main fill-slot="content">
-    <metal:content define-macro="content"
+  <metal:content define-macro="content"
                    tal:define="show_border context/@@plone/showEditableBorder; 
                                show_border python:show_border and not ajax_load">
 
@@ -23,7 +23,7 @@
     <div id="content" tal:attributes="class python:show_border and 'documentEditable' or ''" >
       <tal:include tal:replace="structure view/base_view" />
     </div>
-    </metal:content>
+  </metal:content>
 </metal:main>
 
 </body>

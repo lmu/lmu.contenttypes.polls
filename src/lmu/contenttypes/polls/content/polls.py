@@ -4,12 +4,21 @@ import random
 import time
 
 from AccessControl import Unauthorized
+from Products.CMFPlone.interfaces.syndication import ISyndicatable
+#from Products.statusmessages.interfaces import IStatusMessage
+#from plone.dexterity.content import Item
+from plone.dexterity.content import Container
 from plone import api
 from plone.uuid.interfaces import IUUID
 from zope.interface import implements
 
 from lmu.contenttypes.polls.config import COOKIE_KEY
 from lmu.contenttypes.polls.interfaces import IPolls
+from lmu.contenttypes.polls.interfaces import IPollFolder
+
+
+class PollFolder(Container):
+    implements(IPollFolder, ISyndicatable)
 
 
 class Polls(object):
