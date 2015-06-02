@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from collective.z3cform.widgets.enhancedtextlines import EnhancedTextLinesFieldWidget  # NOQA
+from collective.z3cform.widgets.enhancedtextlines import EnhancedTextLinesFieldWidget
 from plone import api
 from plone.directives import form
-from plone.portlets.interfaces import IPortletDataProvider
 from zope import schema
 from zope.component import queryUtility
 from zope.interface import alsoProvides
@@ -14,8 +13,19 @@ from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 
-from lmu.contenttypes.polls import MessageFactory as _
 from lmu.contenttypes.polls import config
+from lmu.contenttypes.polls import MessageFactory as _
+
+
+class IHiddenProfiles(Interface):
+    #implements(INonInstallable)
+
+    def getNonInstallableProfiles(self):
+        """ """
+
+
+class InsuficientOptions(Invalid):
+    __doc__ = _(u'Not enought options provided')
 
 
 def PossiblePolls(context):
@@ -37,17 +47,6 @@ def PossiblePolls(context):
     return SimpleVocabulary(values)
 
 alsoProvides(PossiblePolls, IContextSourceBinder)
-
-
-class IHiddenProfiles(Interface):
-    #implements(INonInstallable)
-
-    def getNonInstallableProfiles(self):
-        """ """
-
-
-class InsuficientOptions(Invalid):
-    __doc__ = _(u'Not enought options provided')
 
 
 class IPolls(Interface):
@@ -82,17 +81,24 @@ class IPolls(Interface):
         """Return a identifier for vote_id."""
 
 
-class IPoll(form.Schema):
-
+class IPoll(Interface):
     """A Poll in a Plone site."""
 
-    poll_type = schema.Choice(
-        title=_(u'Type of Poll'),
-        description=_(u''),
-        source=config.POLL_TYPES,
-        default='poll_star',  # config.POLL_TYPES[0].value,
-        required=True,
-    )
+
+class IStarPoll(IPoll):
+    """  """
+
+
+class IAgreeDisagreePoll(IPoll):
+    """  """
+
+
+class ILikeDislikePoll(IPoll):
+    """  """
+
+
+class IFreePoll(Interface):
+    """A Poll Type that let you create a Poll with qquestion otion you could define by yourselfe."""
 
     # multivalue = schema.Bool(
     #    title = _(u"Multivalue"),
@@ -106,14 +112,6 @@ class IPoll(form.Schema):
             u'How to show results.'),
         source=config.SHOW_RESULTS_OPTIONS,
         default='after_vote',  # config.SHOW_RESULTS_OPTIONS[0].value,
-        required=True,
-    )
-
-    star_results_graph = schema.Choice(
-        title=_(u'Graph'),
-        description=_(u'Format to show the results.'),
-        source=config.STAR_POLL_RESULT_GRAPH_OPTIONS,
-        default='average_bar',
         required=True,
     )
 
@@ -146,7 +144,7 @@ class IPoll(form.Schema):
         title=_(u'Available options'),
         value_type=schema.TextLine(),
         default=[],
-        required=False,
+        required=True,
     )
 
     @invariant
@@ -154,49 +152,6 @@ class IPoll(form.Schema):
         """Validate options."""
         options = data.options
         descriptions = options and [o for o in options]
-        if data.poll_type == 'poll_free' and len(descriptions) < 2:
+        if len(descriptions) < 2:
             raise InsuficientOptions(
                 _(u'You need to provide at least two options for a free poll.'))
-
-
-class IVotePortlet(IPortletDataProvider):
-
-    """A portlet.
-
-    It inherits from IPortletDataProvider because for this portlet, the
-    data that is being rendered and the portlet assignment itself are the
-    same.
-    """
-
-    header = schema.TextLine(
-        title=_(u'Header'),
-        description=_(u'The header for the portlet. Leave empty for none.'),
-        required=False,
-    )
-
-    poll = schema.Choice(
-        title=_(u'Poll'),
-        description=_(u'Which poll to show in the portlet.'),
-        required=True,
-        source=PossiblePolls,
-    )
-
-    show_total = schema.Bool(
-        title=_(u'Show total votes'),
-        description=_(u'Show the number of collected votes so far.'),
-        default=True,
-    )
-
-    show_closed = schema.Bool(
-        title=_(u'Show closed polls'),
-        description=_(
-            u'If there is no available open poll or the chosen poll is '
-            u'already closed, should the porlet show the results instead.'),
-        default=False,
-    )
-
-    link_poll = schema.Bool(
-        title=_(u'Add a link to the poll'),
-        description=u'',
-        default=True,
-    )

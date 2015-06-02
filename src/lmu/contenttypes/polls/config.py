@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from zope.interface import implements
+from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 
@@ -46,3 +48,36 @@ GENERAL_RESULT_GRAPH_OPTIONS = SimpleVocabulary([
     SimpleTerm(value=u'pie', title=_(u'Pie Chart')),
     SimpleTerm(value=u'numbers', title=_(u'Numbers Only'))
 ])
+
+
+class ResultViewOptionsVocabulary(object):
+    """Vocabulary factory returning available languages for the portal.
+    """
+    implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        return SHOW_RESULTS_OPTIONS
+
+ResultViewOptionsVocabularyFactory = ResultViewOptionsVocabulary
+
+
+class StarPollResultGraphOptionsVocabulary(object):
+    """Vocabulary factory returning available languages for the portal.
+    """
+    implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        return STAR_POLL_RESULT_GRAPH_OPTIONS
+
+StarPollResultGraphOptionsVocabularyFactory = StarPollResultGraphOptionsVocabulary
+
+
+class TwoOptionResultGraphOptionsVocabulary(object):
+    """Vocabulary factory returning available languages for the portal.
+    """
+    implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        return GENERAL_RESULT_GRAPH_OPTIONS
+
+TwoOptionResultGraphOptionsVocabularyFactory = TwoOptionResultGraphOptionsVocabulary

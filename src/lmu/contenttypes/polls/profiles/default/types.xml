@@ -1,4 +1,9 @@
 <?xml version="1.0"?>
 <object name="portal_types" meta_type="Plone Types Tool">
-  <object name="Poll" meta_type="Dexterity FTI" />
+  <object meta_type="Dexterity FTI" name="Poll Folder" />
+  <!--<object meta_type="Dexterity FTI" name="Poll" />-->
+  <object meta_type="Dexterity FTI" name="Star Poll" />
+  <object meta_type="Dexterity FTI" name="Agree / Disagree Poll" />
+  <object meta_type="Dexterity FTI" name="Like / Dislike Poll" />
+  <!--<object meta_type="Dexterity FTI" name="Free Poll" />-->
 </object>

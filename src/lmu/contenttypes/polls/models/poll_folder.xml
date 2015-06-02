@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<model xmlns="http://namespaces.plone.org/supermodel/schema"
+       xmlns:form="http://namespaces.plone.org/supermodel/form"
+       xmlns:security="http://namespaces.plone.org/supermodel/security"
+       xmlns:i18n="http://namespaces.zope.org/i18n"
+       i18n_domain="lmu.contenttypes.polls">
+
+    <schema>
+        <!-- field definitions -->
+      <field name="title" type="zope.schema.TextLine">
+        <title i18n:translate="">Title</title>
+        <description i18n:translate="">Name of the Poll Folder</description>
+        <required>True</required>
+      </field>
+      <field name="description" type="zope.schema.TextLine">
+        <title i18n:translate="">Description</title>
+        <description i18n:translate="">Used in item listings and search results.</description>
+        <required>False</required>
+      </field>
+      <field name="text" type="plone.app.textfield.RichText">
+        <title i18n:translate="lable_text_title">Poll Rules</title>
+        <description i18n:translate="lable_text_description">A Description text of Poll Rules which should be showable on every subsequent Element of a Poll Folder</description>
+        <required>False</required>
+      </field>
+    </schema>
+
+</model>

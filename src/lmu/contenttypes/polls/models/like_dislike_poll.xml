@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<model xmlns="http://namespaces.plone.org/supermodel/schema"
+       xmlns:form="http://namespaces.plone.org/supermodel/form" 
+       xmlns:security="http://namespaces.plone.org/supermodel/security" 
+       xmlns:marshal="http://namespaces.plone.org/supermodel/marshal"
+       xmlns:i18n="http://namespaces.zope.org/i18n"
+       i18n_domain="lmu.contenttypes.polls">
+  <schema>
+    <!-- field definitions -->
+    <field name="title" type="zope.schema.Text">
+      <title i18n:translate="lable_title_title">Poll Question</title>
+      <description i18n:translate="lable_title_description">The Question you would like to ask.</description>
+      <required>True</required>
+    </field>
+    <field name="description" type="zope.schema.Text">
+      <title i18n:translate="lable_description_title">Poll Description</title>
+      <description i18n:translate="lable_description_description">A Description for the Poll</description>
+      <required>True</required>
+    </field>
+    <field name="result_diagramm" type="zope.schema.Choice">
+      <description/>
+      <title i18n:translate="lable_description_title">Result Diagramm</title>
+      <description i18n:translate="lable_description_description">Which Type of Diagramm would you like for the results?</description>
+      <vocabulary>lmu.contenttypes.polls.TwoOptionResultOptions</vocabulary>
+      <default>average_bar</default>
+      <required>True</required>
+    </field>
+    <field name="show_results" type="zope.schema.Choice">
+      <description/>
+      <title i18n:translate="lable_description_title">Show Results</title>
+      <description i18n:translate="lable_description_description">Would you like to show results for Poll?</description>
+      <vocabulary>lmu.contenttypes.polls.ResultViewOptions</vocabulary>
+      <default>after_vote</default>
+      <required>True</required>
+    </field>
+  </schema>
+</model>

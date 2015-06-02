@@ -63,22 +63,26 @@
         provides="lmu.contenttypes.polls.interfaces.IPolls"
         />
 
+    <utility
+        name="lmu.contenttypes.polls.ResultViewOptions"
+        component=".config.ResultViewOptionsVocabularyFactory"
+        />
+
+    <utility
+        name="lmu.contenttypes.polls.StarPollResultGraphOptions"
+        component=".config.StarPollResultGraphOptionsVocabularyFactory"
+        />
+
+    <utility
+        name="lmu.contenttypes.polls.TwoOptionResultGraphOptions"
+        component=".config.TwoOptionResultGraphOptionsVocabularyFactory"
+        />
+
     <genericsetup:importStep
         name="lmu.contenttypes.polls"
         title="lmu.contenttypes.polls special import handlers"
         description=""
         handler="lmu.contenttypes.polls.setuphandlers.setupVarious"
-        />
-
-    <!-- Register the portlet -->
-    <plone:portlet
-        name="lmu.contenttypes.polls.voteportlet.VotePortlet"
-        interface="lmu.contenttypes.polls.interfaces.IVotePortlet"
-        assignment="lmu.contenttypes.polls.voteportlet.Assignment"
-        renderer="lmu.contenttypes.polls.voteportlet.Renderer"
-        addview="lmu.contenttypes.polls.voteportlet.AddForm"
-        editview="lmu.contenttypes.polls.voteportlet.EditForm"
-        view_permission="zope2.View"
         />
 
 </configure>
