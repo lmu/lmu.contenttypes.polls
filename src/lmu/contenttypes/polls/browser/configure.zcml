@@ -47,4 +47,11 @@
         permission="zope2.View"
         />
 
+    <browser:page
+        name="current_poll"
+        for="*"
+        class="lmu.contenttypes.polls.browser.poll_views.CurrentPollView"
+        permission="zope2.View"
+        />
+
 </configure>

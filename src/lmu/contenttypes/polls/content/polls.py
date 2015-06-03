@@ -43,7 +43,7 @@ class Polls(object):
 
     def _query_for_polls(self, **kw):
         """Use Portal Catalog to return a list of polls."""
-        kw['portal_type'] = 'Poll'
+        kw['portal_type'] = ['Star Poll', 'Agree Disagree Poll', 'Like Dislike Poll']
         results = self.ct.searchResults(**kw)
         return results
 
