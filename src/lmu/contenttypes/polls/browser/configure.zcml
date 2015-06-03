@@ -13,9 +13,23 @@
         />
 
     <browser:page
-        name="view"
+        name="poll_view"
         for="lmu.contenttypes.polls.interfaces.IPoll"
         class="lmu.contenttypes.polls.browser.poll_views.PollView"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        name="view"
+        for="lmu.contenttypes.polls.interfaces.IStarPoll"
+        class="lmu.contenttypes.polls.browser.poll_views.StarPollView"
+        permission="zope2.View"
+        />
+
+    <browser:page
+        name="view"
+        for="lmu.contenttypes.polls.interfaces.IAgreeDisagreePoll"
+        class="lmu.contenttypes.polls.browser.poll_views.AgreeDisagreePollView"
         permission="zope2.View"
         />
 

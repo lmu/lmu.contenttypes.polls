@@ -59,7 +59,7 @@
 
     <utility
         name="lmu.contenttypes.polls"
-        factory="lmu.contenttypes.polls.polls.Polls"
+        factory="lmu.contenttypes.polls.content.polls.Polls"
         provides="lmu.contenttypes.polls.interfaces.IPolls"
         />
 

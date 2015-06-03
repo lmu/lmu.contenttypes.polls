@@ -16,7 +16,7 @@
     <field name="description" type="zope.schema.Text">
       <title i18n:translate="lable_description_title">Poll Description</title>
       <description i18n:translate="lable_description_description">A Description for the Poll</description>
-      <required>True</required>
+      <required>False</required>
     </field>
 
     <field name="result_diagramm" type="zope.schema.Choice">

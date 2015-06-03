@@ -16,7 +16,7 @@
     <field name="description" type="zope.schema.Text">
       <title i18n:translate="lable_description_title">Poll Description</title>
       <description i18n:translate="lable_description_description">A Description for the Poll</description>
-      <required>True</required>
+      <required>False</required>
     </field>
 
     <field name="result_diagramm" type="zope.schema.Choice">
@@ -24,7 +24,7 @@
       <title i18n:translate="lable_description_title">Result Diagramm</title>
       <description i18n:translate="lable_description_description">Which Type of Diagramm would you like for the results?</description>
       <vocabulary>lmu.contenttypes.polls.TwoOptionResultGraphOptions</vocabulary>
-      <default>average_bar</default>
+      <default>bar</default>
       <required>True</required>
     </field>
 

@@ -7,7 +7,7 @@
 
 <body>
 
-  <metal:content fill-slot="content">
+  <metal:content fill-slot="content-core">
 
     <main id="content" class="poll">
       <header id="Poll-header" class="row">
@@ -33,18 +33,12 @@
                                navigation_root_url context/@@plone_portal_state/navigation_root_url;
                                pas_member context/@@pas_member;
                               ">
-          <article class="Poll-entry poll-preview tileItem visualIEFloatFix clearfix" 
-                   tal:define="item entry/getObject;
-                               item_creator entry/Creator;
-                               item_type entry/portal_type;
-                               item_modified entry/ModificationDate;
-                               item_url item/getURL|item/absolute_url;
-                               member python:view.get_memberdata(item);
-                               text python:view.strip_text(item);
-                               islast repeat/entry/end;
-                               last python: 'lastTileItem' if islast else '';
-                               sklass string:row Poll-entry tileItem ${last} visualIEFloatFix">
-
+          <article class="poll-entry poll-preview tileItem visualIEFloatFix clearfix" 
+                   tal:define="item python:entry[1];
+                               item_type item/portal_type;
+                               item_modified item/ModificationDate;
+                               item_url item/getURL|item/absolute_url;">
+            <a tal:attributes="href item_url;" tal:content="item/title" />
 
           </article>
         </tal:block>

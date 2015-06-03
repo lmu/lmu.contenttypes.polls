@@ -79,7 +79,7 @@ class Polls(object):
 
     def voted_in_a_poll(self, poll, request=None):
         """Check if current user already voted."""
-        anonymous_allowed = poll.allow_anonymous
+        anonymous_allowed = None  # poll.allow_anonymous
         poll_uid = self.uid_for_poll(poll)
         member = self.member
         member_id = member.getId()

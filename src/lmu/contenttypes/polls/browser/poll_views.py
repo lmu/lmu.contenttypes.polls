@@ -58,20 +58,20 @@ class BaseView(BrowserView):
 
         # When the poll's container is the site's root, we do not need to
         # check the permissions.
-        container = aq_parent(aq_inner(self.context))
+        #container = aq_parent(aq_inner(self.context))
 
-        if 'open' == self.wf_state and not ISiteRoot.providedBy(container):
-            roles = [
-                r['name'] for r in
-                self.context.rolesOfPermission('lmu.contenttypes.polls: Vote')
-                if r['selected']]
+        #if 'open' == self.wf_state and not ISiteRoot.providedBy(container):
+            # roles = [
+            #     r['name'] for r in
+            #     self.context.rolesOfPermission('lmu.contenttypes.polls: Vote')
+            #     if r['selected']]
 
-            if 'Anonymous' not in roles and self.context.allow_anonymous:
-                messages.addStatusMessage(_(
-                    u"Anonymous user won't be able to vote, you forgot to "
-                    u'publish the parent folder, you must sent back the poll '
-                    u'to private state, publish the parent folder and open '
-                    u'the poll again'), type='info')
+            # if 'Anonymous' not in roles and self.context.allow_anonymous:
+            #     messages.addStatusMessage(_(
+            #         u"Anonymous user won't be able to vote, you forgot to "
+            #         u'publish the parent folder, you must sent back the poll '
+            #         u'to private state, publish the parent folder and open '
+            #         u'the poll again'), type='info')
 
         if 'poll.submit' in form:
             self._updateForm(form)
@@ -110,13 +110,13 @@ class BaseView(BrowserView):
     def handleRedirect(self):
         env = self.request.environ
         referer = env.get('HTTP_REFERER', self.context.absolute_url)
-        if referer in [
-            'https://iuksptest.verwaltung.uni-muenchen.de/index.html',
-            'https://iukintest.verwaltung.uni-muenchen.de/index.html',
-            'https://www.serviceportal.verwaltung.uni-muenchen.de/index.html',
-            'https://www.intranet.verwaltung.uni-muenchen.de/index.html',
-        ]:
-            referer += ''  # '#feedback'
+        # if referer in [
+        #     'https://iuksptest.verwaltung.uni-muenchen.de/index.html',
+        #     'https://iukintest.verwaltung.uni-muenchen.de/index.html',
+        #     'https://www.serviceportal.verwaltung.uni-muenchen.de/index.html',
+        #     'https://www.intranet.verwaltung.uni-muenchen.de/index.html',
+        # ]:
+        #     referer += ''  # '#feedback'
         return self.request.response.redirect(referer)
 
 
@@ -143,7 +143,7 @@ class PollBaseView(BaseView):
 
     poll_star_template = ViewPageTemplateFile('templates/poll_star.pt')
     poll_like_dislike_template = ViewPageTemplateFile('templates/poll_like_dislike.pt')  # NOQA
-    poll_true_not_true_template = ViewPageTemplateFile('templates/poll_true_not_true.pt')  # NOQA
+    poll_agree_disagree_template = ViewPageTemplateFile('templates/poll_agree_disagree.pt')  # NOQA
     poll_free_template = ViewPageTemplateFile('templates/poll_free.pt')
 
     def __init__(self, context, request):
@@ -156,7 +156,7 @@ class PollBaseView(BaseView):
             (context, self.request), name=u'plone_context_state')
         self.wf_state = self.state.workflow_state()
         self.utility = context.utility
-        self.poll_type = context.poll_type
+        self.poll_type = context.portal_type
         omit = self.request.get('omit')
         self.omit = str2bool(omit)
         self.heading_level = 'h3'
@@ -168,7 +168,7 @@ class PollBaseView(BaseView):
         request_type = env.get('REQUEST_METHOD', 'GET')
 
         if request_type == 'GET':
-            if self.poll_type == 'poll_star':
+            if self.poll_type == 'Star Poll':
                 self.template = self.poll_star_template
                 view_class = self.request.steps[-1:][0]
                 if view_class in ['current_poll', ' poll_base_view']:
@@ -184,14 +184,16 @@ class PollBaseView(BaseView):
                             float(option['votes'])
                     if self.participants > 1:
                         self.average = self.average / self.participants
-            elif self.poll_type == 'poll_true_not_true':
-                self.template = self.poll_true_not_true_template
+            elif self.poll_type == 'Agree Disagree Poll':
+                self.template = self.poll_agree_disagree_template
 
-            elif self.poll_type == 'poll_like_dislike':
+            elif self.poll_type == 'Like Dislike Poll':
                 self.template = self.poll_like_dislike_template
 
-            elif self.poll_type == 'poll_free':
+            elif self.poll_type == 'Free Poll':
                 self.template = self.poll_free_template
+            #else:
+            #    import ipdb; ipdb.set_trace()
         elif request_type == 'POST':
             self.update()
             return self.handleRedirect()
@@ -238,10 +240,7 @@ class PollBaseView(BaseView):
         return self.context.get_show_results()
 
     def graph_type(self):
-        if self.context.get_poll_type() == 'poll_star':
-            return self.context.star_results_graph
-        else:
-            return self.context.general_results_graph
+        return self.context.result_diagramm
 
     def get_options(self):
         """Return available options."""
@@ -319,8 +318,20 @@ class PollBaseView(BaseView):
                 results['options'], results['total'])
         return viewlet.render()
 
+    def get_two_option_bar_widget(self, example=False):
+        if example:
+            viewlet = TwoOptionBarWidgetViewlet(
+                self.context, self.request, None, None,
+                self.fake_results(), 42)
+        else:
+            results = self.get_results()
+            viewlet = TwoOptionBarWidgetViewlet(
+                self.context, self.request, None, None,
+                results['options'], results['total'])
+        return viewlet.render()
 
-class PollView(BaseView):
+
+class PollView(PollBaseView):
 
     template = ViewPageTemplateFile('templates/poll.pt')
 
@@ -328,6 +339,7 @@ class PollView(BaseView):
         """
         """
         super(PollView, self).__init__(context, request)
+        #import ipdb; ipdb.set_trace()
         self.context = context
         self.request = request
         self.state = getMultiAdapter(
@@ -335,20 +347,32 @@ class PollView(BaseView):
         self.wf_state = self.state.workflow_state()
         self.utility = context.utility
 
+        env = self.request.environ
+        self.request_type = env.get('REQUEST_METHOD', 'GET')
+        self.results = self.get_results()
+
     def __call__(self):
         """
         """
-        env = self.request.environ
-        request_type = env.get('REQUEST_METHOD', 'GET')
-
-        if request_type == 'GET':
+        if self.request_type == 'GET':
             base_view = self.context.restrictedTraverse('@@poll_base_view')
             #base_view = PollBaseView(self.context, self.request)
             self.base_view = base_view()
-        elif request_type == 'POST':
+
+            view_class = self.request.steps[-1:][0]
+            if view_class in ['current_poll', ' poll_base_view']:
+                self.heading_level = 'h3'
+            else:
+                self.heading_level = 'h1'
+
+            if self.results:
+                self.participants = self.results.get('total', 0)
+
+        elif self.request_type == 'POST':
             self.update()
             return self.handleRedirect()
-        return self.template()
+        #import ipdb;ipdb.set_trace()
+        return self.template(self)
 
 
 class StarPollView(PollView):
@@ -358,28 +382,54 @@ class StarPollView(PollView):
     def __call__(self):
         """
         """
-        env = self.request.environ
-        request_type = env.get('REQUEST_METHOD', 'GET')
 
-        if request_type == 'GET':
-            view_class = self.request.steps[-1:][0]
-            if view_class in ['current_poll', ' poll_base_view']:
-                self.heading_level = 'h3'
-            else:
-                self.heading_level = 'h1'
-            results = self.get_results()
-            if results:
-                self.participants = results.get('total', 0)
+        #import ipdb; ipdb.set_trace()
+        if self.request_type == 'GET':
+            if self.results:
                 self.average = 0.0
-                for option in results.get('options', []):
+                for option in self.results.get('options', []):
                     self.average += float(option['index']) * \
                         float(option['votes'])
                 if self.participants > 1:
                     self.average = self.average / self.participants
-        elif request_type == 'POST':
-            self.update()
-            return self.handleRedirect()
-        return self.template()
+        return super(StarPollView, self).__call__()
+
+
+class AgreeDisagreePollView(PollView):
+
+    template = ViewPageTemplateFile('templates/poll_agree_disagree.pt')
+
+    def __call__(self):
+        """
+        """
+        self.template = ViewPageTemplateFile('templates/poll_agree_disagree.pt')
+        if self.request_type == 'GET':
+            if self.results:
+                self.average = 0.0
+                for option in self.results.get('options', []):
+                    self.average += float(option['index']) * \
+                        float(option['votes'])
+                if self.participants > 1:
+                    self.average = self.average / self.participants
+        return super(AgreeDisagreePollView, self).__call__()
+
+
+class LikeDislikePollView(PollView):
+
+    template = ViewPageTemplateFile('templates/poll_like_dislike.pt')
+
+    def __call__(self):
+        """
+        """
+        if self.request_type == 'GET':
+            if self.results:
+                self.average = 0.0
+                for option in self.results.get('options', []):
+                    self.average += float(option['index']) * \
+                        float(option['votes'])
+                if self.participants > 1:
+                    self.average = self.average / self.participants
+        return super(LikeDislikePollView, self).__call__()
 
 
 class StarAverageWidgetViewlet(base.ViewletBase):
@@ -432,3 +482,27 @@ class StarBarWidgetViewlet(base.ViewletBase):
 class StarNumbersWidgetViewlet(StarBarWidgetViewlet):
 
     template = ViewPageTemplateFile('templates/poll_star_numbers_widget.pt')
+
+
+class TwoOptionBarWidgetViewlet(base.ViewletBase):
+
+    template = ViewPageTemplateFile('templates/two_option_bar_widget.pt')
+
+    def __init__(self, context, request, portal, manager,
+                 results, participants=0):
+        """
+        """
+        super(TwoOptionBarWidgetViewlet, self).__init__(context, request, portal, manager)  # NOQA
+        self.context = context
+        self.request = request
+        self.results = results
+        self.participants = participants
+
+    def render(self):
+        for option in self.results:
+            setattr(self, 'result{index}{name}'.format(index=option['index'], name='option'), option['description'])
+            setattr(self, 'result{index}{name}'.format(index=option['index'], name='par'), option['votes'])
+            per = option['percentage']
+            setattr(self, 'result{index}{name}'.format(index=option['index'], name='per'), round(per*100.0, 1))
+            setattr(self, 'result{index}{name}'.format(index=option['index'], name='style'), 'width: {per}%;'.format(per=per*100.0))
+        return self.template()

@@ -29,10 +29,11 @@
 
   <!-- View information -->
   <property name="link_target"></property>
-  <property name="immediate_view">view</property>
-  <property name="default_view">view</property>
+  <property name="immediate_view">poll_view</property>
+  <property name="default_view">poll_view</property>
   <property name="view_methods">
-   <element value="entry_view"/>
+   <element value="poll_view"/>
+   <element value="view"/>
   </property>
   <property name="default_view_fallback">False</property>
   <property name="add_permission">cmf.AddPortalContent</property>
