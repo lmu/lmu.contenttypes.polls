@@ -384,3 +384,8 @@ msgstr "Sie müssen mindestens zwei Auswahloptionen für eine Freie Umfrage bere
 msgid "spinner"
 msgstr "Fortschrittsanzeige."
 
+msgid "Agree"
+msgstr "Ich stimme zu"
+
+msgid "Disagree"
+msgstr "Ich stimme nicht zu"

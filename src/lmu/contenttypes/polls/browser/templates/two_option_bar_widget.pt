@@ -17,18 +17,18 @@
           <div class="a-meter-bar" style="width: 5.298%;" tal:attributes="style view/result1style;"></div>
         </div>
       </td>
-      <td>(<span tal:replace="view/result2par" /> / <span tal:replace="view/result1per" /> %)</td>
+      <td>(<span tal:replace="view/result1par" /> / <span tal:replace="view/result1per" /> %)</td>
     </tr>
     <tr>
       <td>
-        <span class="stars-1" i18n:translate="" >Disagree</span>
+        <span class="disagree" i18n:translate="" >Disagree</span>
       </td>
       <td>
         <div class="a-meter">
           <div class="a-meter-bar" style="width: 0.662%;" tal:attributes="style view/result2style;"></div>
         </div>
       </td>
-      <td>(<span tal:replace="view/result1par" /> / <span tal:replace="view/result2per" /> %)</td>
+      <td>(<span tal:replace="view/result2par" /> / <span tal:replace="view/result2per" /> %)</td>
     </tr>
   </tbody>
   <tfoot>
