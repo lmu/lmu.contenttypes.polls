@@ -10,7 +10,7 @@
   <tbody>
     <tr>
       <td>
-        <span class="agree" i18n:translate="" >Agree</span>
+        <span i18n:translate="" tal:content="view/result1option" >Agree</span>
       </td>
       <td>
         <div class="a-meter">
@@ -21,7 +21,7 @@
     </tr>
     <tr>
       <td>
-        <span class="stars-1" i18n:translate="" >Disagree</span>
+        <span i18n:translate="" tal:content="view/result2option" >Disagree</span>
       </td>
       <td>
         <div class="a-meter">
