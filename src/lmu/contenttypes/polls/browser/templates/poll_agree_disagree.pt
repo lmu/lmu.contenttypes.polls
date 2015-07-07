@@ -26,9 +26,9 @@
         <h3 tal:content="context/title" >Vote-Question</h3>
         <p tal:content="context/description" class="documentDescription" >Description</p>
         <form class="poll">
-          <input type="radio" name="options" value="1" id="agree-preview"/><label for="agree" i18n:translate="" class="helper-margin-top-m small-10 small-centered medium-4 large-10 columns">Agree</label><br />
-          <input type="radio" name="options" value="2" id="disagree-preview"/><label for="disagree" i18n:translate="" class="helper-margin-top-m small-10 small-centered medium-4 large-10 columns">Disgree</label><br />
-          <input type="submit" name="demo.submit" value="Submit" i18n:attributes="value" class="button disabled small radius small-10 small-centered medium-4 large-10 columns helper-margin-top-m" disabled="disabled" />
+          <input type="radio" name="options" value="1" id="agree-preview"/><label for="agree-preview" i18n:translate="" class="helper-margin-top-m small-10 small-centered medium-4 large-10 columns">Agree</label><br />
+          <input type="radio" name="options" value="2" id="disagree-preview"/><label for="disagree-preview" i18n:translate="" class="helper-margin-top-m small-10 small-centered medium-4 large-10 columns">Disgree</label><br />
+          <input type="submit" name="demo.submit" value="Demo-Submit" i18n:attributes="value" class="button disabled small radius small-10 small-centered medium-4 large-10 columns helper-margin-top-m" disabled="disabled" />
         </form>
         <div tal:condition="python: show_results == 'with_vote'" >
           <hr />

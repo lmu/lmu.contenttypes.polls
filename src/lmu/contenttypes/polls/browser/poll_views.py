@@ -259,28 +259,47 @@ class PollBaseView(BaseView):
             show_results = True
         return (show_results and context.get_results()) or None
 
-    def fake_results(self):
+    def fake_star_results(self):
         return [
             {'index': 1,
-             'description': u'1 Star',
+             'description': _(u'1 Star'),
+             'token': 'star-1',
              'votes': 1,
              'percentage': 0.00662},
             {'index': 2,
-             'description': u'2 Stars',
+             'description': _(u'2 Stars'),
+             'token': 'star-1',
              'votes': 4,
              'percentage': 0.05298},
             {'index': 3,
-             'description': u'3 Stars',
+             'description': _(u'3 Stars'),
+             'token': 'star-3',
              'votes': 9,
              'percentage': 0.17881},
             {'index': 4,
-             'description': u'4 Stars',
+             'description': _(u'4 Stars'),
+             'token': 'star-4',
              'votes': 25,
              'percentage': 0.66225},
             {'index': 5,
-             'description': u'5 Stars',
+             'description': _(u'5 Stars'),
+             'token': 'star-5',
              'votes': 3,
              'percentage': 0.09934},
+        ]
+    
+    def fake_agree_results(self):
+        return [
+            {'index': 1,
+             'description': _(u'Agree'),
+             'token': 'agree',
+             'votes': 22,
+             'percentage': 0.52381},
+            {'index': 2,
+             'description': _(u'Disagree'),
+             'token': 'disagree',
+             'votes': 20,
+             'percentage': 0.47619},
         ]
 
     def get_star_average_widget(self, example=False):
@@ -298,7 +317,7 @@ class PollBaseView(BaseView):
         if example:
             viewlet = StarBarWidgetViewlet(
                 self.context, self.request, None, None,
-                self.fake_results(), 42)
+                self.fake_star_results(), 42)
         else:
             results = self.get_results()
             viewlet = StarBarWidgetViewlet(
@@ -310,7 +329,7 @@ class PollBaseView(BaseView):
         if example:
             viewlet = StarNumbersWidgetViewlet(
                 self.context, self.request, None, None,
-                self.fake_results(), 42)
+                self.fake_star_results(), 42)
         else:
             results = self.get_results()
             viewlet = StarNumbersWidgetViewlet(
@@ -322,7 +341,7 @@ class PollBaseView(BaseView):
         if example:
             viewlet = TwoOptionBarWidgetViewlet(
                 self.context, self.request, None, None,
-                self.fake_results(), 42)
+                self.fake_agree_results(), 42)
         else:
             results = self.get_results()
             viewlet = TwoOptionBarWidgetViewlet(
@@ -501,7 +520,7 @@ class TwoOptionBarWidgetViewlet(base.ViewletBase):
     def render(self):
         for option in self.results:
             setattr(self, 'result{index}{name}'.format(index=option['index'], name='option'), option['description'])
-            setattr(self, 'result{index}{name}'.format(index=option['index'], name='token'), option.get['token'])
+            setattr(self, 'result{index}{name}'.format(index=option['index'], name='token'), option['token'])
             setattr(self, 'result{index}{name}'.format(index=option['index'], name='par'), option['votes'])
             per = option['percentage']
             setattr(self, 'result{index}{name}'.format(index=option['index'], name='per'), round(per*100.0, 1))
