@@ -47,9 +47,11 @@ class Poll(Item):
         for option in self.get_options():
             index = option.get('option_id')
             description = option.get('description')
+            token = option.get('token')
             option_votes = self.annotations.get(VOTE_ANNO_KEY % index, 0)
             votes['options'].append({'index': index,
                                      'description': description,
+                                     'token': token,
                                      'votes': option_votes,
                                      'percentage': 0.0})
             votes['total'] = votes['total'] + option_votes
