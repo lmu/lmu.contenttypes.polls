@@ -8,6 +8,7 @@ from zope.annotation.interfaces import IAnnotations
 from zope.component import queryUtility
 from zope.interface import implements
 
+from lmu.contenttypes.polls import MessageFactory as _
 from lmu.contenttypes.polls.config import COOKIE_KEY
 from lmu.contenttypes.polls.config import MEMBERS_ANNO_KEY
 from lmu.contenttypes.polls.config import PERMISSION_VOTE
@@ -171,11 +172,11 @@ class StarPoll(Poll):
     def get_options(self):
         """Return available options."""
         return [
-            {'option_id': 1, 'description': ''},
-            {'option_id': 2, 'description': ''},
-            {'option_id': 3, 'description': ''},
-            {'option_id': 4, 'description': ''},
-            {'option_id': 5, 'description': ''}
+            {'option_id': 1, 'token': '', 'description': ''},
+            {'option_id': 2, 'token': '', 'description': ''},
+            {'option_id': 3, 'token': '', 'description': ''},
+            {'option_id': 4, 'token': '', 'description': ''},
+            {'option_id': 5, 'token': '', 'description': ''}
         ]
 
 
@@ -186,8 +187,8 @@ class AgreeDisagreePoll(Poll):
     def get_options(self):
         """Return available options."""
         return [
-            {'option_id': 1, 'description': 'agree'},
-            {'option_id': 2, 'description': 'disagree'}
+            {'option_id': 1, 'token': 'agree', 'description': _('Agree')},
+            {'option_id': 2, 'token': 'disagree', 'description': _('Disagree')}
         ]
 
 
@@ -198,6 +199,6 @@ class LikeDislikePoll(Poll):
     def get_options(self):
         """Return available options."""
         return [
-            {'option_id': 1, 'description': 'like'},
-            {'option_id': 2, 'description': 'dislike'}
+            {'option_id': 1, 'token': 'like', 'description': _('Like')},
+            {'option_id': 2, 'token': 'dislike', 'description': _('Dislike')}
         ]

@@ -10,25 +10,25 @@
   <tbody>
     <tr>
       <td>
-        <span i18n:translate="" tal:content="view/result1option" >Agree</span>
+        <span i18n:translate="" tal:content="view/result1option" tal:attributes="class view/result1token" >Option 1</span>
       </td>
       <td>
         <div class="a-meter">
           <div class="a-meter-bar" style="width: 5.298%;" tal:attributes="style view/result1style;"></div>
         </div>
       </td>
-      <td>(<span tal:replace="view/result2par" /> / <span tal:replace="view/result1per" /> %)</td>
+      <td>(<span tal:replace="view/result1par" /> / <span tal:replace="view/result1per" /> %)</td>
     </tr>
     <tr>
       <td>
-        <span i18n:translate="" tal:content="view/result2option" >Disagree</span>
+        <span i18n:translate="" tal:content="view/result2option" tal:attributes="class view/result1token" >Option 2</span>
       </td>
       <td>
         <div class="a-meter">
           <div class="a-meter-bar" style="width: 0.662%;" tal:attributes="style view/result2style;"></div>
         </div>
       </td>
-      <td>(<span tal:replace="view/result1par" /> / <span tal:replace="view/result2per" /> %)</td>
+      <td>(<span tal:replace="view/result2par" /> / <span tal:replace="view/result2per" /> %)</td>
     </tr>
   </tbody>
   <tfoot>

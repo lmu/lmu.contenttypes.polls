@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"POT-Creation-Date: 2015-07-07 08:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,61 +43,60 @@ msgstr "4 Sterne"
 msgid "5 Stars"
 msgstr "5 Sterne"
 
+#: ./profiles/default/types/Agree_Disagree_Poll.xml
+#: ./profiles/default/types/Like_Dislike_Poll.xml
+#: ./profiles/default/types/Star_Poll.xml
+msgid "A Poll with a star rating"
+msgstr "Eine Stern-Umfrage"
+
 #: ./profiles/default/types/Poll.xml
 msgid "A poll"
 msgstr "Eine Umfrage"
 
-#: ./profiles/default/portlets.xml
-msgid "A portlet to allow voting on a specific poll"
-msgstr "Ein Portlet, welches es erlaubt bei einer spezifischen Umfrage abzustimmen"
+#: ./browser/templates/poll_agree_disagree.pt:29
+#: ./content/poll.py:190
+msgid "Agree"
+msgstr "Ich stimme zu"
 
-#: ./interfaces.py:199
-msgid "Add a link to the poll"
-msgstr "Füge einnen Link zur Umfrage hinzu"
-
-#: ./config.py:26
+#: ./config.py:28
+#: ./profiles/default/types/Agree_Disagree_Poll.xml
 msgid "Agree / Disagree Poll"
 msgstr "Stimmt / Stimmt nicht Umfrage"
 
-#: ./interfaces.py:136
+#: ./interfaces.py:138
 msgid "Allow anonymous"
 msgstr "Erlaube nicht angemeldeten Nutzer das Abstimmen"
 
-#: ./interfaces.py:137
+#: ./interfaces.py:139
 msgid "Allow not logged in users to vote. The parent folder of this poll should be published before opeining the poll for this field to take effect"
 msgstr "Erlaube es nicht eingeloggten Nutzern abzustimmen. Das übergeordnete Elemente muss hierfür veröffentlicht sein, damit dies möglich its."
 
-#: ./interfaces.py:129
+#: ./interfaces.py:131
 msgid "Allow to change Vote"
 msgstr "Erlaube es, dass man seine Stimmabgabe ändern kann"
 
-#: ./interfaces.py:130
+#: ./interfaces.py:132
 msgid "Allow user to change vote after a successful submit."
 msgstr "Erlaube es Nutzern ihre Stimmabgabe nach einer Erfolgreichen Stimmabgabe zu ändern."
 
-#: ./browser/poll_views.py:58
-msgid "Anonymous user won't be able to vote, you forgot to publish the parent folder, you must sent back the poll to private state, publish the parent folder and open the poll again"
-msgstr "Nicht eingeloggte Nutzer sind nicht in der Lage abzustimmen. Sie haben vergessen das übergeordnete Element zu vertöfferntlichen. Sie müsen die Abstimmung auf den Workflow-Status Privat zurücksetzten, den übergeordneten Orderner Veröffentlichen und die Abstimmung wieder Öffenen um dies zu ermöglichen."
-
-#: ./interfaces.py:146
+#: ./interfaces.py:148
 msgid "Available options"
 msgstr "Verfügbare Optionen"
 
 #: ./browser/templates/poll_free.pt:47
 #: ./browser/templates/poll_like_dislike.pt:47
-#: ./browser/templates/poll_true_not_true.pt:47
 msgid "Available options:"
 msgstr "Verfügbare Optionen:"
 
-#: ./config.py:38
+#: ./config.py:40
 msgid "Average + Bar Chart"
 msgstr "Durchschnitt & Balken-Diagramm"
 
-#: ./config.py:40
+#: ./config.py:42
 msgid "Average Chart"
 msgstr "Durchschnitts-Diagramm"
 
-#: ./config.py:39
+#: ./config.py:41
 msgid "Bar Chart"
 msgstr "Balken-Diagramm"
 
@@ -113,43 +112,53 @@ msgstr "Abgeschlossen"
 msgid "Closed Polls"
 msgstr "Abgschlossene Umfragen"
 
-#: ./interfaces.py:114
+#: ./browser/templates/poll_agree_disagree.pt:73
+#: ./content/poll.py:191
+msgid "Disagree"
+msgstr "Ich stimme nicht zu"
+
+#: ./browser/templates/poll_agree_disagree.pt:30
+msgid "Disgree"
+msgstr "Ich stimme nicht zu"
+
+#: ./content/poll.py:203
+msgid "Dislike"
+msgstr "Mag ich nicht"
+
+#: ./profiles/default/types/Poll_Folder.xml
+msgid "Folder for Polls special views and restrictions"
+msgstr "Container für Umfragen"
+
+#: ./interfaces.py:124
 msgid "Format to show the results."
 msgstr "Format, in welchem die Ergebnisse angezeigt werden sollen."
 
-#: ./config.py:28
+#: ./config.py:30
 msgid "Free Poll"
 msgstr "Umfrage mit freien Antwortmöglichkeiten."
 
-#: ./interfaces.py:113
+#: ./interfaces.py:123
 msgid "Graph"
 msgstr "Diagramm"
 
-#: ./interfaces.py:172
-msgid "Header"
-msgstr "Kopfzeile"
-
-#: ./interfaces.py:105
+#: ./interfaces.py:115
 msgid "How to show results."
 msgstr "Wie sollen die Ergebnisse angezeigt werden."
 
-#: ./interfaces.py:192
-msgid "If there is no available open poll or the chosen poll is already closed, should the porlet show the results instead."
-msgstr "Wenn es keine verfügbare oder ausgewählte Umfage gibt, soll dann das Portlet stattdessen die Ergebnisse anzeigen?"
-
-#: ./browser/poll_views.py:78
+#: ./browser/poll_views.py:90
 msgid "Invalid option"
 msgstr "Nichterlaube Option"
 
-#: ./profiles/default/portlets.xml
-msgid "LMU Voting portlet"
-msgstr "LMU Umfrage Portlet"
-
-#: ./interfaces.py:31
+#: ./interfaces.py:41
 msgid "Latest opened poll"
 msgstr "Aktuellste Umfrage"
 
-#: ./config.py:27
+#: ./content/poll.py:202
+msgid "Like"
+msgstr "Mag ich"
+
+#: ./config.py:29
+#: ./profiles/default/types/Like_Dislike_Poll.xml
 msgid "Like / Dislike Poll"
 msgstr "Like / Dislike Umfrage"
 
@@ -161,15 +170,15 @@ msgstr "Nutzer hat die ÜUmfrage zurückgezogen"
 msgid "Member submits poll for opening"
 msgstr "Nutzer hat die Umfrage voröffentlicht."
 
-#: ./config.py:34
+#: ./config.py:36
 msgid "Never Show result for user"
 msgstr "Zeige niemals Ergebnisse für den Nutzer"
 
-#: ./browser/poll_views.py:126
+#: ./browser/poll_views.py:138
 msgid "No active or closed Polls avalible"
 msgstr "Keine aktiven oder abgeschlossenen Umfragen verfügbar."
 
-#: ./interfaces.py:50
+#: ./interfaces.py:28
 msgid "Not enought options provided"
 msgstr "Nicht genügend Optionen zur Verfügung gestellt"
 
@@ -177,7 +186,7 @@ msgstr "Nicht genügend Optionen zur Verfügung gestellt"
 msgid "Nothing to see here"
 msgstr "Nicht zu sehen hier"
 
-#: ./config.py:41
+#: ./config.py:43
 msgid "Numbers Only"
 msgstr "Nur Zahlen Ergebnisse"
 
@@ -197,6 +206,7 @@ msgstr "Veröffentlicht"
 msgid "Option"
 msgstr "Optionen"
 
+#: ./browser/templates/poll_agree_disagree.pt:35
 #: ./browser/templates/poll_star.pt:41
 #: ./browser/templates/voteportlet.pt:38
 msgid "Partial results"
@@ -204,6 +214,7 @@ msgstr "So hat die LMU abgestimmt"
 
 #: ./browser/templates/poll_star_bar_widget.pt:69
 #: ./browser/templates/poll_star_numbers_widget.pt:46
+#: ./browser/templates/two_option_bar_widget.pt:36
 msgid "Participants"
 msgstr "Teilnehmer"
 
@@ -215,14 +226,17 @@ msgstr "Wartet auf Redaktion"
 msgid "Percentage"
 msgstr "Prozente"
 
-#: ./config.py:46
+#: ./config.py:48
 msgid "Pie Chart"
 msgstr "Torten Diagramm"
 
-#: ./interfaces.py:178
 #: ./profiles/default/types/Poll.xml
 msgid "Poll"
 msgstr "Umfrage"
+
+#: ./profiles/default/types/Poll_Folder.xml
+msgid "Poll Folder"
+msgstr "Umfrage Ordner"
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml
 msgid "Poll Workflow"
@@ -236,13 +250,14 @@ msgstr "Privat"
 msgid "Reject"
 msgstr "Zurückgezogen"
 
+#: ./browser/templates/poll_agree_disagree.pt:48
 #: ./browser/templates/poll_star.pt:54
 msgid "Result View Example"
 msgstr "Beispiel der Ergebnisansicht"
 
 #: ./browser/templates/poll_free.pt:76
 #: ./browser/templates/poll_like_dislike.pt:76
-#: ./browser/templates/poll_true_not_true.pt:76
+#: ./browser/templates/voteportlet.pt:39
 msgid "Results"
 msgstr "Ergebnisse"
 
@@ -262,37 +277,26 @@ msgstr "Redaktion hat die Umfrage veröffentlicht"
 msgid "Reviewer rejects the poll"
 msgstr "Redaktion hat die Umfrage zurückgezogen"
 
-#: ./config.py:32
+#: ./config.py:34
 msgid "Show after Vote"
 msgstr "Zeige nach Abstimmung"
 
-#: ./interfaces.py:191
-msgid "Show closed polls"
-msgstr "Zeige Abgeschlossene Umfragen"
-
-#: ./config.py:33
+#: ./config.py:35
 msgid "Show directly with Vote question"
 msgstr "Zeige Zwischenergebnisse direkt mit der Frage zur Abstimmung"
 
-#: ./interfaces.py:104
+#: ./interfaces.py:114
 msgid "Show results"
 msgstr "Zeige Ergebnisse"
 
-#: ./interfaces.py:186
-msgid "Show the number of collected votes so far."
-msgstr "Zeige die Anzahl an bisher abgegebenen Stimmen"
-
-#: ./interfaces.py:185
-msgid "Show total votes"
-msgstr "Zeige absolute Stimmenanzahl"
-
-#: ./config.py:25
+#: ./config.py:27
+#: ./profiles/default/types/Star_Poll.xml
 msgid "Star Poll"
 msgstr "Stern-Umfrage"
 
+#: ./browser/templates/poll_agree_disagree.pt:31
 #: ./browser/templates/poll_free.pt:32
 #: ./browser/templates/poll_like_dislike.pt:32
-#: ./browser/templates/poll_star.pt:37
 msgid "Submit"
 msgstr "Absenden"
 
@@ -300,55 +304,53 @@ msgstr "Absenden"
 msgid "Submit for opening"
 msgstr "Absenden zum Veröffentlichen"
 
-#: ./browser/poll_views.py:91
+#: ./browser/poll_views.py:103
 msgid "Thanks for your vote"
 msgstr "Danke für Ihre Teilnahme."
 
-#: ./interfaces.py:173
-msgid "The header for the portlet. Leave empty for none."
-msgstr "Die Kopfzeile des Portlets, lassen Sie es leer für keine."
-
+#: ./browser/templates/poll_agree_disagree.pt:60
 #: ./browser/templates/poll_star.pt:66
 msgid "This Poll did not show results. Thank you for participation."
 msgstr "Diese Umfrage zeigt keine Ergebnisse. Vielen Dank für Ihre Teilnahme"
 
+#: ./browser/templates/poll_agree_disagree.pt:124
 #: ./browser/templates/poll_star.pt:145
 msgid "This Poll did not show results. You have not participated."
 msgstr "Diese Umfrage zeigt keine Ergebnisse. Sie haben nicht an doieser Umfrage Teilgenommen."
 
+#: ./browser/templates/poll_agree_disagree.pt:108
 #: ./browser/templates/poll_star.pt:126
 msgid "This Poll has been closed"
 msgstr "Diese Umfrage ist abgeschlossen."
 
+#: ./browser/templates/poll_agree_disagree.pt:20
 #: ./browser/templates/poll_star.pt:20
 msgid "This Poll hasn't been published, you see a preview without voting possibility"
 msgstr "Diese Umfrage ist bisher noch nicht veröffentlicht. Sie sehen eine Vorschau, ohne die Möglichkeit abzustimmen."
 
+#: ./browser/templates/poll_agree_disagree.pt:114
 #: ./browser/templates/poll_star.pt:132
 msgid "This is the final Result, thanks for participating"
 msgstr "Dies ist das abschließende Ergebnis. Vielen Dank für Ihre Teilnahme"
 
+#: ./browser/templates/poll_agree_disagree.pt:115
 #: ./browser/templates/poll_star.pt:133
 msgid "This is the final Result, you have not participate"
 msgstr "Dies ist das abschließende Ergebnis. Sie haben an dieser Umfrage nicht teilgenommen."
 
+#: ./browser/templates/poll_agree_disagree.pt:93
 #: ./browser/templates/poll_star.pt:108
 msgid "This is the partial Result"
 msgstr "So hat die LMU abgestimmt:"
 
 #: ./browser/templates/poll_free.pt:90
 #: ./browser/templates/poll_like_dislike.pt:90
-#: ./browser/templates/poll_true_not_true.pt:90
+#: ./browser/templates/voteportlet.pt:107
 msgid "Total Votes:"
 msgstr "Absolute Stimmen"
 
-#: ./interfaces.py:90
-msgid "Type of Poll"
-msgstr "Art der Umfrage"
-
 #: ./browser/templates/poll_free.pt:56
 #: ./browser/templates/poll_like_dislike.pt:56
-#: ./browser/templates/poll_true_not_true.pt:56
 msgid "Vote!"
 msgstr "Abstimmen!"
 
@@ -356,27 +358,20 @@ msgstr "Abstimmen!"
 msgid "Voters"
 msgstr "Teilnehmer"
 
+#: ./browser/templates/poll_agree_disagree.pt:24
 #: ./browser/templates/poll_star.pt:24
 msgid "Voting View"
 msgstr "Abstimmungs Sicht"
-
-#: ./voteportlet.py:161
-msgid "Voting portlet"
-msgstr "Umfrage Portlet"
-
-#: ./interfaces.py:179
-msgid "Which poll to show in the portlet."
-msgstr "Welche Umfrage soll in dem Portlet angezeigt werden."
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml
 msgid "Workflow to be used with polls"
 msgstr "Welcher Workflow soll für die Umfrage genutzt werden?"
 
-#: ./browser/poll_views.py:96
+#: ./browser/poll_views.py:108
 msgid "You are not authorized to vote"
 msgstr "Sie sind nicht autorisiert abzustimmen."
 
-#: ./interfaces.py:159
+#: ./interfaces.py:161
 msgid "You need to provide at least two options for a free poll."
 msgstr "Sie müssen mindestens zwei Auswahloptionen für eine Freie Umfrage bereitstellen."
 

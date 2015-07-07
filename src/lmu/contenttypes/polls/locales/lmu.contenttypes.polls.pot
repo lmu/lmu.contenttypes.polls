@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-05-11 09:52+0000\n"
+"POT-Creation-Date: 2015-07-07 08:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,10 +16,6 @@ msgstr ""
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: manual\n"
-
-#: ./interfaces.py:91
-msgid ""
-msgstr ""
 
 #: ./browser/templates/poll_star_average_widget.pt:16
 msgid "${dynamic_count} of 5 Stars"
@@ -50,61 +46,60 @@ msgstr ""
 msgid "5 Stars"
 msgstr ""
 
+#: ./profiles/default/types/Agree_Disagree_Poll.xml
+#: ./profiles/default/types/Like_Dislike_Poll.xml
+#: ./profiles/default/types/Star_Poll.xml
+msgid "A Poll with a star rating"
+msgstr ""
+
 #: ./profiles/default/types/Poll.xml
 msgid "A poll"
 msgstr ""
 
-#: ./profiles/default/portlets.xml
-msgid "A portlet to allow voting on a specific poll"
+#: ./browser/templates/poll_agree_disagree.pt:29
+#: ./content/poll.py:190
+msgid "Agree"
 msgstr ""
 
-#: ./interfaces.py:199
-msgid "Add a link to the poll"
-msgstr ""
-
-#: ./config.py:26
+#: ./config.py:28
+#: ./profiles/default/types/Agree_Disagree_Poll.xml
 msgid "Agree / Disagree Poll"
 msgstr ""
 
-#: ./interfaces.py:136
+#: ./interfaces.py:138
 msgid "Allow anonymous"
 msgstr ""
 
-#: ./interfaces.py:137
+#: ./interfaces.py:139
 msgid "Allow not logged in users to vote. The parent folder of this poll should be published before opeining the poll for this field to take effect"
 msgstr ""
 
-#: ./interfaces.py:129
+#: ./interfaces.py:131
 msgid "Allow to change Vote"
 msgstr ""
 
-#: ./interfaces.py:130
+#: ./interfaces.py:132
 msgid "Allow user to change vote after a successful submit."
 msgstr ""
 
-#: ./browser/poll_views.py:58
-msgid "Anonymous user won't be able to vote, you forgot to publish the parent folder, you must sent back the poll to private state, publish the parent folder and open the poll again"
-msgstr ""
-
-#: ./interfaces.py:146
+#: ./interfaces.py:148
 msgid "Available options"
 msgstr ""
 
 #: ./browser/templates/poll_free.pt:47
 #: ./browser/templates/poll_like_dislike.pt:47
-#: ./browser/templates/poll_true_not_true.pt:47
 msgid "Available options:"
 msgstr ""
 
-#: ./config.py:38
+#: ./config.py:40
 msgid "Average + Bar Chart"
 msgstr ""
 
-#: ./config.py:40
+#: ./config.py:42
 msgid "Average Chart"
 msgstr ""
 
-#: ./config.py:39
+#: ./config.py:41
 msgid "Bar Chart"
 msgstr ""
 
@@ -120,43 +115,53 @@ msgstr ""
 msgid "Closed Polls"
 msgstr ""
 
-#: ./interfaces.py:114
+#: ./browser/templates/poll_agree_disagree.pt:73
+#: ./content/poll.py:191
+msgid "Disagree"
+msgstr ""
+
+#: ./browser/templates/poll_agree_disagree.pt:30
+msgid "Disgree"
+msgstr ""
+
+#: ./content/poll.py:203
+msgid "Dislike"
+msgstr ""
+
+#: ./profiles/default/types/Poll_Folder.xml
+msgid "Folder for Polls special views and restrictions"
+msgstr ""
+
+#: ./interfaces.py:124
 msgid "Format to show the results."
 msgstr ""
 
-#: ./config.py:28
+#: ./config.py:30
 msgid "Free Poll"
 msgstr ""
 
-#: ./interfaces.py:113
+#: ./interfaces.py:123
 msgid "Graph"
 msgstr ""
 
-#: ./interfaces.py:172
-msgid "Header"
-msgstr ""
-
-#: ./interfaces.py:105
+#: ./interfaces.py:115
 msgid "How to show results."
 msgstr ""
 
-#: ./interfaces.py:192
-msgid "If there is no available open poll or the chosen poll is already closed, should the porlet show the results instead."
-msgstr ""
-
-#: ./browser/poll_views.py:78
+#: ./browser/poll_views.py:90
 msgid "Invalid option"
 msgstr ""
 
-#: ./profiles/default/portlets.xml
-msgid "LMU Voting portlet"
-msgstr ""
-
-#: ./interfaces.py:31
+#: ./interfaces.py:41
 msgid "Latest opened poll"
 msgstr ""
 
-#: ./config.py:27
+#: ./content/poll.py:202
+msgid "Like"
+msgstr ""
+
+#: ./config.py:29
+#: ./profiles/default/types/Like_Dislike_Poll.xml
 msgid "Like / Dislike Poll"
 msgstr ""
 
@@ -168,15 +173,15 @@ msgstr ""
 msgid "Member submits poll for opening"
 msgstr ""
 
-#: ./config.py:34
+#: ./config.py:36
 msgid "Never Show result for user"
 msgstr ""
 
-#: ./browser/poll_views.py:126
+#: ./browser/poll_views.py:138
 msgid "No active or closed Polls avalible"
 msgstr ""
 
-#: ./interfaces.py:50
+#: ./interfaces.py:28
 msgid "Not enought options provided"
 msgstr ""
 
@@ -184,7 +189,7 @@ msgstr ""
 msgid "Nothing to see here"
 msgstr ""
 
-#: ./config.py:41
+#: ./config.py:43
 msgid "Numbers Only"
 msgstr ""
 
@@ -204,6 +209,7 @@ msgstr ""
 msgid "Option"
 msgstr ""
 
+#: ./browser/templates/poll_agree_disagree.pt:35
 #: ./browser/templates/poll_star.pt:41
 #: ./browser/templates/voteportlet.pt:38
 msgid "Partial results"
@@ -211,6 +217,7 @@ msgstr ""
 
 #: ./browser/templates/poll_star_bar_widget.pt:69
 #: ./browser/templates/poll_star_numbers_widget.pt:46
+#: ./browser/templates/two_option_bar_widget.pt:36
 msgid "Participants"
 msgstr ""
 
@@ -222,13 +229,16 @@ msgstr ""
 msgid "Percentage"
 msgstr ""
 
-#: ./config.py:46
+#: ./config.py:48
 msgid "Pie Chart"
 msgstr ""
 
-#: ./interfaces.py:178
 #: ./profiles/default/types/Poll.xml
 msgid "Poll"
+msgstr ""
+
+#: ./profiles/default/types/Poll_Folder.xml
+msgid "Poll Folder"
 msgstr ""
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml
@@ -243,13 +253,14 @@ msgstr ""
 msgid "Reject"
 msgstr ""
 
+#: ./browser/templates/poll_agree_disagree.pt:48
 #: ./browser/templates/poll_star.pt:54
 msgid "Result View Example"
 msgstr ""
 
 #: ./browser/templates/poll_free.pt:76
 #: ./browser/templates/poll_like_dislike.pt:76
-#: ./browser/templates/poll_true_not_true.pt:76
+#: ./browser/templates/voteportlet.pt:39
 msgid "Results"
 msgstr ""
 
@@ -269,37 +280,26 @@ msgstr ""
 msgid "Reviewer rejects the poll"
 msgstr ""
 
-#: ./config.py:32
+#: ./config.py:34
 msgid "Show after Vote"
 msgstr ""
 
-#: ./interfaces.py:191
-msgid "Show closed polls"
-msgstr ""
-
-#: ./config.py:33
+#: ./config.py:35
 msgid "Show directly with Vote question"
 msgstr ""
 
-#: ./interfaces.py:104
+#: ./interfaces.py:114
 msgid "Show results"
 msgstr ""
 
-#: ./interfaces.py:186
-msgid "Show the number of collected votes so far."
-msgstr ""
-
-#: ./interfaces.py:185
-msgid "Show total votes"
-msgstr ""
-
-#: ./config.py:25
+#: ./config.py:27
+#: ./profiles/default/types/Star_Poll.xml
 msgid "Star Poll"
 msgstr ""
 
+#: ./browser/templates/poll_agree_disagree.pt:31
 #: ./browser/templates/poll_free.pt:32
 #: ./browser/templates/poll_like_dislike.pt:32
-#: ./browser/templates/poll_star.pt:37
 msgid "Submit"
 msgstr ""
 
@@ -307,55 +307,53 @@ msgstr ""
 msgid "Submit for opening"
 msgstr ""
 
-#: ./browser/poll_views.py:91
+#: ./browser/poll_views.py:103
 msgid "Thanks for your vote"
 msgstr ""
 
-#: ./interfaces.py:173
-msgid "The header for the portlet. Leave empty for none."
-msgstr ""
-
+#: ./browser/templates/poll_agree_disagree.pt:60
 #: ./browser/templates/poll_star.pt:66
 msgid "This Poll did not show results. Thank you for participation."
 msgstr ""
 
+#: ./browser/templates/poll_agree_disagree.pt:124
 #: ./browser/templates/poll_star.pt:145
 msgid "This Poll did not show results. You have not participated."
 msgstr ""
 
+#: ./browser/templates/poll_agree_disagree.pt:108
 #: ./browser/templates/poll_star.pt:126
 msgid "This Poll has been closed"
 msgstr ""
 
+#: ./browser/templates/poll_agree_disagree.pt:20
 #: ./browser/templates/poll_star.pt:20
 msgid "This Poll hasn't been published, you see a preview without voting possibility"
 msgstr ""
 
+#: ./browser/templates/poll_agree_disagree.pt:114
 #: ./browser/templates/poll_star.pt:132
 msgid "This is the final Result, thanks for participating"
 msgstr ""
 
+#: ./browser/templates/poll_agree_disagree.pt:115
 #: ./browser/templates/poll_star.pt:133
 msgid "This is the final Result, you have not participate"
 msgstr ""
 
+#: ./browser/templates/poll_agree_disagree.pt:93
 #: ./browser/templates/poll_star.pt:108
 msgid "This is the partial Result"
 msgstr ""
 
 #: ./browser/templates/poll_free.pt:90
 #: ./browser/templates/poll_like_dislike.pt:90
-#: ./browser/templates/poll_true_not_true.pt:90
+#: ./browser/templates/voteportlet.pt:107
 msgid "Total Votes:"
-msgstr ""
-
-#: ./interfaces.py:90
-msgid "Type of Poll"
 msgstr ""
 
 #: ./browser/templates/poll_free.pt:56
 #: ./browser/templates/poll_like_dislike.pt:56
-#: ./browser/templates/poll_true_not_true.pt:56
 msgid "Vote!"
 msgstr ""
 
@@ -363,27 +361,20 @@ msgstr ""
 msgid "Voters"
 msgstr ""
 
+#: ./browser/templates/poll_agree_disagree.pt:24
 #: ./browser/templates/poll_star.pt:24
 msgid "Voting View"
-msgstr ""
-
-#: ./voteportlet.py:161
-msgid "Voting portlet"
-msgstr ""
-
-#: ./interfaces.py:179
-msgid "Which poll to show in the portlet."
 msgstr ""
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml
 msgid "Workflow to be used with polls"
 msgstr ""
 
-#: ./browser/poll_views.py:96
+#: ./browser/poll_views.py:108
 msgid "You are not authorized to vote"
 msgstr ""
 
-#: ./interfaces.py:159
+#: ./interfaces.py:161
 msgid "You need to provide at least two options for a free poll."
 msgstr ""
 
