@@ -501,7 +501,7 @@ class TwoOptionBarWidgetViewlet(base.ViewletBase):
     def render(self):
         for option in self.results:
             setattr(self, 'result{index}{name}'.format(index=option['index'], name='option'), option['description'])
-            setattr(self, 'result{index}{name}'.format(index=option['index'], name='token'), option['token'])
+            setattr(self, 'result{index}{name}'.format(index=option['index'], name='token'), option.get('token',option['description']).lower())
             setattr(self, 'result{index}{name}'.format(index=option['index'], name='par'), option['votes'])
             per = option['percentage']
             setattr(self, 'result{index}{name}'.format(index=option['index'], name='per'), round(per*100.0, 1))
