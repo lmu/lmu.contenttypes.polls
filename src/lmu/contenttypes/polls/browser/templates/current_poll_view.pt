@@ -6,20 +6,6 @@
       tal:define="omit view/omit"
       tal:omit-tag="omit" >
 
-<head tal:condition="not:omit">
-  <title tal:content="context/Title"></title>
-
-  <link rel="stylesheet" type="text/css" href="++resource++collective.js.foundation/css/normalize.css" >
-  <link rel="stylesheet" type="text/css" href="++resource++collective.js.foundation/css/foundation.min.css" >
-
-  <link rel="stylesheet" href="++theme++lmu.theme.intranet/static/foundation/stylesheets/app.css">
-  <link rel="stylesheet" href="++theme++lmu.theme.intranet/static/main.css">
-
-  <script type="text/javascript" src="++resource++plone.app.jquery.js" ></script>
-  <script type="text/javascript" src="++resource++collective.js.foundation/js/foundation.min.js" ></script>
-
-</head>
-
 <body tal:omit-tag="omit" class="current-pollpage template-folder-current_poll_view" >
 
   <h3 i18n:translate="" tal:condition="view/open_polls">Open Polls</h3>
