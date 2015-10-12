@@ -14,5 +14,10 @@
   <type type_id="Like Dislike Poll">
    <bound-workflow workflow_id="poll_workflow"/>
   </type>
+<!--
+  <type type_id="Poll Folder">
+   <bound-workflow workflow_id="intranet_workflow"/>
+  </type>
+-->
  </bindings>
 </object>

@@ -287,7 +287,7 @@ class PollBaseView(BaseView):
              'votes': 3,
              'percentage': 0.09934},
         ]
-    
+
     def fake_agree_results(self):
         return [
             {'index': 1,
