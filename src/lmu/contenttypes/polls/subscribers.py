@@ -23,7 +23,7 @@ def fix_permissions(poll, event):
         parent_view_roles = [
             r['name'] for r in parent_view_roles if r['selected']]
         # Poll has been opened
-        import ipdb; ipdb.set_trace()
+        #import ipdb; ipdb.set_trace()
         allow_anonymous = poll.allow_anonymous
         parent_is_root = ISiteRoot.providedBy(parent)
         parent_allow_anon = 'Anonymous' in parent_view_roles
