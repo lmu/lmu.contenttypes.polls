@@ -63,15 +63,15 @@
     </tal:preview>
 
     <tal:vote-view tal:condition="python: wf_state in ['open', 'published']" >
-      <tal:vote tal:condition="python: can_vote and not has_voted">
+      <div tal:condition="python: can_vote and not has_voted" id="poll-id" tal:attributes="id string:poll-${context/id}" >
         <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
         <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
         <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
         <p tal:content="context/description" class="documentDescription" >Description</p>
-        <form action="#" method="POST" tal:attributes="action context/absolute_url" class="poll">
+        <form action="#" method="POST" tal:attributes="action context/absolute_url; id string:poll-form-${context/id}" class="poll" >
           <input type="radio" name="options" value="1" id="agree" /><label for="agree" i18n:translate="" class="helper-margin-top-m small-10 small-centered medium-4 large-10 columns">Agree</label><br />
           <input type="radio" name="options" value="2" id="disagree" /><label for="disagree" i18n:translate="" class="helper-margin-top-m small-10 small-centered medium-4 large-10 columns">Disagree</label><br />
-          <input type="submit" name="poll.submit" value="Submit" id="poll-submit" i18n:attributes="value" class="button disabled small radius small-10 small-centered medium-4 large-10 columns helper-margin-top-m" />
+          <input type="submit" name="poll.submit" value="Submit" id="poll-submit" i18n:attributes="value" class="button disabled small radius small-10 small-centered medium-4 large-10 columns helper-margin-top-m poll_submit" disabled="disabled" tal:attributes="id string:poll-submit-${context/id} "/>
         </form>
         <div tal:condition="python: show_results == 'with_vote'" >
           <hr />
@@ -83,7 +83,16 @@
             <tal:include tal:replace="structure python:view.get_star_numbers_widget()" />
           </tal:numbers>
         </div>
-      </tal:vote>
+        <tal:script_block tal:replace='structure string:<script type="text/javascript" >' tal:condition="nothing" />
+            $("<tal:target tal:replace="string:#poll-form-${context/id}" />").submit(function( event ) {
+              event.preventDefault();
+              alert(var data = $("<tal:target tal:replace="string:#poll-form-${context/id}" /> input:selected").val());
+              $.post("<tal:action tal:replace="context/absolute_url" />", function( data ) {
+                $("<tal:origin tal:replace="string:#poll-${context/absolute_url}" />")
+              });
+            });
+        <tal:script_block tal:replace="structure string:</script>" />
+      </div>
       <tal:result tal:condition="python: has_voted" >
         <div>
           <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
