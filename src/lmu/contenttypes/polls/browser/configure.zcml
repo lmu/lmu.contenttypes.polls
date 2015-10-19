@@ -41,14 +41,14 @@
         />
 
     <browser:page
-        name="current_poll"
+        name="current_poll.include"
         for="lmu.contenttypes.polls.interfaces.IPollFolder"
         class="lmu.contenttypes.polls.browser.poll_views.CurrentPollView"
         permission="zope2.View"
         />
 
     <browser:page
-        name="current_poll"
+        name="current_poll.include"
         for="*"
         class="lmu.contenttypes.polls.browser.poll_views.CurrentPollView"
         permission="zope2.View"
