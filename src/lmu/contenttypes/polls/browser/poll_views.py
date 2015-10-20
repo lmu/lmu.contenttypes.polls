@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
+import random
+
+from datetime import datetime
 
 from AccessControl import Unauthorized
 from Acquisition import aq_inner
-from Acquisition import aq_parent
-from Products.CMFCore.interfaces import ISiteRoot
+#from Acquisition import aq_parent
+#from Products.CMFCore.interfaces import ISiteRoot
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.app.layout.viewlets import common as base
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
+
+from lmu.policy.base.browser.content_listing import _IncludeMixin
 
 from lmu.contenttypes.polls import MessageFactory as _
 #from lmu.contenttypes.polls.interfaces import IPoll
@@ -100,37 +105,37 @@ class BaseView(BrowserView):
             # Let's vote
             try:
                 self.context.set_vote(options, self.request)
-                self.messages.append(_(u'Thanks for your vote'))
+                #self.messages.append(_(u'Thanks for your vote'))
                 # We do this to avoid redirecting anonymous user as
                 # we just sent them the cookie
                 self._has_voted = True
             except Unauthorized:
-                self.errors.append(_(u'You are not authorized to vote'))
+                #self.errors.append(_(u'You are not authorized to vote'))
+                pass
 
     def handleRedirect(self):
         env = self.request.environ
         referer = env.get('HTTP_REFERER', self.context.absolute_url)
-        # if referer in [
-        #     'https://iuksptest.verwaltung.uni-muenchen.de/index.html',
-        #     'https://iukintest.verwaltung.uni-muenchen.de/index.html',
-        #     'https://www.serviceportal.verwaltung.uni-muenchen.de/index.html',
-        #     'https://www.intranet.verwaltung.uni-muenchen.de/index.html',
-        # ]:
-        #     referer += ''  # '#feedback'
+        referer += '?vote=' + str(random.getrandbits(100)) + '&vote-timestamp=' + str(datetime.now().isoformat())
         return self.request.response.redirect(referer)
 
 
-class CurrentPollView(BaseView):
+class CurrentPollView(BaseView, _IncludeMixin):
 
     template = ViewPageTemplateFile('templates/current_poll_view.pt')
 
     def __call__(self):
-        omit = self.request.get('omit')
-        self.omit = str2bool(omit)
+        #omit = self.request.get('full')
+        #self.omit = str2bool(omit)
         self.utility = queryUtility(IPolls, name='lmu.contenttypes.polls')
         self.open_polls = self.utility.recent_polls()
         self.closed_polls = self.utility.recent_polls(show_all=True,
                                                       review_state='closed')
+        super(CurrentPollView, self).__call__()
+
+        REQUEST = self.context.REQUEST
+        RESPONSE = REQUEST.RESPONSE
+        RESPONSE.setHeader('Content-Type', 'application/xml;charset=utf-8')
         if len(self.open_polls) == 1:
             poll = self.open_polls[0].getObject()
             return poll.restrictedTraverse('@@poll_base_view')()
@@ -168,6 +173,9 @@ class PollBaseView(BaseView):
         request_type = env.get('REQUEST_METHOD', 'GET')
 
         if request_type == 'GET':
+            REQUEST = self.context.REQUEST
+            RESPONSE = REQUEST.RESPONSE
+            RESPONSE.setHeader('Content-Type', 'application/xml;charset=utf-8')
             if self.poll_type == 'Star Poll':
                 self.template = self.poll_star_template
                 view_class = self.request.steps[-1:][0]
