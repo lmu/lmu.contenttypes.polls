@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-07-07 08:22+0000\n"
+"POT-Creation-Date: 2015-10-21 16:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,31 @@ msgstr ""
 msgid "${dynamic_count} of 5 Stars"
 msgstr "${dynamic_count} von 5 Sternen"
 
+#: ./browser/poll_views.py:273
 #: ./browser/templates/poll_star_bar_widget.pt:57
 #: ./browser/templates/poll_star_numbers_widget.pt:39
 msgid "1 Star"
 msgstr "1 Stern"
 
+#: ./browser/poll_views.py:278
 #: ./browser/templates/poll_star_bar_widget.pt:46
 #: ./browser/templates/poll_star_numbers_widget.pt:34
 msgid "2 Stars"
 msgstr "2 Sterne"
 
+#: ./browser/poll_views.py:283
 #: ./browser/templates/poll_star_bar_widget.pt:35
 #: ./browser/templates/poll_star_numbers_widget.pt:29
 msgid "3 Stars"
 msgstr "3 Sterne"
 
+#: ./browser/poll_views.py:288
 #: ./browser/templates/poll_star_bar_widget.pt:24
 #: ./browser/templates/poll_star_numbers_widget.pt:24
 msgid "4 Stars"
 msgstr "4 Sterne"
 
+#: ./browser/poll_views.py:293
 #: ./browser/templates/poll_star_bar_widget.pt:13
 #: ./browser/templates/poll_star_numbers_widget.pt:19
 msgid "5 Stars"
@@ -53,8 +58,9 @@ msgstr "Eine Stern-Umfrage"
 msgid "A poll"
 msgstr "Eine Umfrage"
 
-#: ./browser/templates/poll_agree_disagree.pt:29
-#: ./content/poll.py:190
+#: ./browser/poll_views.py:302
+#: ./browser/templates/poll_agree_disagree.pt:28
+#: ./content/poll.py:192
 msgid "Agree"
 msgstr "Ich stimme zu"
 
@@ -108,20 +114,25 @@ msgstr "Umfrage abschließen"
 msgid "Closed"
 msgstr "Abgeschlossen"
 
-#: ./browser/templates/current_poll_view.pt:31
+#: ./browser/templates/current_poll_view.pt:17
 msgid "Closed Polls"
 msgstr "Abgschlossene Umfragen"
 
-#: ./browser/templates/poll_agree_disagree.pt:73
-#: ./content/poll.py:191
+#: ./browser/templates/poll_agree_disagree.pt:30
+msgid "Demo-Submit"
+msgstr ""
+
+#: ./browser/poll_views.py:307
+#: ./browser/templates/poll_agree_disagree.pt:72
+#: ./content/poll.py:193
 msgid "Disagree"
 msgstr "Ich stimme nicht zu"
 
-#: ./browser/templates/poll_agree_disagree.pt:30
+#: ./browser/templates/poll_agree_disagree.pt:29
 msgid "Disgree"
 msgstr "Ich stimme nicht zu"
 
-#: ./content/poll.py:203
+#: ./content/poll.py:205
 msgid "Dislike"
 msgstr "Mag ich nicht"
 
@@ -145,7 +156,7 @@ msgstr "Diagramm"
 msgid "How to show results."
 msgstr "Wie sollen die Ergebnisse angezeigt werden."
 
-#: ./browser/poll_views.py:90
+#: ./browser/poll_views.py:95
 msgid "Invalid option"
 msgstr "Nichterlaube Option"
 
@@ -153,7 +164,7 @@ msgstr "Nichterlaube Option"
 msgid "Latest opened poll"
 msgstr "Aktuellste Umfrage"
 
-#: ./content/poll.py:202
+#: ./content/poll.py:204
 msgid "Like"
 msgstr "Mag ich"
 
@@ -174,7 +185,7 @@ msgstr "Nutzer hat die Umfrage voröffentlicht."
 msgid "Never Show result for user"
 msgstr "Zeige niemals Ergebnisse für den Nutzer"
 
-#: ./browser/poll_views.py:138
+#: ./browser/poll_views.py:143
 msgid "No active or closed Polls avalible"
 msgstr "Keine aktiven oder abgeschlossenen Umfragen verfügbar."
 
@@ -194,7 +205,7 @@ msgstr "Nur Zahlen Ergebnisse"
 msgid "Open"
 msgstr "Offen"
 
-#: ./browser/templates/current_poll_view.pt:25
+#: ./browser/templates/current_poll_view.pt:11
 msgid "Open Polls"
 msgstr "Offene Umfragen"
 
@@ -206,11 +217,19 @@ msgstr "Veröffentlicht"
 msgid "Option"
 msgstr "Optionen"
 
-#: ./browser/templates/poll_agree_disagree.pt:35
-#: ./browser/templates/poll_star.pt:41
+#: ./browser/templates/poll_agree_disagree.pt:77
+#: ./browser/templates/poll_star.pt:90
 #: ./browser/templates/voteportlet.pt:38
 msgid "Partial results"
 msgstr "So hat die LMU abgestimmt"
+
+#: ./browser/templates/poll_star.pt:41
+msgid "Partial results LMU"
+msgstr "So hat die LMU abgestimmt"
+
+#: ./browser/templates/poll_agree_disagree.pt:34
+msgid "Partial results ZUV"
+msgstr "So hat die ZUV abgestimmt"
 
 #: ./browser/templates/poll_star_bar_widget.pt:69
 #: ./browser/templates/poll_star_numbers_widget.pt:46
@@ -250,7 +269,7 @@ msgstr "Privat"
 msgid "Reject"
 msgstr "Zurückgezogen"
 
-#: ./browser/templates/poll_agree_disagree.pt:48
+#: ./browser/templates/poll_agree_disagree.pt:47
 #: ./browser/templates/poll_star.pt:54
 msgid "Result View Example"
 msgstr "Beispiel der Ergebnisansicht"
@@ -294,7 +313,7 @@ msgstr "Zeige Ergebnisse"
 msgid "Star Poll"
 msgstr "Stern-Umfrage"
 
-#: ./browser/templates/poll_agree_disagree.pt:31
+#: ./browser/templates/poll_agree_disagree.pt:73
 #: ./browser/templates/poll_free.pt:32
 #: ./browser/templates/poll_like_dislike.pt:32
 msgid "Submit"
@@ -304,41 +323,37 @@ msgstr "Absenden"
 msgid "Submit for opening"
 msgstr "Absenden zum Veröffentlichen"
 
-#: ./browser/poll_views.py:103
-msgid "Thanks for your vote"
-msgstr "Danke für Ihre Teilnahme."
-
-#: ./browser/templates/poll_agree_disagree.pt:60
+#: ./browser/templates/poll_agree_disagree.pt:59
 #: ./browser/templates/poll_star.pt:66
 msgid "This Poll did not show results. Thank you for participation."
 msgstr "Diese Umfrage zeigt keine Ergebnisse. Vielen Dank für Ihre Teilnahme"
 
-#: ./browser/templates/poll_agree_disagree.pt:124
+#: ./browser/templates/poll_agree_disagree.pt:123
 #: ./browser/templates/poll_star.pt:145
 msgid "This Poll did not show results. You have not participated."
 msgstr "Diese Umfrage zeigt keine Ergebnisse. Sie haben nicht an doieser Umfrage Teilgenommen."
 
-#: ./browser/templates/poll_agree_disagree.pt:108
+#: ./browser/templates/poll_agree_disagree.pt:107
 #: ./browser/templates/poll_star.pt:126
 msgid "This Poll has been closed"
 msgstr "Diese Umfrage ist abgeschlossen."
 
-#: ./browser/templates/poll_agree_disagree.pt:20
+#: ./browser/templates/poll_agree_disagree.pt:19
 #: ./browser/templates/poll_star.pt:20
 msgid "This Poll hasn't been published, you see a preview without voting possibility"
 msgstr "Diese Umfrage ist bisher noch nicht veröffentlicht. Sie sehen eine Vorschau, ohne die Möglichkeit abzustimmen."
 
-#: ./browser/templates/poll_agree_disagree.pt:114
+#: ./browser/templates/poll_agree_disagree.pt:113
 #: ./browser/templates/poll_star.pt:132
 msgid "This is the final Result, thanks for participating"
 msgstr "Dies ist das abschließende Ergebnis. Vielen Dank für Ihre Teilnahme"
 
-#: ./browser/templates/poll_agree_disagree.pt:115
+#: ./browser/templates/poll_agree_disagree.pt:114
 #: ./browser/templates/poll_star.pt:133
 msgid "This is the final Result, you have not participate"
 msgstr "Dies ist das abschließende Ergebnis. Sie haben an dieser Umfrage nicht teilgenommen."
 
-#: ./browser/templates/poll_agree_disagree.pt:93
+#: ./browser/templates/poll_agree_disagree.pt:92
 #: ./browser/templates/poll_star.pt:108
 msgid "This is the partial Result"
 msgstr "So hat die LMU abgestimmt:"
@@ -358,7 +373,7 @@ msgstr "Abstimmen!"
 msgid "Voters"
 msgstr "Teilnehmer"
 
-#: ./browser/templates/poll_agree_disagree.pt:24
+#: ./browser/templates/poll_agree_disagree.pt:23
 #: ./browser/templates/poll_star.pt:24
 msgid "Voting View"
 msgstr "Abstimmungs Sicht"
@@ -366,10 +381,6 @@ msgstr "Abstimmungs Sicht"
 #: ./profiles/default/workflows/poll_workflow/definition.xml
 msgid "Workflow to be used with polls"
 msgstr "Welcher Workflow soll für die Umfrage genutzt werden?"
-
-#: ./browser/poll_views.py:108
-msgid "You are not authorized to vote"
-msgstr "Sie sind nicht autorisiert abzustimmen."
 
 #: ./interfaces.py:161
 msgid "You need to provide at least two options for a free poll."
