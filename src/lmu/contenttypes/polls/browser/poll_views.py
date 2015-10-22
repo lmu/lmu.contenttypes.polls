@@ -115,8 +115,8 @@ class BaseView(BrowserView):
 
     def handleRedirect(self):
         env = self.request.environ
-        referer = env.get('HTTP_REFERER', self.context.absolute_url)
-        referer = str(referer) + '#feedback?vote=' + str(random.getrandbits(100)) + '&vote-timestamp=' + str(datetime.now().isoformat())
+        referer = str(env.get('HTTP_REFERER', self.context.absolute_url()))
+        referer += '#feedback?vote=' + str(random.getrandbits(100)) + '&vote-timestamp=' + str(datetime.now().isoformat())
         return self.request.response.redirect(referer)
 
 
