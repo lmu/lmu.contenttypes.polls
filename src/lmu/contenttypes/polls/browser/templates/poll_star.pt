@@ -105,7 +105,7 @@
           <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
           <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
           <p tal:content="context/description" class="documentDescription" >Description</p>
-          <p i18n:translate="">This is the partial Result</p>
+          <p i18n:translate="">This is the partial Result LMU</p>
           <tal:average tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['average_bar', 'average']">
             <tal:include tal:replace="structure python:view.get_star_average_widget()" />
           </tal:average>

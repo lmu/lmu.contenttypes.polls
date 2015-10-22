@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-10-22 09:58+0000\n"
+"POT-Creation-Date: 2015-10-22 10:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -351,10 +351,13 @@ msgstr "Dies ist das abschließende Ergebnis. Vielen Dank für Ihre Teilnahme"
 msgid "This is the final Result, you have not participate"
 msgstr "Dies ist das abschließende Ergebnis. Sie haben an dieser Umfrage nicht teilgenommen."
 
-#: ./browser/templates/poll_agree_disagree.pt:92
 #: ./browser/templates/poll_star.pt:108
-msgid "This is the partial Result"
+msgid "This is the partial Result LMU"
 msgstr "So hat die LMU abgestimmt:"
+
+#: ./browser/templates/poll_agree_disagree.pt:92
+msgid "This is the partial Result ZUV"
+msgstr "So hat die ZUV abgestimmt:"
 
 #: ./browser/templates/poll_free.pt:90
 #: ./browser/templates/poll_like_dislike.pt:90
