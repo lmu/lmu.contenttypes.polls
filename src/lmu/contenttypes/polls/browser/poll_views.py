@@ -116,7 +116,7 @@ class BaseView(BrowserView):
     def handleRedirect(self):
         env = self.request.environ
         referer = env.get('HTTP_REFERER', self.context.absolute_url)
-        referer += '?vote=' + str(random.getrandbits(100)) + '&vote-timestamp=' + str(datetime.now().isoformat())
+        referer += '#feedback?vote=' + str(random.getrandbits(100)) + '&vote-timestamp=' + str(datetime.now().isoformat())
         return self.request.response.redirect(referer)
 
 
@@ -179,7 +179,7 @@ class PollBaseView(BaseView):
             if self.poll_type == 'Star Poll':
                 self.template = self.poll_star_template
                 view_class = self.request.steps[-1:][0]
-                if view_class in ['current_poll', ' poll_base_view']:
+                if view_class in ['current_poll.include', ' poll_base_view']:
                     self.heading_level = 'h3'
                 else:
                     self.heading_level = 'h1'
