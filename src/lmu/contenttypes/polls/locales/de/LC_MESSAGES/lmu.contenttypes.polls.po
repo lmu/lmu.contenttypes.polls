@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-10-21 16:24+0000\n"
+"POT-Creation-Date: 2015-10-22 09:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -217,19 +217,11 @@ msgstr "Veröffentlicht"
 msgid "Option"
 msgstr "Optionen"
 
-#: ./browser/templates/poll_agree_disagree.pt:77
-#: ./browser/templates/poll_star.pt:90
+#: ./browser/templates/poll_agree_disagree.pt:34
+#: ./browser/templates/poll_star.pt:41
 #: ./browser/templates/voteportlet.pt:38
 msgid "Partial results"
 msgstr "So hat die LMU abgestimmt"
-
-#: ./browser/templates/poll_star.pt:41
-msgid "Partial results LMU"
-msgstr "So hat die LMU abgestimmt"
-
-#: ./browser/templates/poll_agree_disagree.pt:34
-msgid "Partial results ZUV"
-msgstr "So hat die ZUV abgestimmt"
 
 #: ./browser/templates/poll_star_bar_widget.pt:69
 #: ./browser/templates/poll_star_numbers_widget.pt:46

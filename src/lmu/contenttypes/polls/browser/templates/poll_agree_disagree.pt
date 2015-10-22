@@ -31,7 +31,7 @@
         </form>
         <div tal:condition="python: show_results == 'with_vote'" >
           <hr />
-          <h3  i18n:translate="">Partial results ZUV</h3>
+          <h3  i18n:translate="">Partial results</h3>
           <tal:average tal:condition="python: graph_type in ['average_bar', 'average']">
             <tal:include tal:replace="structure python:view.get_star_average_widget(example=True)" />
           </tal:average>
