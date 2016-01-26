@@ -11,6 +11,7 @@
                   has_voted view/has_voted;
                   can_vote view/can_vote;
                   can_edit view/can_edit;
+                  isDBReadOnly view/isDBReadOnly;
                   wf_state view/wf_state;
                   show_results view/get_show_results;
                   graph_type view/graph_type;"
@@ -69,7 +70,7 @@
     </tal:preview>
 
     <tal:vote-view tal:condition="python: wf_state in ['open', 'published']" >
-      <tal:vote tal:condition="python: can_vote and not has_voted">
+      <tal:vote tal:condition="python: can_vote and not has_voted and not isDBReadOnly">
         <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
         <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
         <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
@@ -99,7 +100,7 @@
           </tal:numbers>
         </div>
       </tal:vote>
-      <tal:result tal:condition="python: has_voted" >
+      <tal:result tal:condition="python: has_voted or isDBReadOnly" >
         <div>
           <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
           <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>

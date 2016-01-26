@@ -15,6 +15,7 @@ from zope.component import getMultiAdapter
 from zope.component import queryUtility
 
 from lmu.policy.base.browser.content_listing import _IncludeMixin
+from lmu.policy.base.browser.utils import isDBReadOnly as uIsDBReadOnly
 
 from lmu.contenttypes.polls import MessageFactory as _
 #from lmu.contenttypes.polls.interfaces import IPoll
@@ -118,6 +119,9 @@ class BaseView(BrowserView):
         referer = str(env.get('HTTP_REFERER', self.context.absolute_url()))
         referer += '#feedback?vote=' + str(random.getrandbits(100)) + '&vote-timestamp=' + str(datetime.now().isoformat())
         return self.request.response.redirect(referer)
+
+    def isDBReadOnly(self):
+        return uIsDBReadOnly()
 
 
 class CurrentPollView(BaseView, _IncludeMixin):
