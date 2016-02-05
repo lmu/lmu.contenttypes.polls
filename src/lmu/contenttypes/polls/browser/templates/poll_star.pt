@@ -100,7 +100,7 @@
           </tal:numbers>
         </div>
       </tal:vote>
-      <tal:result tal:condition="python: has_voted or isDBReadOnly" >
+      <tal:result tal:condition="python: has_voted" >
         <div>
           <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
           <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
@@ -121,6 +121,13 @@
           </tal:no-results>
         </div>
       </tal:result>
+      <tal:readonly tal:condition="python: not has_voted and isDBReadOnly" >
+        <p class="alert-box secondary helper-border helper-padding-m helper-margin-top-m helper-margin-bottom-m helper-font-light text-center helper-clear"
+           tal:condition="isDBReadOnly"
+           i18n:translate="">
+            Das Abstimmen ist derzeit aus technischen Gruenden nicht moeglich.
+        </p>
+      </tal:readonly>
     </tal:vote-view>
 
     <tal:closed-view tal:condition="python: wf_state in ['closed']" >
