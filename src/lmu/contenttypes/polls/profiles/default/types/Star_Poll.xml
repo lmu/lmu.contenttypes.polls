@@ -38,7 +38,6 @@
   <property name="default_view_fallback">False</property>
   <property name="add_permission">cmf.AddPortalContent</property>
 
-
   <!-- Method aliases -->
   <alias from="(Default)" to="(dynamic view)" />
   <alias from="view" to="(selected layout)" />

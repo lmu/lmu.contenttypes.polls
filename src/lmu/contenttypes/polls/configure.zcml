@@ -37,7 +37,7 @@
 
     <genericsetup:registerProfile
         name="default"
-        title="LMU content types for Polls"
+        title="LMU Content Types for Polls"
         directory="profiles/default"
         description="A Plone extension providing a Poll content type, portlet and workflow."
         provides="Products.GenericSetup.interfaces.EXTENSION"

@@ -43,7 +43,6 @@
   <alias from="edit" to="@@edit" />
   <alias from="sharing" to="@@sharing" />
 
-
   <!-- Actions -->
   <action title="View"
          action_id="view"
@@ -59,5 +58,6 @@
           condition_expr=""
           url_expr="string:${object_url}/edit"
           visible="True">
-    <permission value="Modify 
+    <permission value="Modify portal content" />
+  </action>
 </object>
