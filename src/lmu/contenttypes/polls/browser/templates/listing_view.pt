@@ -7,11 +7,33 @@
 
 <body>
 
-  <metal:content fill-slot="content-core">
+  <metal:content fill-slot="content">
 
     <main id="content" class="poll">
-      <header id="Poll-header" class="row">
-        <div class="columns small-12 large-10 large-centered helper-margin-top-l">
+      <div id="plone-extras" class="visualClear clearfix"
+           tal:define="show_border context/@@plone/showEditableBorder;
+                       show_border python:show_border and not ajax_load"
+           tal:attributes="class python:show_border and 'documentEditable visualClear clearfix helper-margin-bottom-m columns small-12 large-10 large-centered helper-margin-top-l text-left' or ''">
+
+        <div metal:use-macro="context/global_statusmessage/macros/portal_message">
+          Status message
+        </div>
+
+        <div id="edit-bar"
+             tal:condition="show_border"
+             tal:content="structure provider:plone.contentviews" />
+
+        <div id="rules" class="blog_info reveal-modal xlarge" data-reveal aria-labelledby="" aria-hidden="true" role="dialog" style="top: -8em;">
+          <tal:rules tal:content="structure context/text/output">
+            Content Body
+          </tal:rules>
+          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+
+      </div>
+
+      <header id="poll-header" class="row">
+        <div class="columns small-12 large-10 large-centered helper-margin-top-l text-left">
           <h1>
             <span tal:replace="context/title">Poll Titel</span> 
             <small tal:content="context/description"
@@ -19,10 +41,11 @@
                 Poll Sub-Title
             </small>
           </h1>
+          <p tal:content="structure context/text/output"></p>
         </div>
       </header>
       <div id="poll-main" class="row">
-        <div class="columns small-12 large-10 large-centered " >
+        <div class="columns small-12 large-10 large-centered text-left" >
         <tal:block tal:repeat="entry context/items"
                    tal:define="isAnon context/@@plone_portal_state/anonymous;
                                normalizeString nocall: context/plone_utils/normalizeString;
@@ -33,12 +56,17 @@
                                navigation_root_url context/@@plone_portal_state/navigation_root_url;
                                pas_member context/@@pas_member;
                               ">
-          <article class="poll-entry poll-preview tileItem visualIEFloatFix clearfix" 
+          <article class="" 
                    tal:define="item python:entry[1];
                                item_type item/portal_type;
                                item_modified item/ModificationDate;
-                               item_url item/getURL|item/absolute_url;">
-            <a tal:attributes="href item_url;" tal:content="item/title" />
+                               item_url item/getURL|item/absolute_url;
+                               item_isLast repeat/entry/end;
+                               item_helper python: '' if item_isLast else 'helper-border-bottom';
+                               item_klass string:poll-entry poll-preview tileItem ${item_helper} visualIEFloatFix clearfix;"
+                   tal:attributes="class item_klass;">
+            <h3><a tal:attributes="href item_url;" tal:content="item/title">Poll Title</a></h3>
+            <tal:include tal:replace="structure item/poll_base_view" />
 
           </article>
         </tal:block>

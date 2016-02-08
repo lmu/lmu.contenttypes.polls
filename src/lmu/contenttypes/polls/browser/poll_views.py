@@ -177,9 +177,11 @@ class PollBaseView(BaseView):
         request_type = env.get('REQUEST_METHOD', 'GET')
 
         if request_type == 'GET':
-            REQUEST = self.context.REQUEST
-            RESPONSE = REQUEST.RESPONSE
-            RESPONSE.setHeader('Content-Type', 'application/xml;charset=utf-8')
+            if self.poll_type in ['Star Poll', 'Agree Disagree Poll', 'Like Dislike Poll', 'Free Poll']:
+                REQUEST = self.context.REQUEST
+                RESPONSE = REQUEST.RESPONSE
+                #RESPONSE.setHeader('Content-Type', 'application/xml;charset=utf-8')
+                #RESPONSE.setHeader('X-Theme-Disabled', 'True')
             if self.poll_type == 'Star Poll':
                 self.template = self.poll_star_template
                 view_class = self.request.steps[-1:][0]
