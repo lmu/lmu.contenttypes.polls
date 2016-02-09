@@ -101,61 +101,23 @@ class ILikeDislikePoll(IPoll):
     """  """
 
 
-class IFreePoll(Interface):
-    """A Poll Type that let you create a Poll with qquestion otion you could define by yourselfe."""
+class IFreePoll(IPoll):
+    """A Poll Type that let you create a Poll with question options you could define by yourself."""
 
-    # multivalue = schema.Bool(
-    #    title = _(u"Multivalue"),
-    #    description = _(u"Voters can choose several answers at the same "
-    #                     "time."),
-    # )
 
-    show_results = schema.Choice(
-        title=_(u'Show results'),
-        description=_(
-            u'How to show results.'),
-        source=config.SHOW_RESULTS_OPTIONS,
-        default='after_vote',  # config.SHOW_RESULTS_OPTIONS[0].value,
-        required=True,
-    )
-
-    general_results_graph = schema.Choice(
-        title=_(u'Graph'),
-        description=_(u'Format to show the results.'),
-        source=config.GENERAL_RESULT_GRAPH_OPTIONS,
-        default='bar',
-        required=True,
-    )
-
-    change_vote = schema.Bool(
-        title=_(u'Allow to change Vote'),
-        description=_(u'Allow user to change vote after a successful submit.'),
-        default=False,
-        required=False,
-    )
-
-    allow_anonymous = schema.Bool(
-        title=_(u'Allow anonymous'),
-        description=_(
-            u'Allow not logged in users to vote. '
-            u'The parent folder of this poll should be published before opeining the poll for this field to take effect'),  # NOQA
-        default=False,
-        required=False,
-    )
-
-    form.widget(options=EnhancedTextLinesFieldWidget)
-    options = schema.List(
-        title=_(u'Available options'),
-        value_type=schema.TextLine(),
-        default=[],
-        required=True,
-    )
-
-    @invariant
-    def validate_options(data):
-        """Validate options."""
-        options = data.options
-        descriptions = options and [o for o in options]
-        if len(descriptions) < 2:
-            raise InsuficientOptions(
-                _(u'You need to provide at least two options for a free poll.'))
+#    form.widget(options=EnhancedTextLinesFieldWidget)
+#    options = schema.List(
+#        title=_(u'Available options'),
+#        value_type=schema.TextLine(),
+#        default=[],
+#        required=True,
+#    )
+#
+#    @invariant
+#    def validate_options(data):
+#        """Validate options."""
+#        options = data.options
+#        descriptions = options and [o for o in options]
+#        if len(descriptions) < 2:
+#            raise InsuficientOptions(
+#                _(u'You need to provide at least two options for a free poll.'))

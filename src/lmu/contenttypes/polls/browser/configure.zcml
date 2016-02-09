@@ -34,6 +34,13 @@
         />
 
     <browser:page
+        name="view"
+        for="lmu.contenttypes.polls.interfaces.IFreePoll"
+        class="lmu.contenttypes.polls.browser.poll_views.FreePollView"
+        permission="zope2.View"
+        />
+
+    <browser:page
         name="poll_base_view"
         for="lmu.contenttypes.polls.interfaces.IPoll"
         class="lmu.contenttypes.polls.browser.poll_views.PollBaseView"

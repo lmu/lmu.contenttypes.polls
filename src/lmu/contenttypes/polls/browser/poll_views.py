@@ -248,7 +248,9 @@ class PollBaseView(BaseView):
         return utility.uid_for_poll(self.context)
 
     def get_poll_type(self):
-        return self.context.get_poll_type()
+        #import ipdb; ipdb.set_trace()
+        return self.poll_type
+        #return self.context.get_poll_type()
 
     def get_show_results(self):
         return self.context.get_show_results()
@@ -315,6 +317,20 @@ class PollBaseView(BaseView):
              'votes': 20,
              'percentage': 0.47619},
         ]
+
+    def fake_free_results(self):
+        fake_result = []
+        index = 1
+        for option in self.context.options:
+            fake_result.append({
+                'index': index,
+                'description': option,
+                'token': option,
+                'votes': 22,
+                'percentage': 0.52381,
+            })
+            index += 1
+        return fake_result
 
     def get_star_average_widget(self, example=False):
         if example:
@@ -463,6 +479,26 @@ class LikeDislikePollView(PollView):
                 if self.participants > 1:
                     self.average = self.average / self.participants
         return super(LikeDislikePollView, self).__call__()
+
+
+class FreePollView(PollView):
+
+    template = ViewPageTemplateFile('templates/poll_free.pt')
+
+    def __call__(self):
+        """
+        """
+        import ipdb; ipdb.set_trace()
+        self.template = ViewPageTemplateFile('templates/poll_free.pt')
+        if self.request_type == 'GET':
+            if self.results:
+                self.average = 0.0
+                for option in self.results.get('options', []):
+                    self.average += float(option['index']) * \
+                        float(option['votes'])
+                if self.participants > 1:
+                    self.average = self.average / self.participants
+        return super(FreePollView, self).__call__()
 
 
 class StarAverageWidgetViewlet(base.ViewletBase):

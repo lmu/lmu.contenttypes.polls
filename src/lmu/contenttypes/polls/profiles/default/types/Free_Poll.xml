@@ -9,7 +9,7 @@
   <property name="description" i18n:translate="">A Poll with free Questions</property>
   <property name="icon_expr">string:${portal_url}/++resource++lmu.contenttypes.polls/poll_icon.png</property>
   <property name="factory">lmu.contenttypes.polls.poll</property>
-  <property name="global_allow">True</property>
+  <property name="global_allow">False</property>
   <property name="filter_content_types">False</property>
   <property name="allowed_content_types" />
   <property name="allow_discussion">False</property>
@@ -17,8 +17,8 @@
   <!-- schema and class used for content items -->
   <property name="schema"></property>
   <property name="model_source"></property>
-  <property name="schema">lmu.contenttypes.polls.interfaces.IPoll</property>
-  <property name="klass">lmu.contenttypes.polls.content.poll.Poll</property>
+  <property name="model_file">lmu.contenttypes.polls.models:free_poll.xml</property>
+  <property name="klass">lmu.contenttypes.polls.content.poll.FreePoll</property>
 
   <property name="behaviors">
      <element value="plone.app.content.interfaces.INameFromTitle" />

@@ -36,9 +36,19 @@
       <required>True</required>
     </field>
 
-    <field name="questions" type="zope.schema.TextLine">
-      <title i18n:translate="lable_questions_title">Questions</title>
-      <description i18n:translate="lable_questions_description">What should be asked? One Question per line, please.</description>
+    <field name="options"
+           type="zope.schema.List"
+           form:widget="collective.z3cform.widgets.enhancedtextlines.EnhancedTextLinesFieldWidget"
+           form:validator="lmu.contenttypes.polls.content.poll.AtLeastTwoOptionsValidator">
+           <!-- 
+           form:widget="collective.z3cform.widgets.enhancedtextlines.EnhancedTextLinesFieldWidget"
+           form:validator="lmu.contenttypes.polls.content.poll.AtLeastTwoOptionsValidator" -->
+      <title i18n:translate="lable_options_title">Question Options</title>
+      <description i18n:translate="lable_options_description">What should be asked? One Question per line, please.</description>
+      <value_type type="zope.schema.TextLine">
+      </value_type>
+      <missing_value>[]</missing_value>
+      <invariant>lmu.contenttypes.polls.content.poll.AtLeastTwoOptionsValidator.validate_options</invariant>
       <required>True</required>
     </field>
   </schema>

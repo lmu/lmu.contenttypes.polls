@@ -1,97 +1,158 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
-      metal:use-macro="context/main_template/macros/master"
-      i18n:domain="lmu.contenttypes.polls">
-<body>
+      i18n:domain="lmu.contenttypes.polls"
+      tal:define="omit view/omit;
+                  level view/heading_level"
+      tal:omit-tag="omit">
+<body tal:define="options context/options;
+                  results view/get_results;
+                  has_voted view/has_voted;
+                  can_vote view/can_vote;
+                  can_edit view/can_edit;
+                  isDBReadOnly view/isDBReadOnly;
+                  wf_state view/wf_state;
+                  show_results view/get_show_results;
+                  graph_type view/graph_type;"
+      tal:omit-tag="omit">
 
-<metal:main fill-slot="content">
-    <metal:content-core define-macro="content-core"
-         tal:define="results view/get_results;
-                     has_voted view/has_voted;
-                     can_vote view/can_vote;
-                     can_edit view/can_edit;
-                     poll_type view/get_poll_type">
+    <tal:preview tal:condition="python: wf_state in ['private', 'pending']" >
+      <p class="note" i18n:translate="" > 
+        This Poll hasn't been published, you see a preview without voting possibility
+      </p>
 
-    <h1 tal:content="context/title" >Vote-Question</h1>
-    <p tal:content="context/description" >Description</p>
-
-    <tal:star-rating tal:condition="python: poll_type == 'poll_star'" >
-
-      <tal:vote tal:condition="python: can_vote and not has_voted">
-        <form action="#" methode="post" tal:attributes="action context/absolute_url" >
-          <span class="star-rating">
-            <input type="radio" name="rating" value="1"><i></i>
-            <input type="radio" name="rating" value="2"><i></i>
-            <input type="radio" name="rating" value="3"><i></i>
-            <input type="radio" name="rating" value="4"><i></i>
-            <input type="radio" name="rating" value="5"><i></i>
-          </span>
-          <input type="submit" name="poll.submit" value="Submit" i18n:attributes="value" />
+      <h2 i18n:translate="" >Voting View</h2>
+      <div>
+        <h3 tal:content="context/title" >Vote-Question</h3>
+        <p tal:content="context/description" class="documentDescription" >Description</p>
+        <form class="poll">
+          <tal:list tal:repeat="option options">
+            <tal:wrapper tal:define="no repeat/option/number" >
+              <input type="radio" name="options" 
+                     tal:attributes="value no;
+                                     id string:free-${no};"/>
+              <label i18n:translate=""
+                     tal:attributes="for string:free-${no};"
+                     tal:content="option"
+                     class="helper-margin-top-m small-10 small-centered medium-4 large-10 columns">Option</label>
+              <br />
+            </tal:wrapper>
+          </tal:list>
+          <input type="submit" name="demo.submit" value="Demo-Submit" i18n:attributes="value" class="button disabled small radius small-10 small-centered medium-4 large-10 columns helper-margin-top-m" disabled="disabled" />
         </form>
+        <div tal:condition="python: show_results == 'with_vote'" >
+          <hr />
+          <h3  i18n:translate="">Partial results ZUV</h3>
+          <tal:average tal:condition="python: graph_type in ['average_bar', 'average']">
+            <tal:include tal:replace="structure python:view.get_star_average_widget(example=True)" />
+          </tal:average>
+          <tal:bar tal:condition="python: graph_type in ['average_bar', 'bar']">
+            <tal:include tal:replace="structure python:view.get_two_option_bar_widget(example=True)" />
+          </tal:bar>
+          <tal:numbers tal:condition="python: graph_type == 'numbers'">
+            <tal:include tal:replace="structure python:view.get_star_numbers_widget(example=True)" />
+          </tal:numbers>
+        </div>
+      </div>
+
+      <h2 i18n:translate="" >Result View Example</h2>
+      <div>
+        <tal:average tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['average_bar', 'average']">
+            <tal:include tal:replace="structure python:view.get_star_average_widget(example=True)" />
+        </tal:average>
+        <tal:bar tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['average_bar', 'average']">
+            <tal:include tal:replace="structure python:view.get_two_option_bar_widget(example=True)" />
+        </tal:bar>
+        <tal:numbers tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['numbers']">
+            <tal:include tal:replace="structure python:view.get_star_numbers_widget(example=True)" />
+        </tal:numbers>
+        <tal:no-results tal:condition="python: show_results in ['never']">
+          <p i18n:translate="">This Poll did not show results. Thank you for participation.</p>
+        </tal:no-results>
+      </div>
+    </tal:preview>
+
+    <tal:vote-view tal:condition="python: wf_state in ['open', 'published']" >
+      <tal:vote tal:condition="python: can_vote and not has_voted and not isDBReadOnly">
+        <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
+        <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
+        <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
+        <p tal:content="context/description" class="documentDescription" >Description</p>
+        <form action="#" method="POST" tal:attributes="action context/absolute_url" class="poll">
+          <tal:list tal:repeat="option options">
+            <tal:wrapper tal:define="no repeat/option/number" >
+              <input type="radio" name="options" 
+                     tal:attributes="value no;
+                                     id string:free-${no};"/>
+              <label i18n:translate=""
+                     tal:attributes="for string:free-${no};"
+                     tal:content="option"
+                     class="helper-margin-top-m small-10 small-centered medium-4 large-10 columns">Option</label>
+              <br />
+            </tal:wrapper>
+          </tal:list>
+          <input type="submit" name="poll.submit" value="Submit" id="poll-submit" i18n:attributes="value" class="button disabled small radius small-10 small-centered medium-4 large-10 columns helper-margin-top-m" />
+        </form>
+        <div tal:condition="python: show_results == 'with_vote'" >
+          <hr />
+          <h3 i18n:translate="" >Partial results ZUV</h3>
+          <tal:bar tal:condition="python: graph_type in ['bar']">
+            <tal:include tal:replace="structure python:view.get_two_option_bar_widget()" />
+          </tal:bar>
+          <tal:numbers tal:condition="python: graph_type == 'numbers'">
+            <tal:include tal:replace="structure python:view.get_star_numbers_widget()" />
+          </tal:numbers>
+        </div>
       </tal:vote>
+      <tal:result tal:condition="python: has_voted" >
+        <div>
+          <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
+          <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
+          <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
+          <p tal:content="context/description" class="documentDescription" >Description</p>
+          <p i18n:translate="">This is the partial Result ZUV</p>
+          <tal:bar tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['bar']">
+            <tal:include tal:replace="structure python:view.get_two_option_bar_widget()" />
+          </tal:bar>
+          <tal:numbers tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['numbers']">
+            <tal:include tal:replace="structure python:view.get_star_numbers_widget()" />
+          </tal:numbers>
+          <tal:no-results tal:condition="python: show_results in ['never']">
+            <p i18n:translate="">This Poll did not show results. Thank you for participation.</p>
+          </tal:no-results>
+        </div>
+      </tal:result>
+      <tal:readonly tal:condition="python: not has_voted and isDBReadOnly" >
+        <p class="alert-box secondary helper-border helper-padding-m helper-margin-top-m helper-margin-bottom-m helper-font-light text-center helper-clear"
+           tal:condition="isDBReadOnly"
+           i18n:translate="">
+            Das Abstimmen ist derzeit aus technischen Gruenden nicht moeglich.
+        </p>
+      </tal:readonly>
+    </tal:vote-view>
 
-    </tal:star-rating>
-
-
-
-
-
-
-
-
-
-    <tal:editing tal:condition="can_edit">
-    <h2 i18n:translate="">Available options:</h2>
-    <ul>
-        <li tal:repeat="option view/get_options">
-            <span tal:content="option/description" />
-        </li>
-    </ul>
-    </tal:editing>
-
-    <tal:vote tal:condition="can_vote">
-    <h2 i18n:translate="">Vote!</h2>
-    <form action="#" method="post"
-          tal:attributes="action context/absolute_url">
-        <tal:one_choice repeat="option context/get_options">
-        <input type="radio"
-              name="#"
-              value="#"
-              tal:attributes="name string:options;
-                              value option/option_id;"
-              />
-        <span tal:content="option/description" />
-        <br/>
-        </tal:one_choice>
-        <input type="hidden" name="poll.uuid" value=""
-             tal:attributes="value view/poll_uid" />
-        <input type="submit" name="poll.submit" value="Submit" i18n:attributes="value" />
-    </form>
-    </tal:vote>
-
-    <tal:results tal:condition="python:results and not can_vote">
-    <h2><span i18n:translate="">Results</span>:</h2>
-    <div class="poll-data" 
-       tal:attributes="class python:'poll-data ' + ('bar-poll' if context.results_graph == 'bar' else 'pie-poll')">
-      <div class="pollresultholder"></div>
-      <ul class="poll-results">
-        <li tal:repeat="option_result results">
-            <span class="option_description" tal:content="python: option_result[0]" />:
-            <span class="option_result" tal:content="python: option_result[1]" />
-        </li>
-      </ul>
-    </div>
-    </tal:results>
-    <tal:total_votes condition="not:can_edit">
-    <div class="total-votes">
-        <span i18n:translate="">Total Votes:</span><span tal:content="context/total_votes">23</span>
-    </div>
-    </tal:total_votes>
-    </metal:content-core>
-</metal:main>
+    <tal:closed-view tal:condition="python: wf_state in ['closed']" >
+      <p i18n:translate="" >This Poll has been closed</p>
+        <div>
+          <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
+          <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
+          <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
+          <p tal:content="context/description" class="documentDescription" >Description</p>
+          <p tal:condition="python: has_voted" i18n:translate="" >This is the final Result, thanks for participating</p>
+          <p tal:condition="python: not has_voted" i18n:translate="" >This is the final Result, you have not participate</p>
+          <tal:bar tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['bar']">
+            <tal:include tal:replace="structure python:view.get_two_option_bar_widget()" />
+          </tal:bar>
+          <tal:numbers tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['numbers']">
+            <tal:include tal:replace="structure python:view.get_star_numbers_widget()" />
+          </tal:numbers>
+          <tal:no-results tal:condition="python: show_results in ['never']">
+            <p tal:condition="python: has_voted" i18n:translate="">This Poll did not show results. Thank you for participation.</p>
+            <p tal:condition="python: not has_voted" i18n:translate="">This Poll did not show results. You have not participated.</p>
+          </tal:no-results>
+        </div>
+    </tal:closed-view>
 
 </body>
 </html>

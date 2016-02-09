@@ -4,6 +4,10 @@ from AccessControl import Unauthorized
 from plone.dexterity.content import Item
 #from plone.dexterity.content import Container
 
+from plone.i18n.normalizer import idnormalizer
+from plone.i18n.normalizer import urlnormalizer
+from z3c.form.interfaces import IValidator
+from z3c.form.validator import SimpleFieldValidator
 from zope.annotation.interfaces import IAnnotations
 from zope.component import queryUtility
 from zope.interface import implements
@@ -17,7 +21,13 @@ from lmu.contenttypes.polls.interfaces import IPoll
 from lmu.contenttypes.polls.interfaces import IStarPoll
 from lmu.contenttypes.polls.interfaces import IAgreeDisagreePoll
 from lmu.contenttypes.polls.interfaces import ILikeDislikePoll
+from lmu.contenttypes.polls.interfaces import IFreePoll
 from lmu.contenttypes.polls.interfaces import IPolls
+from lmu.contenttypes.polls.interfaces import InsuficientOptions
+
+from logging import getLogger
+
+log = getLogger(__name__)
 
 
 class Poll(Item):
@@ -204,3 +214,38 @@ class LikeDislikePoll(Poll):
             {'option_id': 1, 'token': 'like', 'description': _('Like')},
             {'option_id': 2, 'token': 'dislike', 'description': _('Dislike')}
         ]
+
+
+class FreePoll(Poll):
+    """ """
+    implements(IFreePoll, IPoll)
+
+    def get_options(self):
+        """Return available options."""
+        options = []
+        index = 1
+        for option in self.options:
+            options.append({'option_id': index, 'token': idnormalizer.normalize(option.replace(' ', '-')), 'description': option})
+            index += 1
+        return options
+
+
+class AtLeastTwoOptionsValidator(SimpleFieldValidator):
+    implements(IValidator)
+
+    def validate(self, value):
+        """Validate options."""
+        super(AtLeastTwoOptionsValidator, self).validate(value)
+        if value is not None:
+            descriptions = value and [o for o in value]
+            if len(descriptions) < 2:
+                log.info(u'You need to provide at least two options for a free poll.')
+                #raise InsuficientOptions(_(u'You need to provide at least two options for a free poll.'))
+
+    def validate_options(data):
+        """Validate options."""
+        options = data.options
+        descriptions = options and [o for o in options]
+        if len(descriptions) < 2:
+            log.info(u'You need to provide at least two options for a free poll.')
+            raise InsuficientOptions(_(u'You need to provide at least two options for a free poll.'))

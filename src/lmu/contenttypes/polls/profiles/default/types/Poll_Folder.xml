@@ -16,6 +16,7 @@
     <element value="Star Poll" />
     <element value="Agree Disagree Poll" />
     <element value="Like Dislike Poll" />
+    <element value="Free Poll" />
   </property>
   <property name="allow_discussion">False</property>
 
