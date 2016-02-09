@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="lmu.contenttypes.polls"
+      tal:omit-tag="python: True">
+
+<table>
+  <tbody>
+  <tal:list tal:repeat="option view/options" >
+    <tr>
+      <td>
+        <span i18n:translate="" tal:content="option/option" tal:attributes="class option/token" >Description</span>
+      </td>
+      <td>
+        <div class="a-meter">
+          <div class="a-meter-bar" style="width: 5.298%;" tal:attributes="style option/style;"></div>
+        </div>
+      </td>
+      <td>(<span tal:replace="option/par" /> / <span tal:replace="option/per" /> %)</td>
+    </tr>
+  </tal:list>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th i18n:translate="" colspan="2" >Participants</th>
+      <th tal:content="view/participants">42</th>
+    </tr>
+  </tfoot>
+</table>
+
+</html>

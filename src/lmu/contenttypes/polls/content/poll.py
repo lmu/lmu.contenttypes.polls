@@ -225,7 +225,7 @@ class FreePoll(Poll):
         options = []
         index = 1
         for option in self.options:
-            options.append({'option_id': index, 'token': idnormalizer.normalize(option.replace(' ', '-')), 'description': option})
+            options.append({'option_id': index, 'token': 'free-' + str(index), 'description': option})
             index += 1
         return options
 

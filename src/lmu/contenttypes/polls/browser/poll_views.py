@@ -21,6 +21,10 @@ from lmu.contenttypes.polls import MessageFactory as _
 #from lmu.contenttypes.polls.interfaces import IPoll
 from lmu.contenttypes.polls.interfaces import IPolls
 
+from logging import getLogger
+
+log = getLogger(__name__)
+
 
 def str2bool(v):
     return v is not None and v.lower() in ['true', '1']
@@ -321,14 +325,22 @@ class PollBaseView(BaseView):
     def fake_free_results(self):
         fake_result = []
         index = 1
+        elems = len(self.context.options)
+        total = 42
+        rest = total
         for option in self.context.options:
+            fake_votes = random.randint(0, rest)
+            if index == elems:
+                fake_votes = rest
+            per = float(fake_votes)/float(total)
             fake_result.append({
                 'index': index,
                 'description': option,
-                'token': option,
-                'votes': 22,
-                'percentage': 0.52381,
+                'token': 'free-' + str(index),
+                'votes': fake_votes,
+                'percentage': per,
             })
+            rest = rest - fake_votes
             index += 1
         return fake_result
 
@@ -375,6 +387,18 @@ class PollBaseView(BaseView):
         else:
             results = self.get_results()
             viewlet = TwoOptionBarWidgetViewlet(
+                self.context, self.request, None, None,
+                results['options'], results['total'])
+        return viewlet.render()
+
+    def get_multi_option_bar_widget(self, example=False):
+        if example:
+            viewlet = MultiOptionBarWidgetViewlet(
+                self.context, self.request, None, None,
+                self.fake_free_results(), 42)
+        else:
+            results = self.get_results()
+            viewlet = MultiOptionBarWidgetViewlet(
                 self.context, self.request, None, None,
                 results['options'], results['total'])
         return viewlet.render()
@@ -575,4 +599,32 @@ class TwoOptionBarWidgetViewlet(base.ViewletBase):
             per = option['percentage']
             setattr(self, 'result{index}{name}'.format(index=option['index'], name='per'), round(per*100.0, 1))
             setattr(self, 'result{index}{name}'.format(index=option['index'], name='style'), 'width: {per}%;'.format(per=per*100.0))
+        return self.template()
+
+
+class MultiOptionBarWidgetViewlet(base.ViewletBase):
+
+    template = ViewPageTemplateFile('templates/multi_option_bar_widget.pt')
+
+    def __init__(self, context, request, portal, manager,
+                 results, participants=0):
+        """
+        """
+        super(MultiOptionBarWidgetViewlet, self).__init__(context, request, portal, manager)  # NOQA
+        self.context = context
+        self.request = request
+        self.results = results
+        self.participants = participants
+
+    def render(self):
+        self.options = []
+        for option in self.results:
+            per = option['percentage']
+            self.options.append({
+                'option': option['description'],
+                'token': option['token'],
+                'par': option['votes'],
+                'per': round(per*100.0, 1),
+                'style': 'width: {per}%;'.format(per=per*100.0)
+            })
         return self.template()
