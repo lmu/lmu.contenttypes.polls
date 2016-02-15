@@ -133,8 +133,6 @@ class CurrentPollView(BaseView, _IncludeMixin):
     template = ViewPageTemplateFile('templates/current_poll_view.pt')
 
     def __call__(self):
-        #omit = self.request.get('full')
-        #self.omit = str2bool(omit)
         self.utility = queryUtility(IPolls, name='lmu.contenttypes.polls')
         self.open_polls = self.utility.recent_polls()
         self.closed_polls = self.utility.recent_polls(show_all=True,
@@ -143,7 +141,8 @@ class CurrentPollView(BaseView, _IncludeMixin):
 
         REQUEST = self.context.REQUEST
         RESPONSE = REQUEST.RESPONSE
-        RESPONSE.setHeader('Content-Type', 'application/xml;charset=utf-8')
+        # RESPONSE.setHeader('Content-Type', 'application/xml;charset=utf-8')
+        RESPONSE.setHeader('X-Theme-Disabled', 'True')
         if len(self.open_polls) == 1:
             poll = self.open_polls[0].getObject()
             return poll.restrictedTraverse('@@poll_base_view')()
@@ -155,8 +154,8 @@ class CurrentPollView(BaseView, _IncludeMixin):
 class PollBaseView(BaseView):
 
     poll_star_template = ViewPageTemplateFile('templates/poll_star.pt')
-    poll_like_dislike_template = ViewPageTemplateFile('templates/poll_like_dislike.pt')  # NOQA
-    poll_agree_disagree_template = ViewPageTemplateFile('templates/poll_agree_disagree.pt')  # NOQA
+    poll_like_dislike_template = ViewPageTemplateFile('templates/poll_like_dislike.pt')
+    poll_agree_disagree_template = ViewPageTemplateFile('templates/poll_agree_disagree.pt')
     poll_free_template = ViewPageTemplateFile('templates/poll_free.pt')
 
     def __init__(self, context, request):
@@ -184,8 +183,8 @@ class PollBaseView(BaseView):
             if self.poll_type in ['Star Poll', 'Agree Disagree Poll', 'Like Dislike Poll', 'Free Poll']:
                 REQUEST = self.context.REQUEST
                 RESPONSE = REQUEST.RESPONSE
-                #RESPONSE.setHeader('Content-Type', 'application/xml;charset=utf-8')
-                #RESPONSE.setHeader('X-Theme-Disabled', 'True')
+                # RESPONSE.setHeader('Content-Type', 'application/xml;charset=utf-8')
+                RESPONSE.setHeader('X-Theme-Disabled', 'True')
             if self.poll_type == 'Star Poll':
                 self.template = self.poll_star_template
                 view_class = self.request.steps[-1:][0]
@@ -252,9 +251,7 @@ class PollBaseView(BaseView):
         return utility.uid_for_poll(self.context)
 
     def get_poll_type(self):
-        #import ipdb; ipdb.set_trace()
         return self.poll_type
-        #return self.context.get_poll_type()
 
     def get_show_results(self):
         return self.context.get_show_results()
@@ -512,7 +509,6 @@ class FreePollView(PollView):
     def __call__(self):
         """
         """
-        import ipdb; ipdb.set_trace()
         self.template = ViewPageTemplateFile('templates/poll_free.pt')
         if self.request_type == 'GET':
             if self.results:
