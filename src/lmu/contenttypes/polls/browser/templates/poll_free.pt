@@ -26,7 +26,7 @@
       <div>
         <h3 tal:content="context/title" >Vote-Question</h3>
         <p tal:content="context/description" class="documentDescription" >Description</p>
-        <form class="poll">
+        <form class="poll free-poll">
           <tal:list tal:repeat="option options">
             <tal:wrapper tal:define="no repeat/option/number" >
               <input type="radio" name="options" 
@@ -73,7 +73,7 @@
         <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
         <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
         <p tal:content="context/description" class="documentDescription" >Description</p>
-        <form action="#" method="POST" tal:attributes="action context/absolute_url" class="poll">
+        <form action="#" method="POST" tal:attributes="action context/absolute_url" class="poll free-poll">
           <tal:list tal:repeat="option options">
             <tal:wrapper tal:define="no repeat/option/number" >
               <input type="radio" name="options" 
