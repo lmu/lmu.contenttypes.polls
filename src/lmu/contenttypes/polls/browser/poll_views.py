@@ -38,12 +38,12 @@ class ListingView(BrowserView):
         self.context = context
         self.request = request
 
-        RESPONSE = request.response
-        RESPONSE.setHeader('X-Theme-Disabled', 'False')
-        RESPONSE.setHeader('X-Theme-Enabled', 'True')
-
-        RESPONSE.setHeader('X-Theme-Disabled', 'False')
-        RESPONSE.setHeader('X-Theme-Enabled', 'True')
+#        RESPONSE = request.response
+#        RESPONSE.setHeader('X-Theme-Disabled', 'False')
+#        RESPONSE.setHeader('X-Theme-Enabled', 'True')
+#
+#        RESPONSE.setHeader('X-Theme-Disabled', 'False')
+#        RESPONSE.setHeader('X-Theme-Enabled', 'True')
 
     def __call__(self):
         return self.template()
@@ -146,10 +146,6 @@ class CurrentPollView(BaseView, _IncludeMixin):
                                                       review_state='closed')
         super(CurrentPollView, self).__call__()
 
-        REQUEST = self.context.REQUEST
-        RESPONSE = REQUEST.RESPONSE
-        # RESPONSE.setHeader('Content-Type', 'application/xml;charset=utf-8')
-        RESPONSE.setHeader('X-Theme-Disabled', 'True')
         if len(self.open_polls) == 1:
             poll = self.open_polls[0].getObject()
             return poll.restrictedTraverse('@@poll_base_view')()
@@ -168,7 +164,6 @@ class PollBaseView(BaseView):
     def __init__(self, context, request):
         """
         """
-        super(PollBaseView, self).__init__(context, request)
         self.context = context
         self.request = request
         self.state = getMultiAdapter(
@@ -179,6 +174,7 @@ class PollBaseView(BaseView):
         omit = self.request.get('omit')
         self.omit = str2bool(omit)
         self.heading_level = 'h3'
+        super(PollBaseView, self).__init__(context, request)
 
     def __call__(self):
         """
@@ -187,18 +183,17 @@ class PollBaseView(BaseView):
         request_type = env.get('REQUEST_METHOD', 'GET')
 
         if request_type == 'GET':
-            if self.poll_type in ['Star Poll', 'Agree Disagree Poll', 'Like Dislike Poll', 'Free Poll']:
+            view_class = self.request.steps[-1:][0]
+            if view_class in ['current_poll.include', ' poll_base_view']:
+                self.heading_level = 'h3'
                 REQUEST = self.context.REQUEST
                 RESPONSE = REQUEST.RESPONSE
-                # RESPONSE.setHeader('Content-Type', 'application/xml;charset=utf-8')
                 RESPONSE.setHeader('X-Theme-Disabled', 'True')
+            else:
+                self.heading_level = 'h1'
             if self.poll_type == 'Star Poll':
                 self.template = self.poll_star_template
-                view_class = self.request.steps[-1:][0]
-                if view_class in ['current_poll.include', ' poll_base_view']:
-                    self.heading_level = 'h3'
-                else:
-                    self.heading_level = 'h1'
+
                 results = self.get_results()
                 if results:
                     self.participants = results.get('total', 0)
@@ -216,7 +211,8 @@ class PollBaseView(BaseView):
 
             elif self.poll_type == 'Free Poll':
                 self.template = self.poll_free_template
-            #else:
+            else:
+                log.warn('Unknown Poll Type selected.')
             #    import ipdb; ipdb.set_trace()
         elif request_type == 'POST':
             self.update()
