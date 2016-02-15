@@ -38,6 +38,13 @@ class ListingView(BrowserView):
         self.context = context
         self.request = request
 
+        RESPONSE = request.response
+        RESPONSE.setHeader('X-Theme-Disabled', 'False')
+        RESPONSE.setHeader('X-Theme-Enabled', 'True')
+
+        RESPONSE.setHeader('X-Theme-Disabled', 'False')
+        RESPONSE.setHeader('X-Theme-Enabled', 'True')
+
     def __call__(self):
         return self.template()
 

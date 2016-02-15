@@ -23,7 +23,7 @@
              tal:condition="show_border"
              tal:content="structure provider:plone.contentviews" />
 
-        <div id="rules" class="blog_info reveal-modal xlarge" data-reveal aria-labelledby="" aria-hidden="true" role="dialog" style="top: -8em;">
+        <div id="rules" class="blog_info reveal-modal xlarge" data-reveal aria-labelledby="" aria-hidden="true" role="dialog" style="top: -8em;" tal:on-error="string:">
           <tal:rules tal:content="structure context/text/output">
             Content Body
           </tal:rules>
@@ -41,7 +41,6 @@
                 Poll Sub-Title
             </small>
           </h1>
-          <p tal:content="structure context/text/output"></p>
         </div>
       </header>
       <div id="poll-main" class="row">
