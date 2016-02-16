@@ -23,7 +23,10 @@
           Status message
         </div>
 
+        <tal:include tal:replace="structure view/get_editbar_widget" />
+
         <tal:include tal:replace="structure view/base_view" />
+
       </div>
     </div>
   </metal:content>

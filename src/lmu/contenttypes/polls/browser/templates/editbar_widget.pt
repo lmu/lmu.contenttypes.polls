@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="lmu.contenttypes.polls"
+      tal:define="show_border context/@@plone/showEditableBorder;"
+      tal:omit-tag="python: True">
+
+<div id="edit-bar"
+     tal:condition="show_border"
+     tal:content="structure provider:plone.contentviews" />
+
+<div id="iuk-documemt-infos"
+     tal:condition="python: (view.isOwner() or view.isManager())" >
+  <div class="document-actions" tal:condition="not: view/isDBReadOnly">
+
+    <a tal:attributes="href string:${context/absolute_url}/edit"
+       tal:condition="view/can_edit"
+       class="button link-overlay small"
+       title="Edit Poll"
+       i18n:attributes="title"
+       i18n:translate="" >Edit Poll</a>
+
+    <a tal:attributes="href string:${context/absolute_url}/delete_confirmation"
+       tal:condition="view/can_remove"
+       class="button link-overlay small"
+       title="Delete Poll"
+       i18n:attributes="title"
+       i18n:translate="" >Delete Poll</a>
+
+    <a tal:attributes="href string:${context/absolute_url}/content_status_modify?workflow_action=open"
+       tal:condition="view/can_publish"
+       class="button link-overlay small"
+       title="Open Poll for Voting"
+       i18n:attributes="title"
+       i18n:translate="" >Open Poll for Voting</a>
+
+    <a tal:attributes="href string:${context/absolute_url}/content_status_modify?workflow_action=retract"
+       tal:condition="view/can_hide"
+       class="button link-overlay small"
+       title="Retract Poll"
+       i18n:attributes="title"
+       i18n:translate="" >Retract Poll</a>
+
+    <a tal:attributes="href string:${context/absolute_url}/content_status_modify?workflow_action=close"
+       tal:condition="view/can_lock"
+       class="button link-overlay small"
+       title="Close Poll for Voting"
+       i18n:attributes="title"
+       i18n:translate="" >Close Poll for Voting</a>
+
+  </div>
+</div>
+
+</html>

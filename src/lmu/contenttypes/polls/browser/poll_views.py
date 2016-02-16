@@ -14,10 +14,13 @@ from plone.app.layout.viewlets import common as base
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
 
+from lmu.policy.base.browser.content import _EntryViewMixin
 from lmu.policy.base.browser.content_listing import _IncludeMixin
+from lmu.policy.base.browser.content_listing import _AbstractLMUBaseListingView
 from lmu.policy.base.browser.utils import isDBReadOnly as uIsDBReadOnly
 
 from lmu.contenttypes.polls import MessageFactory as _
+from lmu.contenttypes.polls.content.poll import Poll
 #from lmu.contenttypes.polls.interfaces import IPoll
 from lmu.contenttypes.polls.interfaces import IPolls
 
@@ -30,7 +33,7 @@ def str2bool(v):
     return v is not None and v.lower() in ['true', '1']
 
 
-class ListingView(BrowserView):
+class ListingView(_AbstractLMUBaseListingView, _EntryViewMixin):
 
     template = ViewPageTemplateFile('templates/listing_view.pt')
 
@@ -173,6 +176,10 @@ class PollBaseView(BaseView):
         self.poll_type = context.portal_type
         omit = self.request.get('omit')
         self.omit = str2bool(omit)
+        self.view_class = request.steps[-1:][0]
+        self.show_link = not isinstance(context, Poll)
+        if self.view_class in ['current_poll.include', 'listing_view']:
+            self.show_link = True
         self.heading_level = 'h3'
         super(PollBaseView, self).__init__(context, request)
 
@@ -183,8 +190,7 @@ class PollBaseView(BaseView):
         request_type = env.get('REQUEST_METHOD', 'GET')
 
         if request_type == 'GET':
-            view_class = self.request.steps[-1:][0]
-            if view_class in ['current_poll.include', ' poll_base_view']:
+            if self.view_class in ['current_poll.include', 'poll_base_view']:
                 self.heading_level = 'h3'
                 REQUEST = self.context.REQUEST
                 RESPONSE = REQUEST.RESPONSE
@@ -401,6 +407,10 @@ class PollBaseView(BaseView):
             viewlet = MultiOptionBarWidgetViewlet(
                 self.context, self.request, None, None,
                 results['options'], results['total'])
+        return viewlet.render()
+
+    def get_editbar_widget(self):
+        viewlet = EditBarViewlet(self.context, self.request, None, None)
         return viewlet.render()
 
 
@@ -627,3 +637,21 @@ class MultiOptionBarWidgetViewlet(base.ViewletBase):
                 'style': 'width: {per}%;'.format(per=per*100.0)
             })
         return self.template()
+
+
+class EditBarViewlet(base.ViewletBase, _EntryViewMixin):
+
+    template = ViewPageTemplateFile('templates/editbar_widget.pt')
+
+    def __init__(self, context, request, portal, manager):
+        """
+        """
+        super(EditBarViewlet, self).__init__(context, request, portal, manager)  # NOQA
+        self.context = context
+        self.request = request
+
+    def render(self):
+        return self.template()
+
+    def isDBReadOnly(self):
+        return uIsDBReadOnly()

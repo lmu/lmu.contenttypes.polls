@@ -24,7 +24,7 @@
 
       <h2 i18n:translate="" >Voting View</h2>
       <div>
-        <h3 tal:content="context/title" >Vote-Question</h3>
+        <h3><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h3>
         <p tal:content="context/description" class="documentDescription" >Description</p>
         <form class="poll star-poll">
           <span class="star-rating">
@@ -71,9 +71,9 @@
 
     <tal:vote-view tal:condition="python: wf_state in ['open', 'published']" >
       <tal:vote tal:condition="python: can_vote and not has_voted and not isDBReadOnly">
-        <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
-        <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
-        <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
+        <h1 tal:condition="python: level == 'h1'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h1>
+        <h2 tal:condition="python: level == 'h2'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h2>
+        <h3 tal:condition="python: level == 'h3'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h3>
         <p tal:content="context/description" class="documentDescription" >Description</p>
         <form action="#" method="POST" tal:attributes="action context/absolute_url" class="poll star-poll">
           <span class="star-rating">
@@ -102,9 +102,9 @@
       </tal:vote>
       <tal:result tal:condition="python: has_voted" >
         <div>
-          <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
-          <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
-          <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
+          <h1 tal:condition="python: level == 'h1'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h1>
+          <h2 tal:condition="python: level == 'h2'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h2>
+          <h3 tal:condition="python: level == 'h3'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h3>
           <p tal:content="context/description" class="documentDescription" >Description</p>
           <p i18n:translate="">This is the partial Result LMU</p>
           <tal:average tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['average_bar', 'average']">
@@ -133,9 +133,9 @@
     <tal:closed-view tal:condition="python: wf_state in ['closed']" >
       <p i18n:translate="" >This Poll has been closed</p>
         <div>
-          <h1 tal:content="context/title" tal:condition="python: level == 'h1'">Vote-Question</h1>
-          <h2 tal:content="context/title" tal:condition="python: level == 'h2'">Vote-Question</h2>
-          <h3 tal:content="context/title" tal:condition="python: level == 'h3'">Vote-Question</h3>
+          <h1 tal:condition="python: level == 'h1'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h1>
+          <h2 tal:condition="python: level == 'h2'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h2>
+          <h3 tal:condition="python: level == 'h3'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h3>
           <p tal:content="context/description" class="documentDescription" >Description</p>
           <p tal:condition="python: has_voted" i18n:translate="" >This is the final Result, thanks for participating</p>
           <p tal:condition="python: not has_voted" i18n:translate="" >This is the final Result, you have not participate</p>

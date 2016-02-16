@@ -23,17 +23,52 @@
              tal:condition="show_border"
              tal:content="structure provider:plone.contentviews" />
 
-        <div id="rules" class="blog_info reveal-modal xlarge" data-reveal aria-labelledby="" aria-hidden="true" role="dialog" style="top: -8em;" tal:on-error="string:">
-          <tal:rules tal:content="structure context/text/output">
-            Content Body
-          </tal:rules>
-          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        <div id="iuk-documemt-infos"
+             tal:condition="python: (view.isOwner() or view.isManager())" >
+          <div class="document-actions" tal:condition="not: view/isDBReadOnly">
+
+            <a tal:attributes="href string:${context/absolute_url}/++add++Star Poll"
+               tal:condition="view/can_add"
+               class="button link-overlay small"
+               title="Add Star Poll"
+               i18n:attributes="title"
+               i18n:translate="" >Add Star Poll</a>
+
+            <a tal:attributes="href string:${context/absolute_url}/++add++Agree Disagree Poll"
+               tal:condition="view/can_add"
+               class="button link-overlay small"
+               title="Add Agree / Disagree Poll"
+               i18n:attributes="title"
+               i18n:translate="" >Add Agree / Disagree Poll</a>
+
+            <a tal:attributes="href string:${context/absolute_url}/++add++Like Dislike Poll"
+               tal:condition="view/can_add"
+               class="button link-overlay small"
+               title="Add Star Poll"
+               i18n:attributes="title"
+               i18n:translate="" >Add Like / Dislike Poll</a>
+
+            <a tal:attributes="href string:${context/absolute_url}/++add++Free Poll"
+               tal:condition="view/can_add"
+               class="button link-overlay small"
+               title="Add Free Poll"
+               i18n:attributes="title"
+               i18n:translate="" >Add Free Poll</a>
+
+            <a tal:attributes="href string:${context/absolute_url}/edit"
+               tal:condition="view/can_edit"
+               class="button link-overlay small"
+               title="Edit Blog Entry"
+               i18n:attributes="title"
+               i18n:translate="" >Edit Poll Folder</a>
+
+          </div>
         </div>
 
       </div>
 
       <header id="poll-header" class="row">
-        <div class="columns small-12 large-10 large-centered helper-margin-top-l text-left">
+        <div class="columns small-12 large-10 large-centered helper-margin-top-l helper-margin-bottom-l text-left">
           <h1>
             <span tal:replace="context/title">Poll Titel</span> 
             <small tal:content="context/description"
@@ -64,7 +99,6 @@
                                item_helper python: '' if item_isLast else 'helper-border-bottom';
                                item_klass string:poll-entry poll-preview tileItem ${item_helper} visualIEFloatFix clearfix;"
                    tal:attributes="class item_klass;">
-            <h3><a tal:attributes="href item_url;" tal:content="item/title">Poll Title</a></h3>
             <tal:include tal:replace="structure item/poll_base_view" />
 
           </article>
