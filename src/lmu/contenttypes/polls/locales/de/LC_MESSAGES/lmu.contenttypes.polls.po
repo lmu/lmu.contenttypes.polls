@@ -56,7 +56,7 @@ msgstr "Eine Stern-Umfrage"
 
 #: ./profiles/default/types/Free_Poll.xml
 msgid "A Poll with free Questions"
-msgstr ""
+msgstr "Eien Freitext-Umfrage"
 
 #: ./browser/poll_views.py:320
 #: ./browser/templates/poll_agree_disagree.pt:29
@@ -91,7 +91,7 @@ msgstr "Umfrage abschließen"
 
 #: ./browser/templates/editbar_widget.pt:45
 msgid "Close Poll for Voting"
-msgstr ""
+msgstr "Umfrage abschließen"
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml
 msgid "Closed"
@@ -109,12 +109,12 @@ msgstr "Das Abstimmen ist derzeit aus technischen Gründen nicht möglich."
 
 #: ./browser/templates/editbar_widget.pt:24
 msgid "Delete Poll"
-msgstr ""
+msgstr "Umfrage Löschen"
 
 #: ./browser/templates/poll_agree_disagree.pt:31
 #: ./browser/templates/poll_free.pt:42
 msgid "Demo-Submit"
-msgstr ""
+msgstr "Abstimmen (Demo-Button)"
 
 #: ./browser/poll_views.py:325
 #: ./browser/templates/poll_agree_disagree.pt:67
@@ -132,7 +132,7 @@ msgstr "Mag ich nicht"
 
 #: ./browser/templates/editbar_widget.pt:17
 msgid "Edit Poll"
-msgstr ""
+msgstr "Umfrage bearbeiten"
 
 #: ./profiles/default/types/Poll_Folder.xml
 msgid "Folder for Polls special views and restrictions"
@@ -194,7 +194,7 @@ msgstr "Offen"
 
 #: ./browser/templates/editbar_widget.pt:31
 msgid "Open Poll for Voting"
-msgstr ""
+msgstr "Umfrage zur Abstimmung öffnen"
 
 #: ./browser/templates/current_poll_view.pt:11
 msgid "Open Polls"
@@ -272,7 +272,7 @@ msgstr "Zurückgewiesen"
 
 #: ./browser/templates/editbar_widget.pt:38
 msgid "Retract Poll"
-msgstr ""
+msgstr "Umfrage zurückziehen"
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml
 msgid "Reviewer closes the poll"
