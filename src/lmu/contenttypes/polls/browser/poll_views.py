@@ -178,7 +178,7 @@ class PollBaseView(BaseView):
         self.omit = str2bool(omit)
         self.view_class = request.steps[-1:][0]
         self.show_link = not isinstance(context, Poll)
-        if self.view_class in ['current_poll.include', 'listing_view']:
+        if self.view_class in ['listing_view']:
             self.show_link = True
         self.heading_level = 'h3'
         super(PollBaseView, self).__init__(context, request)
