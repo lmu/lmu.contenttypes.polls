@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2016-02-16 11:37+0000\n"
+"POT-Creation-Date: 2016-02-18 15:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,6 +59,22 @@ msgstr ""
 
 #: ./profiles/default/types/Free_Poll.xml
 msgid "A Poll with free Questions"
+msgstr ""
+
+#: ./browser/templates/listing_view.pt:37
+msgid "Add Agree / Disagree Poll"
+msgstr ""
+
+#: ./browser/templates/listing_view.pt:51
+msgid "Add Free Poll"
+msgstr ""
+
+#: ./browser/templates/listing_view.pt:44
+msgid "Add Like / Dislike Poll"
+msgstr ""
+
+#: ./browser/templates/listing_view.pt:30
+msgid "Add Star Poll"
 msgstr ""
 
 #: ./browser/poll_views.py:320
@@ -133,8 +149,16 @@ msgstr ""
 msgid "Dislike"
 msgstr ""
 
+#: ./browser/templates/listing_view.pt:58
+msgid "Edit Blog Entry"
+msgstr ""
+
 #: ./browser/templates/editbar_widget.pt:17
 msgid "Edit Poll"
+msgstr ""
+
+#: ./browser/templates/listing_view.pt:58
+msgid "Edit Poll Folder"
 msgstr ""
 
 #: ./profiles/default/types/Poll_Folder.xml
