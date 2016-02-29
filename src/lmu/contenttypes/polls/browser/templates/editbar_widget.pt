@@ -42,6 +42,13 @@
        i18n:attributes="title"
        i18n:translate="" >Retract Poll</a>
 
+    <a tal:attributes="href string:${context/absolute_url}/content_status_modify?workflow_action=reject"
+       tal:condition="view/can_reject"
+       class="button link-overlay small"
+       title="Retract Poll"
+       i18n:attributes="title"
+       i18n:translate="" >Reject Poll</a>
+
     <a tal:attributes="href string:${context/absolute_url}/content_status_modify?workflow_action=close"
        tal:condition="view/can_lock"
        class="button link-overlay small"
