@@ -177,6 +177,7 @@ class PollBaseView(BaseView):
         omit = self.request.get('omit')
         self.omit = str2bool(omit)
         self.view_class = request.steps[-1:][0]
+        self.hparam = request.get('h')
         self.show_link = not isinstance(context, Poll)
         if self.view_class in ['listing_view']:
             self.show_link = True
@@ -190,13 +191,15 @@ class PollBaseView(BaseView):
         request_type = env.get('REQUEST_METHOD', 'GET')
 
         if request_type == 'GET':
-            if self.view_class in ['current_poll.include', 'poll_base_view']:
+            if self.view_class in ['current_poll.include', 'poll_base_view', 'poll_base_view.inlcude']:
                 self.heading_level = 'h3'
                 REQUEST = self.context.REQUEST
                 RESPONSE = REQUEST.RESPONSE
                 RESPONSE.setHeader('X-Theme-Disabled', 'True')
             else:
                 self.heading_level = 'h1'
+            if self.hparam:
+                self.heading_level = self.hparam
             if self.poll_type == 'Star Poll':
                 self.template = self.poll_star_template
 
