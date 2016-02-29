@@ -10,15 +10,15 @@
   <tbody>
   <tal:list tal:repeat="option view/options" >
     <tr>
-      <td>
+      <td class="small-7">
         <span i18n:translate="" tal:content="structure option/option" tal:attributes="class option/token" >Description</span>
       </td>
-      <td>
+      <td class="small-3">
         <div class="a-meter">
           <div class="a-meter-bar" style="width: 5.298%;" tal:attributes="style option/style;"></div>
         </div>
       </td>
-      <td>(<span tal:replace="option/par" /> / <span tal:replace="option/per" /> %)</td>
+      <td class="small-2">(<span tal:replace="option/par" /> / <span tal:replace="option/per" /> %)</td>
     </tr>
   </tal:list>
   </tbody>

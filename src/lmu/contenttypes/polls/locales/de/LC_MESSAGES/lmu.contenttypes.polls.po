@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2016-02-18 15:35+0000\n"
+"POT-Creation-Date: 2016-02-29 15:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,31 +18,31 @@ msgstr ""
 msgid "${dynamic_count} of 5 Stars"
 msgstr "${dynamic_count} von 5 Sternen"
 
-#: ./browser/poll_views.py:291
+#: ./browser/poll_views.py:294
 #: ./browser/templates/poll_star_bar_widget.pt:57
 #: ./browser/templates/poll_star_numbers_widget.pt:39
 msgid "1 Star"
 msgstr "1 Stern"
 
-#: ./browser/poll_views.py:296
+#: ./browser/poll_views.py:299
 #: ./browser/templates/poll_star_bar_widget.pt:46
 #: ./browser/templates/poll_star_numbers_widget.pt:34
 msgid "2 Stars"
 msgstr "2 Sterne"
 
-#: ./browser/poll_views.py:301
+#: ./browser/poll_views.py:304
 #: ./browser/templates/poll_star_bar_widget.pt:35
 #: ./browser/templates/poll_star_numbers_widget.pt:29
 msgid "3 Stars"
 msgstr "3 Sterne"
 
-#: ./browser/poll_views.py:306
+#: ./browser/poll_views.py:309
 #: ./browser/templates/poll_star_bar_widget.pt:24
 #: ./browser/templates/poll_star_numbers_widget.pt:24
 msgid "4 Stars"
 msgstr "4 Sterne"
 
-#: ./browser/poll_views.py:311
+#: ./browser/poll_views.py:314
 #: ./browser/templates/poll_star_bar_widget.pt:13
 #: ./browser/templates/poll_star_numbers_widget.pt:19
 msgid "5 Stars"
@@ -74,7 +74,7 @@ msgstr "Mag ich / Mag ich nicht Umfrage hinzufügen"
 msgid "Add Star Poll"
 msgstr "Stern-Umfrage hinzufügen"
 
-#: ./browser/poll_views.py:320
+#: ./browser/poll_views.py:323
 #: ./browser/templates/poll_agree_disagree.pt:29
 #: ./content/poll.py:202
 msgid "Agree"
@@ -105,7 +105,7 @@ msgstr "Balken-Diagramm"
 msgid "Close"
 msgstr "Umfrage abschließen"
 
-#: ./browser/templates/editbar_widget.pt:45
+#: ./browser/templates/editbar_widget.pt:52
 msgid "Close Poll for Voting"
 msgstr "Umfrage abschließen"
 
@@ -132,7 +132,7 @@ msgstr "Umfrage Löschen"
 msgid "Demo-Submit"
 msgstr "Abstimmen (Demo-Button)"
 
-#: ./browser/poll_views.py:325
+#: ./browser/poll_views.py:328
 #: ./browser/templates/poll_agree_disagree.pt:67
 #: ./content/poll.py:203
 msgid "Disagree"
@@ -278,6 +278,10 @@ msgstr "Privat"
 #: ./profiles/default/workflows/poll_workflow/definition.xml
 msgid "Reject"
 msgstr "Zurückgezogen"
+
+#: ./browser/templates/editbar_widget.pt:45
+msgid "Reject Poll"
+msgstr "Umfrage zurückziehen"
 
 #: ./browser/templates/poll_agree_disagree.pt:45
 #: ./browser/templates/poll_free.pt:56
