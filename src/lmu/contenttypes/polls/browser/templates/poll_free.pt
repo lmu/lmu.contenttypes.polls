@@ -34,7 +34,7 @@
                                      id string:free-${no};"/>
               <label i18n:translate=""
                      tal:attributes="for string:free-${no};"
-                     tal:content="option"
+                     tal:content="structure option"
                      class="helper-margin-top-m small-10 small-centered medium-4 large-10 columns">Option</label>
               <br />
             </tal:wrapper>
@@ -81,7 +81,7 @@
                                      id string:free-${no};"/>
               <label i18n:translate=""
                      tal:attributes="for string:free-${no};"
-                     tal:content="option"
+                     tal:content="structure option"
                      class="helper-margin-top-m small-10 small-centered medium-4 large-10 columns">Option</label>
               <br />
             </tal:wrapper>

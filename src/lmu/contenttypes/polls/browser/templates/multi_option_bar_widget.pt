@@ -11,7 +11,7 @@
   <tal:list tal:repeat="option view/options" >
     <tr>
       <td>
-        <span i18n:translate="" tal:content="option/option" tal:attributes="class option/token" >Description</span>
+        <span i18n:translate="" tal:content="structure option/option" tal:attributes="class option/token" >Description</span>
       </td>
       <td>
         <div class="a-meter">
