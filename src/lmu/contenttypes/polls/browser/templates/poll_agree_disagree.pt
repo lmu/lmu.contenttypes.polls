@@ -32,7 +32,7 @@
         </form>
         <div tal:condition="python: show_results == 'with_vote'" >
           <hr />
-          <h3  i18n:translate="">Partial results ZUV</h3>
+          <h3 tal:content="view/result_text">Partial results ZUV</h3>
           <tal:bar tal:condition="python: graph_type in ['bar']">
             <tal:include tal:replace="structure python:view.get_two_option_bar_widget(example=True)" />
           </tal:bar>
@@ -69,7 +69,7 @@
         </form>
         <div tal:condition="python: show_results == 'with_vote'" >
           <hr />
-          <h3 i18n:translate="" >Partial results ZUV</h3>
+          <h3 tal:content="view/result_text" >Partial results ZUV</h3>
           <tal:bar tal:condition="python: graph_type in ['bar']">
             <tal:include tal:replace="structure python:view.get_two_option_bar_widget()" />
           </tal:bar>
@@ -84,7 +84,7 @@
           <h2 tal:condition="python: level == 'h2'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h2>
           <h3 tal:condition="python: level == 'h3'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h3>
           <p tal:content="context/description" class="documentDescription" >Description</p>
-          <p i18n:translate="">This is the partial Result ZUV</p>
+          <p tal:content="view/result_text" >This is the partial Result ZUV</p>
           <tal:bar tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['bar']">
             <tal:include tal:replace="structure python:view.get_two_option_bar_widget()" />
           </tal:bar>
@@ -112,8 +112,7 @@
           <h2 tal:condition="python: level == 'h2'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h2>
           <h3 tal:condition="python: level == 'h3'"><a tal:attributes="href context/absolute_url;" tal:content="context/title" tal:omit-tag="not: view/show_link" >Vote-Question</a></h3>
           <p tal:content="context/description" class="documentDescription" >Description</p>
-          <p tal:condition="python: has_voted" i18n:translate="" >This is the final Result, thanks for participating</p>
-          <p tal:condition="python: not has_voted" i18n:translate="" >This is the final Result, you have not participate</p>
+          <p tal:content="view/result_text" >This is the final Result</p>
           <tal:bar tal:condition="python: show_results in ['after_vote', 'with_vote'] and graph_type in ['bar']">
             <tal:include tal:replace="structure python:view.get_two_option_bar_widget()" />
           </tal:bar>

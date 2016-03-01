@@ -33,6 +33,31 @@ def str2bool(v):
     return v is not None and v.lower() in ['true', '1']
 
 
+def get_hostname(request):
+    """ Extract hostname in virtual-host-safe manner
+
+    @param request: HTTPRequest object, assumed contains environ dictionary
+
+    @return: Host DNS name, as requested by client. Lowercased, no port part.
+             Return None if host name is not present in HTTP request headers
+             (e.g. unit testing).
+    """
+
+    if "HTTP_X_FORWARDED_HOST" in request.environ:
+        # Virtual host
+        host = request.environ["HTTP_X_FORWARDED_HOST"]
+    elif "HTTP_HOST" in request.environ:
+        # Direct client request
+        host = request.environ["HTTP_HOST"]
+    else:
+        return None
+
+    # separate to domain name and port sections
+    host = host.split(":")[0].lower()
+
+    return host
+
+
 class ListingView(_AbstractLMUBaseListingView, _EntryViewMixin):
 
     template = ViewPageTemplateFile('templates/listing_view.pt')
@@ -177,6 +202,7 @@ class PollBaseView(BaseView):
         omit = self.request.get('omit')
         self.omit = str2bool(omit)
         self.view_class = request.steps[-1:][0]
+        self.host = get_hostname(self.request)
         self.hparam = request.get('h')
         self.show_link = not isinstance(context, Poll)
         if self.view_class in ['listing_view']:
@@ -200,6 +226,26 @@ class PollBaseView(BaseView):
                 self.heading_level = 'h1'
             if self.hparam:
                 self.heading_level = self.hparam
+            if self.host == 'www.intranet.verwaltung.uni-muenchen.de' and self.wf_state in ['open']:
+                self.result_text = _(u"This is the partial Result ZUV")
+            elif self.host == 'www.intranet.verwaltung.uni-muenchen.de' and self.wf_state in ['closed'] and self.has_voted:
+                self.result_text = _(u"This is the final Result, thanks for participating")
+            elif self.host == 'www.intranet.verwaltung.uni-muenchen.de' and self.wf_state in ['closed'] and not self.has_voted:
+                self.result_text = _(u"This is the final Result, you have not participate")
+            elif self.host == 'www.serviceportal.verwaltung.uni-muenchen.de' and self.wf_state in ['open']:
+                self.result_text = _(u"This is the partial Result LMU")
+            elif self.host == 'www.serviceportal.verwaltung.uni-muenchen.de' and self.wf_state in ['closed'] and self.has_voted:
+                self.result_text = _(u"This is the final Result, thanks for participating")
+            elif self.host == 'www.serviceportal.verwaltung.uni-muenchen.de' and self.wf_state in ['closed'] and not self.has_voted:
+                self.result_text = _(u"This is the final Result, you have not participate")
+            elif self.wf_state in ['open']:
+                self.result_text  = _(u"This is the partial Result")
+            elif self.wf_state in ['closed'] and self.has_voted:
+                self.result_text = _(u"This is the final Result, thanks for participating")
+            elif self.wf_state in ['closed'] and not self.has_voted:
+                self.result_text = _(u"This is the final Result, you have not participate")
+            else:
+                self.result_text  = _(u"This is the partial Result")
             if self.poll_type == 'Star Poll':
                 self.template = self.poll_star_template
 
