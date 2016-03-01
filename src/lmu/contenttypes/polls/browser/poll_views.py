@@ -226,18 +226,18 @@ class PollBaseView(BaseView):
                 self.heading_level = 'h1'
             if self.hparam:
                 self.heading_level = self.hparam
-            log.info("Request from host: '%s'", self.host)
-            if self.host == 'www.intranet.verwaltung.uni-muenchen.de' and self.wf_state in ['open']:
+            log.debug("Request from host: '%s'", self.host)
+            if 'www.intranet.verwaltung.uni-muenchen.de' in self.host and self.wf_state in ['open']:
                 self.result_text = _(u"This is the partial Result ZUV")
-            elif self.host == 'www.intranet.verwaltung.uni-muenchen.de' and self.wf_state in ['closed'] and self.has_voted:
+            elif 'www.intranet.verwaltung.uni-muenchen.de' in self.host and self.wf_state in ['closed'] and self.has_voted:
                 self.result_text = _(u"This is the final Result, thanks for participating")
-            elif self.host == 'www.intranet.verwaltung.uni-muenchen.de' and self.wf_state in ['closed'] and not self.has_voted:
+            elif 'www.intranet.verwaltung.uni-muenchen.de' in self.host and self.wf_state in ['closed'] and not self.has_voted:
                 self.result_text = _(u"This is the final Result, you have not participate")
-            elif self.host == 'www.serviceportal.verwaltung.uni-muenchen.de' and self.wf_state in ['open']:
+            elif 'www.serviceportal.verwaltung.uni-muenchen.de' in self.host and self.wf_state in ['open']:
                 self.result_text = _(u"This is the partial Result LMU")
-            elif self.host == 'www.serviceportal.verwaltung.uni-muenchen.de' and self.wf_state in ['closed'] and self.has_voted:
+            elif 'www.serviceportal.verwaltung.uni-muenchen.de' in self.host and self.wf_state in ['closed'] and self.has_voted:
                 self.result_text = _(u"This is the final Result, thanks for participating")
-            elif self.host == 'www.serviceportal.verwaltung.uni-muenchen.de' and self.wf_state in ['closed'] and not self.has_voted:
+            elif 'www.serviceportal.verwaltung.uni-muenchen.de' in self.host and self.wf_state in ['closed'] and not self.has_voted:
                 self.result_text = _(u"This is the final Result, you have not participate")
             elif self.wf_state in ['open']:
                 self.result_text  = _(u"This is the partial Result")
