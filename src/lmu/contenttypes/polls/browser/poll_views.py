@@ -226,6 +226,7 @@ class PollBaseView(BaseView):
                 self.heading_level = 'h1'
             if self.hparam:
                 self.heading_level = self.hparam
+            log.info("Request from host: '%s'", self.host)
             if self.host == 'www.intranet.verwaltung.uni-muenchen.de' and self.wf_state in ['open']:
                 self.result_text = _(u"This is the partial Result ZUV")
             elif self.host == 'www.intranet.verwaltung.uni-muenchen.de' and self.wf_state in ['closed'] and self.has_voted:
