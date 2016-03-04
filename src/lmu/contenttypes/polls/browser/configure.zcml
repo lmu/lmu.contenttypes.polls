@@ -55,7 +55,7 @@
         />
 
     <browser:page
-        name="voters"
+        name="voters_view"
         for="lmu.contenttypes.polls.interfaces.IPoll"
         class="lmu.contenttypes.polls.browser.poll_views.VoterView"
         permission="cmf.ManagePortal"

@@ -187,6 +187,7 @@ class VoterView(BaseView):
     def __call__(self):
         """
         """
+        log.info('This Personsn has voted: %s', self.context.voters())
         return self.context.voters()
 
 
