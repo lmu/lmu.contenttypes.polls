@@ -58,7 +58,7 @@
         name="voters"
         for="lmu.contenttypes.polls.interfaces.IPoll"
         class="lmu.contenttypes.polls.browser.poll_views.VoterView"
-        permission="zope2.Manage"
+        permission="zope2.ManagePortal"
         />
 
     <browser:page
