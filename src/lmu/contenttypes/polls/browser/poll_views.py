@@ -182,6 +182,14 @@ class CurrentPollView(BaseView, _IncludeMixin):
         return self.template()
 
 
+class VoterView(BaseView):
+
+    def __call__(self):
+        """
+        """
+        return self.context.voters()
+
+
 class PollBaseView(BaseView):
 
     poll_star_template = ViewPageTemplateFile('templates/poll_star.pt')
