@@ -325,6 +325,9 @@ class PollBaseView(BaseView):
     def get_wf_state(self):
         return self.wf_state
 
+    def voters(self):
+        return self.context.voters()
+
     def get_results(self):
         """Return results so far if allowed."""
         show_results = False
