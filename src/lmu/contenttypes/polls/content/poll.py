@@ -108,7 +108,7 @@ class Poll(Item):
                                        expires=expires)
             member_id = 'Anonymous-%s' % vote_id
 
-        if member_id:
+        if member_id and member_id != 'Anonymous User':
             voters.append(member_id)
             annotations[MEMBERS_ANNO_KEY] = voters
             return True

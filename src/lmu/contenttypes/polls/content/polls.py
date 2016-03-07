@@ -88,7 +88,7 @@ class Polls(object):
             member_id = request.get('EDUPersonPrincipalName')
             if member_id:
                 member_id = member_id.splitt('@')[0]
-        if member_id:
+        if member_id and member_id != 'Anonymous User':
             return member_id in voters
         elif anonymous_allowed and request:
             cookie = COOKIE_KEY % poll_uid
@@ -115,9 +115,7 @@ class Polls(object):
         if canVote:
             # User must view the poll
             # and poll must be open to allow votes
-            if not self.voted_in_a_poll(poll, request):
-                # If user did not vote here, we allow him to vote
-                return True
+            return not self.voted_in_a_poll(poll, request)
         # All other cases shall not pass
         raise Unauthorized
 
