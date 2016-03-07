@@ -84,6 +84,10 @@ class Polls(object):
         member = self.member
         member_id = member.getId()
         voters = poll.voters()
+        if api.user.is_anonymous():
+            member_id = request.get('EDUPersonPrincipalName')
+            if member_id:
+                member_id = member_id.splitt('@')[0]
         if member_id:
             return member_id in voters
         elif anonymous_allowed and request:

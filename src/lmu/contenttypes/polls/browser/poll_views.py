@@ -10,6 +10,7 @@ from Acquisition import aq_inner
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
+from plone import api
 from plone.app.layout.viewlets import common as base
 from zope.component import getMultiAdapter
 from zope.component import queryUtility

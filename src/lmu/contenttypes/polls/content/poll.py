@@ -4,6 +4,7 @@ from AccessControl import Unauthorized
 from plone.dexterity.content import Item
 #from plone.dexterity.content import Container
 
+from plone import api
 from plone.i18n.normalizer import idnormalizer
 from plone.i18n.normalizer import urlnormalizer
 from z3c.form.interfaces import IValidator
@@ -91,6 +92,10 @@ class Poll(Item):
         voters = self.voters()
         member = utility.member
         member_id = member.getId()
+        if api.user.is_anonymous():
+            member_id = request.get('EDUPersonPrincipalName')
+            if member_id:
+                member_id = member_id.splitt('@')[0]
         if not member_id and request:
             poll_uid = utility.uid_for_poll(self)
             cookie = COOKIE_KEY % str(poll_uid)
