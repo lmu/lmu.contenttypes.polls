@@ -298,6 +298,7 @@ class PollBaseView(BaseView, _NoCacheEntryMixin):
 
     @property
     def can_vote(self):
+        log.info('can_vote: "%s" or "%s"', api.user.get_current(), request.get('HTTP_EDUPERSONPRINCIPALNAME'))
         if hasattr(self, '_has_voted') and self._has_voted:
             # This is mainly to avoid anonymous users seeing the form again
             self.messages.addStatusMessage(
@@ -319,6 +320,7 @@ class PollBaseView(BaseView, _NoCacheEntryMixin):
     @property
     def has_voted(self):
         """Return True if the current user voted in this poll."""
+        log.info('has_voted: "%s" or "%s"', api.user.get_current(), request.get('HTTP_EDUPERSONPRINCIPALNAME'))
         if hasattr(self, '_has_voted') and self._has_voted:
             return True
         utility = self.utility
