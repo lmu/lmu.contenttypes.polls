@@ -97,7 +97,6 @@ class Polls(object):
             if member_id:
                 member_id = member_id.split('@')[0].strip()
             log.debug('Voted in Poll / Allow to Vote: normalized "%s" from EDUPersonPrincipalName.', member_id)
-            #return member_id in voters
 
         log.debug('Voted in Poll / Allow to Vote: Update on member_id "%s".', member_id)
         if member_id and member_id != 'Anonymous User':
