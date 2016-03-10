@@ -95,8 +95,9 @@ class Polls(object):
             log.info('HTTP Headers: %s', request.environ.keys())
             member_id = request.get('EDUPersonPrincipalName')
             if member_id:
-                member_id = member_id.splitt('@')[0]
+                member_id = member_id.splitt('@')[0].strip()
         if member_id and member_id != 'Anonymous User':
+            log.info('calculated member "%s" is in voters? (%s), list of voters: %s', member_id, bool(member_id in voters), voters)
             return member_id in voters
         elif anonymous_allowed and request:
             cookie = COOKIE_KEY % poll_uid

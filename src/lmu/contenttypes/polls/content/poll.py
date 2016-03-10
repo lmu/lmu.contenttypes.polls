@@ -94,9 +94,9 @@ class Poll(Item):
         member_id = member.getId()
         log.info('Try to set voter "%s" for Poll: %s', member_id, request.getURL())
         if api.user.is_anonymous():
-            member_id = request.get('EDUPersonPrincipalName')
+            member_id = request.get('HTTP_EDUPERSONPRINCIPALNAME')
             if member_id:
-                member_id = member_id.splitt('@')[0]
+                member_id = member_id.splitt('@')[0].strip()
         if not member_id and request:
             poll_uid = utility.uid_for_poll(self)
             cookie = COOKIE_KEY % str(poll_uid)
@@ -110,6 +110,7 @@ class Poll(Item):
             member_id = 'Anonymous-%s' % vote_id
 
         if member_id and member_id != 'Anonymous User':
+            log.info('Set voter "%s" for Poll: %s', member_id, request.getURL())
             voters.append(member_id)
             annotations[MEMBERS_ANNO_KEY] = voters
             return True
