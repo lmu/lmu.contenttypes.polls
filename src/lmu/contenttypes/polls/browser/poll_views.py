@@ -7,6 +7,7 @@ from AccessControl import Unauthorized
 from Acquisition import aq_inner
 #from Acquisition import aq_parent
 #from Products.CMFCore.interfaces import ISiteRoot
+from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
@@ -194,7 +195,7 @@ class VoterView(BaseView):
             try:
                 if voter != 'Anonymous User':
                     user = api.user.get(username=voter)
-                    list_of_voters += u"{uid}: {name}\n".format(uid=voter, name=user.getProperty('fullname'))
+                    list_of_voters += u"{uid}: {name}\n".format(uid=voter, name=safe_unicode(user.getProperty('fullname')))
                 else:
                     list_of_voters += u"Anonymous User\n"
             except Exception as e:
