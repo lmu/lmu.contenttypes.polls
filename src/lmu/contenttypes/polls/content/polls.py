@@ -90,7 +90,7 @@ class Polls(object):
         voters = poll.voters()
 
         log.info('Voted in Poll / Allow to Vote: Check if member "%s" or "%s" has voted in Poll: %s', member_id, request.get('HTTP_EDUPERSONPRINCIPALNAME'), request.getURL())
-        if api.user.is_anonymous() or member_id != 'Anonymous User':
+        if api.user.is_anonymous() or member_id == 'Anonymous User':
             member_id = request.get('HTTP_EDUPERSONPRINCIPALNAME')
             if member_id:
                 member_id = member_id.splitt('@')[0].strip()
