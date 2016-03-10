@@ -16,6 +16,7 @@ from zope.component import getMultiAdapter
 from zope.component import queryUtility
 
 from lmu.policy.base.browser.content import _EntryViewMixin
+from lmu.policy.base.browser.content import _NoCacheEntryMixin
 from lmu.policy.base.browser.content_listing import _IncludeMixin
 from lmu.policy.base.browser.content_listing import _AbstractLMUBaseListingView
 from lmu.policy.base.browser.utils import isDBReadOnly as uIsDBReadOnly
@@ -192,7 +193,7 @@ class VoterView(BaseView):
         return self.context.voters()
 
 
-class PollBaseView(BaseView):
+class PollBaseView(BaseView, _NoCacheEntryMixin):
 
     poll_star_template = ViewPageTemplateFile('templates/poll_star.pt')
     poll_like_dislike_template = ViewPageTemplateFile('templates/poll_like_dislike.pt')
@@ -283,6 +284,7 @@ class PollBaseView(BaseView):
         elif request_type == 'POST':
             self.update()
             return self.handleRedirect()
+        super(PollBaseView, self).__call__()
         return self.template()
 
     @property
@@ -517,7 +519,7 @@ class PollView(PollBaseView):
         elif self.request_type == 'POST':
             self.update()
             return self.handleRedirect()
-        #import ipdb;ipdb.set_trace()
+        super(PollView, self).__call__()
         return self.template(self)
 
 
