@@ -16,6 +16,10 @@ from lmu.contenttypes.polls.config import COOKIE_KEY
 from lmu.contenttypes.polls.interfaces import IPolls
 from lmu.contenttypes.polls.interfaces import IPollFolder
 
+from logging import getLogger
+
+log = getLogger(__name__)
+
 
 class PollFolder(Container):
     implements(IPollFolder, ISyndicatable)
@@ -84,7 +88,11 @@ class Polls(object):
         member = self.member
         member_id = member.getId()
         voters = poll.voters()
+
+        log.info('Check if member "%s" has voted in Poll: %s', member_id, request.getURL())
         if api.user.is_anonymous():
+
+            log.info('HTTP Headers: %s', request.environ.keys())
             member_id = request.get('EDUPersonPrincipalName')
             if member_id:
                 member_id = member_id.splitt('@')[0]
