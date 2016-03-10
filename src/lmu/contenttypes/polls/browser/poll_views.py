@@ -189,8 +189,16 @@ class VoterView(BaseView):
     def __call__(self):
         """
         """
-        log.info('This Personsn has voted: %s', self.context.voters())
-        return self.context.voters()
+        list_of_voters = "This Persons have already voted:\n"
+        for voter in self.context.voters():
+            try:
+                if voter != 'Anonymous User':
+                    user = api.user.get(userid=voter)
+                    list_of_voters += "{name} [{uid}]\n".format(name=user.fullname, uid=voter)
+            except:
+                log.info('User not found: %s', voter)
+        log.info('%s', list_of_voters)
+        return list_of_voters
 
 
 class PollBaseView(BaseView, _NoCacheEntryMixin):
