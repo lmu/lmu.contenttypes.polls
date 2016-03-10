@@ -96,7 +96,7 @@ class Poll(Item):
         if api.user.is_anonymous() or member_id == 'Anonymous User':
             member_id = request.get('HTTP_EDUPERSONPRINCIPALNAME')
             if member_id:
-                member_id = member_id.splitt('@')[0].strip()
+                member_id = member_id.split('@')[0].strip()
         if not member_id and request:
             poll_uid = utility.uid_for_poll(self)
             cookie = COOKIE_KEY % str(poll_uid)

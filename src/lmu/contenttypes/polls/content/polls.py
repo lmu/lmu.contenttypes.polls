@@ -95,7 +95,7 @@ class Polls(object):
             member_id = request.get('HTTP_EDUPERSONPRINCIPALNAME')
             log.info('Voted in Poll / Allow to Vote: replaced with "%s" from EDUPersonPrincipalName.', member_id)
             if member_id:
-                member_id = member_id.splitt('@')[0].strip()
+                member_id = member_id.split('@')[0].strip()
             log.info('Voted in Poll / Allow to Vote: normalized "%s" from EDUPersonPrincipalName.', member_id)
             return member_id in voters
 
