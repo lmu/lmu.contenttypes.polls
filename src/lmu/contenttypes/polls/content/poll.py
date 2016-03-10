@@ -93,7 +93,7 @@ class Poll(Item):
         member = utility.member
         member_id = member.getId()
         log.info('_set_voter: Try to set voter "%s" for Poll: %s', member_id, request.getURL())
-        if api.user.is_anonymous():
+        if api.user.is_anonymous() or member_id != 'Anonymous User':
             member_id = request.get('HTTP_EDUPERSONPRINCIPALNAME')
             if member_id:
                 member_id = member_id.splitt('@')[0].strip()
