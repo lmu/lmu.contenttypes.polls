@@ -197,8 +197,10 @@ class VoterView(BaseView):
                     list_of_voters += u"{uid}: {name}\n".format(uid=voter, name=user.getProperty('fullname'))
                 else:
                     list_of_voters += u"Anonymous User\n"
-            except:
+            except Exception as e:
                 log.info(u'User not found: %s', voter)
+                list_of_voters += u"{uid}:\n".format(uid=voter)
+                log.info(u'Exception during list voters has happend: %s, %s', e, e.message)
         log.debug('%s', list_of_voters)
         return list_of_voters
 
