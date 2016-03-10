@@ -7,9 +7,9 @@
                   level view/heading_level"
       tal:omit-tag="omit">
 <body tal:define="results view/get_results;
-                  has_voted view/has_voted;
                   can_vote view/can_vote;
                   can_edit view/can_edit;
+                  has_voted view/has_voted|not: can_vote;
                   isDBReadOnly view/isDBReadOnly;
                   wf_state view/wf_state;
                   show_results view/get_show_results;
