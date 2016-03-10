@@ -193,7 +193,7 @@ class VoterView(BaseView):
         for voter in self.context.voters():
             try:
                 if voter != 'Anonymous User':
-                    user = api.user.get(userid=voter)
+                    user = api.user.get(username=voter)
                     list_of_voters += "{uid}: {name}\n".format(uid=voter, name=user.fullname)
                 else:
                     list_of_voters += "Anonymous User\n"
