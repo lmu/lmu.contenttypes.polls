@@ -92,7 +92,7 @@ class Poll(Item):
         voters = self.voters()
         member = utility.member
         member_id = member.getId()
-        log.info('_set_voter: Try to set voter "%s" for Poll: %s', member_id, request.getURL())
+        log.debug('_set_voter: Try to set voter "%s" for Poll: %s', member_id, request.getURL())
         if api.user.is_anonymous() or member_id == 'Anonymous User':
             member_id = request.get('HTTP_EDUPERSONPRINCIPALNAME')
             if member_id:
@@ -110,7 +110,7 @@ class Poll(Item):
             member_id = 'Anonymous-%s' % vote_id
 
         if member_id and member_id != 'Anonymous User':
-            log.info('_set_voter: Set voter "%s" for Poll: %s', member_id, request.getURL())
+            log.debug('_set_voter: Set voter "%s" for Poll: %s', member_id, request.getURL())
             voters.append(member_id)
             annotations[MEMBERS_ANNO_KEY] = voters
             return True

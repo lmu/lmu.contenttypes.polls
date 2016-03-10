@@ -89,19 +89,19 @@ class Polls(object):
         member_id = member.getId()
         voters = poll.voters()
 
-        log.info('Voted in Poll / Allow to Vote: Check if member "%s" or "%s" has voted in Poll: %s', member_id, request.get('HTTP_EDUPERSONPRINCIPALNAME'), request.getURL())
+        log.debug('Voted in Poll / Allow to Vote: Check if member "%s" or "%s" has voted in Poll: %s', member_id, request.get('HTTP_EDUPERSONPRINCIPALNAME'), request.getURL())
         if api.user.is_anonymous() or member_id == 'Anonymous User':
-            log.info('Voted in Poll / Allow to Vote: Member has been identified as "%s", replace it with EDUPersonPrincipalName.', member_id)
+            log.debug('Voted in Poll / Allow to Vote: Member has been identified as "%s", replace it with EDUPersonPrincipalName.', member_id)
             member_id = request.get('HTTP_EDUPERSONPRINCIPALNAME')
-            log.info('Voted in Poll / Allow to Vote: replaced with "%s" from EDUPersonPrincipalName.', member_id)
+            log.debug('Voted in Poll / Allow to Vote: replaced with "%s" from EDUPersonPrincipalName.', member_id)
             if member_id:
                 member_id = member_id.split('@')[0].strip()
-            log.info('Voted in Poll / Allow to Vote: normalized "%s" from EDUPersonPrincipalName.', member_id)
+            log.debug('Voted in Poll / Allow to Vote: normalized "%s" from EDUPersonPrincipalName.', member_id)
             #return member_id in voters
 
-        log.info('Voted in Poll / Allow to Vote: Update on member_id "%s".', member_id)
+        log.debug('Voted in Poll / Allow to Vote: Update on member_id "%s".', member_id)
         if member_id and member_id != 'Anonymous User':
-            log.info('Voted in Poll / Allow to Vote: calculated member "%s" is in voters? (%s), list of voters: %s', member_id, bool(member_id in voters), voters)
+            log.debug('Voted in Poll / Allow to Vote: calculated member "%s" is in voters? (%s), list of voters: %s', member_id, bool(member_id in voters), voters)
             return member_id in voters
         elif anonymous_allowed and request:
             cookie = COOKIE_KEY % poll_uid

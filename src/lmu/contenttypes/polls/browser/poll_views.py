@@ -189,17 +189,17 @@ class VoterView(BaseView):
     def __call__(self):
         """
         """
-        list_of_voters = "This Persons have already voted:\n"
+        list_of_voters = u"This Persons have already voted:\n"
         for voter in self.context.voters():
             try:
                 if voter != 'Anonymous User':
                     user = api.user.get(username=voter)
-                    list_of_voters += "{uid}: {name}\n".format(uid=voter, name=user.getProperty('fullname'))
+                    list_of_voters += u"{uid}: {name}\n".format(uid=voter, name=user.getProperty('fullname'))
                 else:
-                    list_of_voters += "Anonymous User\n"
+                    list_of_voters += u"Anonymous User\n"
             except:
-                log.info('User not found: %s', voter)
-        log.info('%s', list_of_voters)
+                log.info(u'User not found: %s', voter)
+        log.debug('%s', list_of_voters)
         return list_of_voters
 
 
@@ -298,7 +298,7 @@ class PollBaseView(BaseView, _NoCacheEntryMixin):
 
     @property
     def can_vote(self):
-        log.info('can_vote: "%s" or "%s"', api.user.get_current(), self.request.get('HTTP_EDUPERSONPRINCIPALNAME'))
+        log.debug('can_vote: "%s" or "%s"', api.user.get_current(), self.request.get('HTTP_EDUPERSONPRINCIPALNAME'))
         if hasattr(self, '_has_voted') and self._has_voted:
             # This is mainly to avoid anonymous users seeing the form again
             self.messages.addStatusMessage(
@@ -320,7 +320,7 @@ class PollBaseView(BaseView, _NoCacheEntryMixin):
     @property
     def has_voted(self):
         """Return True if the current user voted in this poll."""
-        log.info('has_voted: "%s" or "%s"', api.user.get_current(), self.request.get('HTTP_EDUPERSONPRINCIPALNAME'))
+        log.debug('has_voted: "%s" or "%s"', api.user.get_current(), self.request.get('HTTP_EDUPERSONPRINCIPALNAME'))
         if hasattr(self, '_has_voted') and self._has_voted:
             return True
         utility = self.utility
