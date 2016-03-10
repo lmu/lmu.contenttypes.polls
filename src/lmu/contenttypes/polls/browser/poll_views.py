@@ -486,7 +486,6 @@ class PollView(PollBaseView):
         """
         """
         super(PollView, self).__init__(context, request)
-        #import ipdb; ipdb.set_trace()
         self.context = context
         self.request = request
         self.state = getMultiAdapter(
@@ -518,7 +517,6 @@ class PollView(PollBaseView):
         elif self.request_type == 'POST':
             self.update()
             return self.handleRedirect()
-        #super(PollView, self).__call__()
         return self.template(self)
 
 
@@ -529,8 +527,6 @@ class StarPollView(PollView):
     def __call__(self):
         """
         """
-
-        #import ipdb; ipdb.set_trace()
         if self.request_type == 'GET':
             if self.results:
                 self.average = 0.0
