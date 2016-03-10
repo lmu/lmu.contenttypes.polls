@@ -284,7 +284,6 @@ class PollBaseView(BaseView, _NoCacheEntryMixin):
         elif request_type == 'POST':
             self.update()
             return self.handleRedirect()
-        super(PollBaseView, self).__call__()
         return self.template()
 
     @property
@@ -519,7 +518,7 @@ class PollView(PollBaseView):
         elif self.request_type == 'POST':
             self.update()
             return self.handleRedirect()
-        super(PollView, self).__call__()
+        #super(PollView, self).__call__()
         return self.template(self)
 
 
