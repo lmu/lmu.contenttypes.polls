@@ -194,7 +194,7 @@ class VoterView(BaseView):
             try:
                 if voter != 'Anonymous User':
                     user = api.user.get(username=voter)
-                    list_of_voters += "{uid}: {name}\n".format(uid=voter, name=user.fullname)
+                    list_of_voters += "{uid}: {name}\n".format(uid=voter, name=user.getProperty('fullname'))
                 else:
                     list_of_voters += "Anonymous User\n"
             except:
