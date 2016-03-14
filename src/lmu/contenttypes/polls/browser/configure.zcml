@@ -61,6 +61,42 @@
         permission="cmf.ManagePortal"
         />
 
+
+    <browser:page
+        name="poll_voters_view"
+        for="lmu.contenttypes.polls.interfaces.IPoll"
+        class="lmu.contenttypes.polls.browser.poll_views.PollVoterView"
+        permission="cmf.ManagePortal"
+        />
+
+    <browser:page
+        name="polls_voters_view"
+        for="lmu.contenttypes.polls.interfaces.IPollFolder"
+        class="lmu.contenttypes.polls.browser.poll_views.PollsVoterView"
+        permission="cmf.ManagePortal"
+        />
+
+    <browser:page
+        name="polls_voters_view"
+        for="Products.CMFCore.interfaces.ISiteRoot"
+        class="lmu.contenttypes.polls.browser.poll_views.PollsVoterView"
+        permission="cmf.ManagePortal"
+        />
+
+    <browser:page
+        name="polls_voters_view"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class="lmu.contenttypes.polls.browser.poll_views.PollsVoterView"
+        permission="cmf.ManagePortal"
+        />
+
+    <browser:page
+        name="polls_voters_view"
+        for="Products.CMFCore.interfaces.IFolderish"
+        class="lmu.contenttypes.polls.browser.poll_views.PollsVoterView"
+        permission="cmf.ManagePortal"
+        />
+
     <browser:page
         name="current_poll.include"
         for="lmu.contenttypes.polls.interfaces.IPollFolder"

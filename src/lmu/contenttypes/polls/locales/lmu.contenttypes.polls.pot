@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2016-03-01 17:57+0000\n"
+"POT-Creation-Date: 2016-03-14 15:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,31 +21,31 @@ msgstr ""
 msgid "${dynamic_count} of 5 Stars"
 msgstr ""
 
-#: ./browser/poll_views.py:340
+#: ./browser/poll_views.py:427
 #: ./browser/templates/poll_star_bar_widget.pt:57
 #: ./browser/templates/poll_star_numbers_widget.pt:39
 msgid "1 Star"
 msgstr ""
 
-#: ./browser/poll_views.py:345
+#: ./browser/poll_views.py:432
 #: ./browser/templates/poll_star_bar_widget.pt:46
 #: ./browser/templates/poll_star_numbers_widget.pt:34
 msgid "2 Stars"
 msgstr ""
 
-#: ./browser/poll_views.py:350
+#: ./browser/poll_views.py:437
 #: ./browser/templates/poll_star_bar_widget.pt:35
 #: ./browser/templates/poll_star_numbers_widget.pt:29
 msgid "3 Stars"
 msgstr ""
 
-#: ./browser/poll_views.py:355
+#: ./browser/poll_views.py:442
 #: ./browser/templates/poll_star_bar_widget.pt:24
 #: ./browser/templates/poll_star_numbers_widget.pt:24
 msgid "4 Stars"
 msgstr ""
 
-#: ./browser/poll_views.py:360
+#: ./browser/poll_views.py:447
 #: ./browser/templates/poll_star_bar_widget.pt:13
 #: ./browser/templates/poll_star_numbers_widget.pt:19
 msgid "5 Stars"
@@ -77,15 +77,19 @@ msgstr ""
 msgid "Add Star Poll"
 msgstr ""
 
-#: ./browser/poll_views.py:369
+#: ./browser/poll_views.py:456
 #: ./browser/templates/poll_agree_disagree.pt:29
-#: ./content/poll.py:202
+#: ./content/poll.py:209
 msgid "Agree"
 msgstr ""
 
 #: ./config.py:28
 #: ./profiles/default/types/Agree_Disagree_Poll.xml
 msgid "Agree / Disagree Poll"
+msgstr ""
+
+#: ./browser/templates/polls_voters_view.pt:15
+msgid "Amount of Polls: ${DYNAMIC_CONTENT}"
 msgstr ""
 
 #: ./browser/templates/poll_like_dislike.pt:47
@@ -135,9 +139,9 @@ msgstr ""
 msgid "Demo-Submit"
 msgstr ""
 
-#: ./browser/poll_views.py:374
+#: ./browser/poll_views.py:461
 #: ./browser/templates/poll_agree_disagree.pt:67
-#: ./content/poll.py:203
+#: ./content/poll.py:210
 msgid "Disagree"
 msgstr ""
 
@@ -145,7 +149,7 @@ msgstr ""
 msgid "Disgree"
 msgstr ""
 
-#: ./content/poll.py:215
+#: ./content/poll.py:222
 msgid "Dislike"
 msgstr ""
 
@@ -170,7 +174,7 @@ msgstr ""
 msgid "Free Poll"
 msgstr ""
 
-#: ./browser/poll_views.py:135
+#: ./browser/poll_views.py:138
 msgid "Invalid option"
 msgstr ""
 
@@ -178,13 +182,17 @@ msgstr ""
 msgid "Latest opened poll"
 msgstr ""
 
-#: ./content/poll.py:214
+#: ./content/poll.py:221
 msgid "Like"
 msgstr ""
 
 #: ./config.py:29
 #: ./profiles/default/types/Like_Dislike_Poll.xml
 msgid "Like / Dislike Poll"
+msgstr ""
+
+#: ./browser/templates/polls_voters_view.pt:14
+msgid "List of Voters"
 msgstr ""
 
 #: ./profiles/default/workflows/poll_workflow/definition.xml
@@ -199,7 +207,7 @@ msgstr ""
 msgid "Never Show result for user"
 msgstr ""
 
-#: ./browser/poll_views.py:181
+#: ./browser/poll_views.py:184
 msgid "No active or closed Polls avalible"
 msgstr ""
 
@@ -355,29 +363,41 @@ msgstr ""
 msgid "This Poll hasn't been published, you see a preview without voting possibility"
 msgstr ""
 
-#: ./browser/poll_views.py:232
+#: ./browser/poll_views.py:314
 msgid "This is the final Result, thanks for participating"
 msgstr ""
 
-#: ./browser/poll_views.py:234
+#: ./browser/poll_views.py:316
 msgid "This is the final Result, you have not participate"
 msgstr ""
 
-#: ./browser/poll_views.py:242
+#: ./browser/poll_views.py:324
 msgid "This is the partial Result"
 msgstr ""
 
-#: ./browser/poll_views.py:236
+#: ./browser/poll_views.py:318
 msgid "This is the partial Result LMU"
 msgstr ""
 
-#: ./browser/poll_views.py:230
+#: ./browser/poll_views.py:312
 msgid "This is the partial Result ZUV"
 msgstr ""
 
 #: ./browser/templates/poll_like_dislike.pt:90
 #: ./browser/templates/voteportlet.pt:107
 msgid "Total Votes:"
+msgstr ""
+
+#: ./browser/templates/polls_voters_view.pt:22
+msgid "User Login"
+msgstr ""
+
+#: ./browser/templates/polls_voters_view.pt:23
+msgid "User fullname"
+msgstr ""
+
+#: ./browser/templates/editbar_widget.pt:59
+msgid "View Voters"
 msgstr ""
 
 #: ./browser/templates/poll_like_dislike.pt:56
@@ -398,7 +418,7 @@ msgstr ""
 msgid "Workflow to be used with polls"
 msgstr ""
 
-#: ./content/poll.py:251
+#: ./content/poll.py:258
 msgid "You need to provide at least two options for a free poll."
 msgstr ""
 

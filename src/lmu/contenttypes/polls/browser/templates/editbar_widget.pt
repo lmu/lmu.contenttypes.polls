@@ -56,6 +56,13 @@
        i18n:attributes="title"
        i18n:translate="" >Close Poll for Voting</a>
 
+    <a tal:attributes="href string:${context/absolute_url}/poll_voters_view"
+       tal:condition="view/isManager"
+       class="button link-overlay small"
+       title="View Voters"
+       i18n:attributes="title"
+       i18n:translate="" >View Voters</a>
+
   </div>
 </div>
 

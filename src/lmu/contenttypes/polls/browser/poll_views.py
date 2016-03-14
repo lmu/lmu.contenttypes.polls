@@ -201,9 +201,66 @@ class VoterView(BaseView):
             except Exception as e:
                 log.info(u'User not found: %s', voter)
                 list_of_voters += u"{uid}:\n".format(uid=voter)
-                log.info(u'Exception during list voters has happend: %s, %s', e, e.message)
+                log.info(u'Exception during list voters has happend: %s, %s, for voter: %s', e, e.message, voter)
         log.debug('%s', list_of_voters)
         return list_of_voters
+
+
+class PollVoterView(BaseView):
+
+    template = ViewPageTemplateFile('templates/polls_voters_view.pt')
+
+    def __call__(self):
+        """
+        """
+        self.polls = []
+        ivoters = []
+        for voter in self.context.voters():
+            try:
+                ivoter = {'login': voter}
+                if voter != 'Anonymous User':
+                    user = api.user.get(username=voter)
+                    ivoter['fullname'] = safe_unicode(user.getProperty('fullname'))
+                else:
+                    ivoter['fullname'] = u"Anonymous User"
+            except Exception as e:
+                log.info(u'Exception during list voters has happend: %s, %s, for voter: %s', e, e.message, voter)
+        ivoters.append(ivoter)
+        self.polls = [{'poll': self.context, 'voters': ivoters}]
+        return self.template()
+
+
+class PollsVoterView(BaseView):
+
+    template = ViewPageTemplateFile('templates/polls_voters_view.pt')
+
+    def __call__(self):
+        """
+        """
+        polls = api.content.find(
+            context=self.context,
+            portal_type=['Poll',
+                         'Free Poll',
+                         'Star Poll',
+                         'Agree Disagree Poll',
+                         'Like Dislike Poll']
+            )
+        self.polls = []
+        for poll in polls:
+            ivoters = []
+            for voter in poll.getObject().voters():
+                try:
+                    ivoter = {'login': voter}
+                    if voter != 'Anonymous User':
+                        user = api.user.get(username=voter)
+                        ivoter['fullname'] = safe_unicode(user.getProperty('fullname'))
+                    else:
+                        ivoter['fullname'] = u"Anonymous User"
+                except Exception as e:
+                    log.info(u'Exception during list voters has happend: %s, %s, for voter: %s', e, e.message, voter)
+                ivoters.append(ivoter)
+            self.polls.append({'poll': poll.getObject(), 'voters': ivoters})
+        return self.template()
 
 
 class PollBaseView(BaseView, _NoCacheEntryMixin):
