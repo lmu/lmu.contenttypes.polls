@@ -172,8 +172,9 @@ class CurrentPollView(BaseView, _IncludeMixin):
 
     def __call__(self):
         self.utility = queryUtility(IPolls, name='lmu.contenttypes.polls')
-        self.open_polls = self.utility.recent_polls()
-        self.closed_polls = self.utility.recent_polls(show_all=True,
+        self.open_polls = self.utility.recent_polls(context=self.context)
+        self.closed_polls = self.utility.recent_polls(context=self.context,
+                                                      show_all=True,
                                                       review_state='closed')
         super(CurrentPollView, self).__call__()
 
