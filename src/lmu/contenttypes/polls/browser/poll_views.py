@@ -173,9 +173,11 @@ class CurrentPollView(BaseView, _IncludeMixin):
     def __call__(self):
         self.utility = queryUtility(IPolls, name='lmu.contenttypes.polls')
         self.open_polls = self.utility.recent_polls(context=self.context)
-        self.closed_polls = self.utility.recent_polls(context=self.context,
-                                                      show_all=True,
-                                                      review_state='closed')
+        self.closed_polls = self.utility.recent_polls(
+            context=self.context,
+            show_all=True,
+            review_state='closed',
+        )
         super(CurrentPollView, self).__call__()
 
         if len(self.open_polls) == 1:
@@ -183,6 +185,8 @@ class CurrentPollView(BaseView, _IncludeMixin):
             return poll.restrictedTraverse('@@poll_base_view')()
         elif len(self.open_polls) <= 0 and len(self.closed_polls) <= 0:
             return _(u"No active or closed Polls avalible")
+        elif len(self.open_polls) <= 0:
+            return _(u"No active Polls avalible")
         return self.template()
 
 
@@ -196,7 +200,10 @@ class VoterView(BaseView):
             try:
                 if voter != 'Anonymous User':
                     user = api.user.get(username=voter)
-                    list_of_voters += u"{uid}: {name}\n".format(uid=voter, name=safe_unicode(user.getProperty('fullname')))
+                    list_of_voters += u"{uid}: {name}\n".format(
+                        uid=voter,
+                        name=safe_unicode(user.getProperty('fullname')),
+                    )
                 else:
                     list_of_voters += u"Anonymous User\n"
             except Exception as e:
@@ -240,12 +247,14 @@ class PollsVoterView(BaseView):
         """
         polls = api.content.find(
             context=self.context,
-            portal_type=['Poll',
-                         'Free Poll',
-                         'Star Poll',
-                         'Agree Disagree Poll',
-                         'Like Dislike Poll']
-            )
+            portal_type=[
+                'Poll',
+                'Free Poll',
+                'Star Poll',
+                'Agree Disagree Poll',
+                'Like Dislike Poll',
+            ]
+        )
         self.polls = []
         for poll in polls:
             ivoters = []
@@ -752,7 +761,7 @@ class MultiOptionBarWidgetViewlet(base.ViewletBase):
                  results, participants=0):
         """
         """
-        super(MultiOptionBarWidgetViewlet, self).__init__(context, request, portal, manager)  # NOQA
+        super(MultiOptionBarWidgetViewlet, self).__init__(context, request, portal, manager)
         self.context = context
         self.request = request
         self.results = results
@@ -779,7 +788,7 @@ class EditBarViewlet(base.ViewletBase, _EntryViewMixin):
     def __init__(self, context, request, portal, manager):
         """
         """
-        super(EditBarViewlet, self).__init__(context, request, portal, manager)  # NOQA
+        super(EditBarViewlet, self).__init__(context, request, portal, manager)
         self.context = context
         self.request = request
 
